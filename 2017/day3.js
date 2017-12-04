@@ -15,9 +15,7 @@ exports.calculateSteps = target => {
   return Math.abs(x) + Math.abs(y);
 };
 
-const sumOrOne = (positions, x, y) => {
-  if (x === 0 && y === 0) return 1;
-
+const sumOfNeighbors = (positions, x, y) => {
   return [
     positions.get(`${x + 1},${y + 1}`),
     positions.get(`${x + 1},${y}`),
@@ -41,7 +39,7 @@ exports.calculateLargerThan = target => {
   const positions = new Map();
 
   while (true) {
-    const value = sumOrOne(positions, x, y);
+    const value = !x && !y ? 1 : sumOfNeighbors(positions, x, y);
 
     if (value > target) return value;
 
