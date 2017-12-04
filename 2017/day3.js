@@ -39,7 +39,7 @@ exports.calculateLargerThan = target => {
   const positions = new Map();
 
   while (true) {
-    const value = !x && !y ? 1 : sumOfNeighbors(positions, x, y);
+    const value = sumOfNeighbors(positions, x, y) || 1;
 
     if (value > target) return value;
 
