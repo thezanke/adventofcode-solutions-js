@@ -4,9 +4,13 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
+    "babel-preset-flow": "^6.23.0",
     "jest": "^21.2.1"
   },
   "scripts": {
     "test": "jest"
+  },
+  "devDependencies": {
+    "flow-bin": "^0.61.0"
   }
 }
