@@ -1,4 +1,4 @@
-exports.CHALLENGE_ONE = `2
+exports.CHALLENGE_INPUT = `2
 1
 1
 2
@@ -1089,4 +1089,6 @@ exports.CHALLENGE_ONE = `2
 -455
 -498
 -92
--1030`;
+-1030`
+  .split('\n')
+  .map(num => parseInt(num, 10));
