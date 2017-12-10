@@ -43,5 +43,5 @@ test('test validity of example passphrase', () => {
 
 test('count valid passphrases in challenge input', () => {
   const inputArr = CHALLENGE.split('\n');
-  expect(inputArr.map(isValidAdv).filter(Boolean).length).toBe(5);
+  expect(inputArr.map(isValidAdv).filter(Boolean).length).toBe(167);
 });
