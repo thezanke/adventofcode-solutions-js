@@ -15,7 +15,7 @@ test('counts jumps for challenge two example', () => {
   expect(countJumps([0, 3, 0, 1, -3], CHALLENGE_TWO_INCREMENTER)).toEqual(10);
 });
 
-test("counts jumps for challenge two", () => {
+test('counts jumps for challenge two', () => {
   expect(countJumps(CHALLENGE_INPUT, CHALLENGE_TWO_INCREMENTER)).toEqual(
     30513679
   );
