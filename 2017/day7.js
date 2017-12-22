@@ -65,11 +65,13 @@ type FindImbalancedBranchCallback = (branch: Branch, difference: number) => void
 const allSameValue = (arr: number[]): boolean => new Set(arr).size === 1;
 
 const isProblemBranch = (branch: Branch): boolean => {
+  // if it doesn't have siblings, it's the root branch and not a problem
   if (!branch.siblings) return false;
 
   const siblingWeights = branch.siblings.map(sumBranch);
   const outlier = allSameValue(siblingWeights) && sumBranch(branch) !== siblingWeights[0];
 
+  // if it's not an outlier, it's not a problem branch
   if (!outlier) return false;
 
   // an outlier with no children is the problem branch
