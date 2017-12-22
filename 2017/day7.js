@@ -19,7 +19,7 @@ const processRow = (row: string): Branch => {
   const weight = parseInt(weightStr, 10);
   const childNames = childrenStr && childrenStr.split(', ');
 
-  return { name, weight, children: [], parent: null, root: false, totalWeight: 0, childNames };
+  return { name, weight, children: [], siblings: null, parent: null, root: false, totalWeight: 0, childNames };
 };
 
 const buildTree = (input: string[]): BranchHash => {
