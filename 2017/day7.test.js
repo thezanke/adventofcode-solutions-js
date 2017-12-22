@@ -36,5 +36,5 @@ test('find imbalanced branch for challenge input', () => {
   const tree = buildTree(CHALLENGE_INPUT);
   const branch = findImbalancedBranch(tree);
   const difference = sumBranch(branch.siblings[0]) - sumBranch(branch);
-  expect(branch.weight + difference).toEqual(60);
+  expect(branch.weight + difference).toEqual(362);
 });
