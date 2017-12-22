@@ -1,13 +1,13 @@
 // @flow
 type Branch = {
-  name: string,
-  weight: number,
-  children: Branch[],
   childNames: string[],
+  children: Branch[],
+  name: string,
   parent: ?Branch,
-  siblings: ?(Branch[]),
   root: boolean,
-  totalWeight: number
+  siblings: ?(Branch[]),
+  totalWeight: number,
+  weight: number
 };
 
 type BranchHash = { [string]: Branch };
@@ -19,7 +19,16 @@ const processRow = (row: string): Branch => {
   const weight = parseInt(weightStr, 10);
   const childNames = childrenStr && childrenStr.split(', ');
 
-  return { name, weight, children: [], siblings: null, parent: null, root: false, totalWeight: 0, childNames };
+  return {
+    childNames,
+    children: [],
+    name,
+    parent: null,
+    root: false,
+    siblings: null,
+    totalWeight: 0,
+    weight
+  };
 };
 
 const buildTree = (input: string[]): BranchHash => {
