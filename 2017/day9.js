@@ -1,7 +1,6 @@
 const initialState = {
   nodes: {},
   stack: [],
-  currentNode: null,
   ignoring: false
 };
 
@@ -63,7 +62,7 @@ const readCharacter = (state, char, i) => {
     return { ...state, nodes, stack };
   }
 
-  return state;
+  throw Error('syntax error at position ' + i);
 };
 
 const processStream = (stream, groups = []) => stream.split('').reduce(readCharacter, initialState);
