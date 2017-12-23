@@ -57,10 +57,6 @@ const readCharacter = (state, char, i) => {
 
   if (['<', '{'].includes(char)) {
     const newNode = createNode(char === '<' ? 'garbage' : 'group', currentNode);
-    if (newNode.parentNode && newNode.parentNode.type === 'garbage') {
-      console.log({ char, i, newNode });
-      throw Error('impossible');
-    }
     const nodes = { ...state.nodes, [newNode.id]: newNode };
     const stack = [newNode, ...state.stack];
 
