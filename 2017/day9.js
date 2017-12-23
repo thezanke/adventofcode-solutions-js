@@ -65,17 +65,17 @@ const readCharacter = (state, char, i) => {
   throw Error('syntax error at position ' + i);
 };
 
-const processStream = (stream, groups = []) => stream.split('').reduce(readCharacter, initialState);
+const processStream = (stream, groups = []) => stream.split('').reduce(readCharacter, initialState).nodes;
 
-const countGroups = ({ nodes }) => Object.values(nodes).filter(n => n.type === 'group').length;
+const countGroups = nodes => Object.values(nodes).filter(n => n.type === 'group').length;
 
-const calculateTotal = ({ nodes }) =>
+const calculateTotal = nodes =>
   Object.values(nodes)
     .filter(n => n.type === 'group')
     .map(n => n.score)
     .reduce((a, b) => a + b, 0);
 
-const countGarbage = ({ nodes }) =>
+const countGarbage = nodes =>
   Object.values(nodes)
     .filter(n => n.type === 'garbage')
     .map(n => n.contents.length)
