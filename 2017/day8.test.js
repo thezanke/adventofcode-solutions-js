@@ -29,7 +29,7 @@ test('find largest value in history for example input', () => {
   expect(findLargestValue(history.map(findLargestValue))).toEqual(10);
 });
 
-test('find largest value in history for example input', () => {
+test('find largest value in history for challenge input', () => {
   const { history } = processInstructions(CHALLENGE_INPUT, true);
-  expect(findLargestValue(history.map(findLargestValue))).toEqual(10);
+  expect(findLargestValue(history.map(findLargestValue))).toEqual(9819);
 });
