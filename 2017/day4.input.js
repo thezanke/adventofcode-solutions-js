@@ -1,4 +1,4 @@
-module.exports = `una bokpr ftz ryw nau yknf fguaczl anu
+const CHALLENGE_INPUT = `una bokpr ftz ryw nau yknf fguaczl anu
 tvay wvco bcoblpt fwzg sfsys zvuqll mcbhwz ovcw fgdy
 ynsocz vid rfmsy essqt fpbjvvq sldje qfpvjvb
 yvh nxc kla vhy vkbq cxfzgr
@@ -509,4 +509,6 @@ xjbyy mxfxa ogvk nqiy qyni ldqwryj niyq jjixc
 uhbul daccgva xtiz dim uhbul yjmakv yjmakv
 huo esajup ouj oju ujo
 eeeu hwvsk jfkmds okhi pogskfm itdlbll
-lpyubo dylpfb iehwug decj ntidy cuygyg lalkb iutu oxgm imn`
+lpyubo dylpfb iehwug decj ntidy cuygyg lalkb iutu oxgm imn`;
+
+module.exports = { CHALLENGE_INPUT };

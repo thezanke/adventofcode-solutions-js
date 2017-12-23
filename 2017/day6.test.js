@@ -1,5 +1,5 @@
 const { countUniqueCycles, findLoopSize } = require('./day6');
-const CHALLENGE_INPUT = require('./day6.input');
+const { CHALLENGE_INPUT } = require('./day6.input');
 
 test('countUniqueCycles for example', () => {
   expect(countUniqueCycles([0, 2, 7, 0])).toEqual(5);

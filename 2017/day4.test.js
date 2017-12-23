@@ -1,4 +1,4 @@
-const CHALLENGE = require('./day4.input');
+const { CHALLENGE_INPUT } = require('./day4.input');
 
 const { isValid } = require('./day4');
 
@@ -15,7 +15,7 @@ test('test validity of example passphrase', () => {
 });
 
 test('count valid passphrases in challenge input', () => {
-  const inputArr = CHALLENGE.split('\n');
+  const inputArr = CHALLENGE_INPUT.split('\n');
   expect(inputArr.map(isValid).filter(Boolean).length).toBe(477);
 });
 
@@ -42,6 +42,6 @@ test('test validity of example passphrase', () => {
 });
 
 test('count valid passphrases in challenge input', () => {
-  const inputArr = CHALLENGE.split('\n');
+  const inputArr = CHALLENGE_INPUT.split('\n');
   expect(inputArr.map(isValidAdv).filter(Boolean).length).toBe(167);
 });
