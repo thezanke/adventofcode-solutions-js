@@ -80,4 +80,10 @@ const calculateTotal = ({ nodes }) =>
     .map(n => n.score)
     .reduce((a, b) => a + b, 0);
 
-module.exports = { processStream, calculateTotal, countGroups };
+const countGarbage = ({ nodes }) =>
+  Object.values(nodes)
+    .filter(n => n.type === 'garbage')
+    .map(n => n.contents.length)
+    .reduce((a, b) => a + b, 0);
+
+module.exports = { processStream, calculateTotal, countGroups, countGarbage };
