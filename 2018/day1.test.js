@@ -16,18 +16,18 @@ test('part 1', () => {
 const parseChange = change => [change.slice(0, 1), parseInt(change.slice(1), 10)];
 
 const calibrateFinal = input => {
-  let locked = false;
   let frequency = 0;
   let i = 0;
-  let cache = new Set([frequency]);
+  let cache = new Set();
 
-  while (!locked) {
+  while (!cache.has(frequency)) {
+    cache.add(frequency);
+
     const [sign, change] = parseChange(input[i]);
-    frequency = operations[sign](frequency, change);
 
+    frequency = operations[sign](frequency, change);
     if (cache.has(frequency)) locked = true;
 
-    cache.add(frequency);
     i = i === input.length - 1 ? 0 : i + 1;
   }
 
@@ -35,5 +35,5 @@ const calibrateFinal = input => {
 };
 
 test('part 2', () => {
-  expect(calibrateFinal(input)).toEqual(531);
+  expect(calibrateFinal(input)).toEqual(76787);
 });
