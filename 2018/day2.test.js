@@ -14,10 +14,6 @@ const part1 = input => {
   return results.reduce((a, b) => a * b);
 };
 
-test('part 1', () => {
-  expect(part1(input)).toEqual(5658);
-});
-
 const part2 = input => {
   const results = input
     .map((line, i) => {
@@ -40,6 +36,12 @@ const part2 = input => {
   return Array.from(id1).reduce((str, letter, i) => (id2[i] === letter ? str + letter : str), '');
 };
 
-test('part 2', () => {
-  expect(part2(input)).toEqual('nmgyjkpruszlbaqwficavxneo');
-});
+describe('day 2', () => {
+  test('part 1', () => {
+    expect(part1(input)).toEqual(5658);
+  });
+
+  test('part 2', () => {
+    expect(part2(input)).toEqual('nmgyjkpruszlbaqwficavxneo');
+  });
+})

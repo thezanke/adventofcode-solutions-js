@@ -8,10 +8,6 @@ const operations = {
 // part 1
 let part1 = input => input.reduce((acc, line) => operations[line.slice(0, 1)](acc, parseInt(line.slice(1), 10)), 0);
 
-test('part 1', () => {
-  expect(part1(input)).toEqual(531);
-});
-
 // part 2
 const parseChange = change => [change.slice(0, 1), parseInt(change.slice(1), 10)];
 
@@ -34,6 +30,12 @@ const part2 = input => {
   return frequency;
 };
 
-test('part 2', () => {
-  expect(part2(input)).toEqual(76787);
+describe('day 1', () => {
+  test('part 1', () => {
+    expect(part1(input)).toEqual(531);
+  });
+
+  test('part 2', () => {
+    expect(part2(input)).toEqual(76787);
+  });
 });

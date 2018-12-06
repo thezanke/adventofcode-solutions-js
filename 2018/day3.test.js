@@ -35,7 +35,7 @@ const parseClaims = input =>
     const [id, x, y, w, h] = parsed.map(str => parseInt(str, 10));
     return { id, w, h, x, y, x2: x + w, y2: y + h, overlap: 0 };
   });
-  
+
 const part1 = input => {
   const map = createMap();
   const claims = parseClaims(input);
@@ -44,11 +44,6 @@ const part1 = input => {
 
   return map.getOverlaps().length;
 };
-
-
-test('part 1', () => {
-  expect(part1(INPUT)).toEqual(107663);
-});
 
 const part2 = input => {
   const map = createMap();
@@ -63,6 +58,12 @@ const part2 = input => {
   return winner.id;
 };
 
-test('part 2', () => {
-  expect(part2(INPUT)).toEqual(1166);
-});
+describe('day 3', () => {
+  test('part 1', () => {
+    expect(part1(INPUT)).toEqual(107663);
+  });
+
+  test('part 2', () => {
+    expect(part2(INPUT)).toEqual(1166);
+  });
+})
