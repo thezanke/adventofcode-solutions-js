@@ -26,7 +26,7 @@ const part1 = input => {
   return performReactions(input).length;
 };
 
-const mutate = (inputPolymer, unit) => inputPolymer;
+const mutate = (inputPolymer, unit) => inputPolymer.split('').filter(u => u.toLowerCase() !== unit).join('');
 
 const createMutations = inputPolymer => {
   let mutations = [inputPolymer];
@@ -35,25 +35,24 @@ const createMutations = inputPolymer => {
 }
 
 const part2 = input => {
-  const mutations = createMutations(input);
-  return false;
+  const mutations = createMutations(input).map(m => performReactions(m));
+  return Math.min(...mutations.map(p => p.length));
 };
 
-describe.only('day 5', () => {
-  test('example', () => {
+describe('day 5', () => {
+  test('example 1', () => {
     expect(performReactions('dabAcCaCBAcCcaDA')).toEqual('dabCBAcaDA');
   });
 
-
   test('part 1', () => {
-    expect(part1(INPUT)).toEqual(1);
+    expect(part1(INPUT)).toEqual(10564);
   });
 
   test('example 2', () => {
-    expect(performReactions('dabAcCaCBAcCcaDA')).toEqual('dabCBAcaDA');
+    expect(part2('dabAcCaCBAcCcaDA')).toEqual(4);
   });
 
-  test.skip('part 2', () => {
-    expect(part2(INPUT)).toEqual(1);
+  test('part 2', () => {
+    expect(part2(INPUT)).toEqual(6336);
   });
 })
