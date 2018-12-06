@@ -1,18 +1,70 @@
-const input = require('./input/day3');
+const { flatten } = require('lodash');
+
+const INPUT = require('./input/day3');
 
 const CLAIM_FORMAT = /^#(\d+) @ (\d+),(\d+): (\d+)x(\d+)$/;
 
+const createMap = () => {
+  const map = {};
+
+  const markLocation = (id, x, y) => {
+    let key = `${x},${y}`;
+    if (!map[key]) map[key] = { count: 0, ids: [] };
+    map[key].count += 1;
+    map[key].ids.push(id);
+    return map[key];
+  };
+
+  const mapClaim = claim => {
+    for (let y = claim.y; y < claim.y2; y += 1) {
+      for (let x = claim.x; x < claim.x2; x += 1) {
+        markLocation(claim.id, x, y);
+      }
+    }
+  };
+
+  const getOverlaps = () => Object.values(map).filter(c => c.count >= 2);
+
+  return {
+    mapClaim,
+    getOverlaps,
+  };
+}
+
 const parseClaims = input =>
   input.map((line, i) => {
-    let [, id, x1, y1, w, h] = CLAIM_FORMAT.exec(line).map(str => parseInt(str, 10));
-    return { id, pos: { x1, y1, x2: x1 + w, y2: y1 + h }, w, h };
+    const parsed = CLAIM_FORMAT.exec(line).slice(1);
+    const [id, x, y, w, h] = parsed.map(str => parseInt(str, 10));
+    return { id, w, h, x, y, x2: x + w, y2: y + h, overlap: 0 };
   });
-
+  
 const part1 = input => {
+  const map = createMap();
   const claims = parseClaims(input);
-  console.log(claims);
+
+  claims.forEach(map.mapClaim);
+
+  return map.getOverlaps().length;
+};
+
+
+test('part 1', () => {
+  expect(part1(INPUT)).toEqual(107663);
+});
+
+const part2 = input => {
+  const map = createMap();
+  const claims = parseClaims(input);
+
+  claims.forEach(map.mapClaim);
+
+  const overlaps = map.getOverlaps();
+  const ids = new Set(flatten(overlaps.map(o => o.ids)));
+  const winner = claims.find(c => !ids.has(c.id));
+
+  return winner.id;
 };
 
 test('part 1', () => {
-  expect(part1(input)).toBeTruthy();
+  expect(part2(INPUT)).toEqual(107663);
 });
