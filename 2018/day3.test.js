@@ -8,11 +8,12 @@ const createMap = () => {
   const map = {};
 
   const markLocation = (id, x, y) => {
-    let key = `${x},${y}`;
-    if (!map[key]) map[key] = { count: 0, ids: [] };
-    map[key].count += 1;
-    map[key].ids.push(id);
-    return map[key];
+    const LOC_ID = `${x},${y}`;
+
+    if (!map[LOC_ID]) map[LOC_ID] = { count: 0, ids: [] };
+
+    map[LOC_ID].count += 1;
+    map[LOC_ID].ids.push(id);
   };
 
   const mapClaim = claim => {
@@ -25,10 +26,7 @@ const createMap = () => {
 
   const getOverlaps = () => Object.values(map).filter(c => c.count >= 2);
 
-  return {
-    mapClaim,
-    getOverlaps,
-  };
+  return { mapClaim, getOverlaps };
 }
 
 const parseClaims = input =>
@@ -65,6 +63,6 @@ const part2 = input => {
   return winner.id;
 };
 
-test('part 1', () => {
-  expect(part2(INPUT)).toEqual(107663);
+test('part 2', () => {
+  expect(part2(INPUT)).toEqual(1166);
 });
