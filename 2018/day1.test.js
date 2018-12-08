@@ -1,4 +1,4 @@
-const input = require('./input/day1');
+const { CHALLENGE_INPUT } = require('./input/day1');
 
 const operations = {
   '+': (val, num) => val + num,
@@ -32,10 +32,10 @@ const part2 = input => {
 
 describe('day 1', () => {
   test('part 1', () => {
-    expect(part1(input)).toEqual(531);
+    expect(part1(CHALLENGE_INPUT)).toEqual(531);
   });
 
   test('part 2', () => {
-    expect(part2(input)).toEqual(76787);
+    expect(part2(CHALLENGE_INPUT)).toEqual(76787);
   });
 });

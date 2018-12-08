@@ -1,4 +1,4 @@
-const { Spinlock, findSolution } = require('./day17');
+const { Spinlock, findSolution } = require('./lib/day17');
 
 test('step through example', () => {
   const spinlock = new Spinlock(3);

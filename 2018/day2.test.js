@@ -1,4 +1,4 @@
-const input = require('./input/day2');
+const { CHALLENGE_INPUT } = require('./input/day2');
 
 const repeatCount = (input, test) => Array.from(input).filter(item => item === test).length;
 
@@ -38,10 +38,10 @@ const part2 = input => {
 
 describe('day 2', () => {
   test('part 1', () => {
-    expect(part1(input)).toEqual(5658);
+    expect(part1(CHALLENGE_INPUT)).toEqual(5658);
   });
 
   test('part 2', () => {
-    expect(part2(input)).toEqual('nmgyjkpruszlbaqwficavxneo');
+    expect(part2(CHALLENGE_INPUT)).toEqual('nmgyjkpruszlbaqwficavxneo');
   });
 })

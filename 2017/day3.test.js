@@ -1,6 +1,6 @@
-const CHALLENGE_INPUT = 347991;
+const { calculateSteps, calculateLargerThan } = require('./lib/day3');
 
-const { calculateSteps } = require('./day3');
+const CHALLENGE_INPUT = 347991;
 
 test('calculate steps for example', () => {
   expect(calculateSteps(1)).toEqual(0);
@@ -21,8 +21,6 @@ test('calculate steps for example', () => {
 test('calculate steps for challenge', () => {
   expect(calculateSteps(CHALLENGE_INPUT)).toEqual(480);
 });
-
-const { calculateLargerThan } = require('./day3');
 
 test('calculate first large value for example', () => {
   expect(calculateLargerThan(1)).toEqual(2);

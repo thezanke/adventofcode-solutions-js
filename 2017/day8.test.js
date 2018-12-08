@@ -1,5 +1,5 @@
-const { processInstructions, findLargestValue } = require('./day8');
-const { EXAMPLE_INPUT, CHALLENGE_INPUT } = require('./day8.input');
+const { EXAMPLE_INPUT, CHALLENGE_INPUT } = require('./input/day8');
+const { processInstructions, findLargestValue } = require('./lib/day8');
 
 test('process instructions for example input', () => {
   expect(processInstructions(EXAMPLE_INPUT)).toEqual({ a: 1, b: 0, c: -10 });

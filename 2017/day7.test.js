@@ -1,5 +1,5 @@
-const { sumBranch, buildTree, findImbalancedBranch } = require('./day7');
-const { EXAMPLE_INPUT, CHALLENGE_INPUT } = require('./day7.input');
+const { EXAMPLE_INPUT, CHALLENGE_INPUT } = require('./input/day7');
+const { sumBranch, buildTree, findImbalancedBranch } = require('./lib/day7');
 
 test('build tree for example input', () => {
   const tree = buildTree(EXAMPLE_INPUT);

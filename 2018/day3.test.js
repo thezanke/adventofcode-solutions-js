@@ -1,6 +1,6 @@
 const { flatten } = require('lodash');
 
-const INPUT = require('./input/day3');
+const { CHALLENGE_INPUT } = require('./input/day3');
 
 const CLAIM_FORMAT = /^#(\d+) @ (\d+),(\d+): (\d+)x(\d+)$/;
 
@@ -60,10 +60,10 @@ const part2 = input => {
 
 describe('day 3', () => {
   test('part 1', () => {
-    expect(part1(INPUT)).toEqual(107663);
+    expect(part1(CHALLENGE_INPUT)).toEqual(107663);
   });
 
   test('part 2', () => {
-    expect(part2(INPUT)).toEqual(1166);
+    expect(part2(CHALLENGE_INPUT)).toEqual(1166);
   });
 })

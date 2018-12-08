@@ -1,5 +1,5 @@
-const { countJumps } = require('./day5');
-const { CHALLENGE_INPUT } = require('./day5.input');
+const { CHALLENGE_INPUT } = require('./input/day5');
+const { countJumps } = require('./lib/day5');
 
 test('counts jumps for challenge one example', () => {
   expect(countJumps([0, 3, 0, 1, -3])).toEqual(5);

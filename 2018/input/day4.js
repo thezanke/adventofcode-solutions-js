@@ -1,2 +1,1 @@
-module.exports = ``;
-// .split('\n');
+exports.CHALLENGE_INPUT = ``;

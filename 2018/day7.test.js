@@ -1,6 +1,6 @@
 const { partition, sortBy, map } = require('lodash');
 
-const { EXAMPLE, INPUT } = require('./input/day7');
+const { EXAMPLE_INPUT, CHALLENGE_INPUT } = require('./input/day7');
 
 const INPUT_PATTERN = /^Step ([A-Z]) must be finished before step ([A-Z]) can begin.$/;
 
@@ -65,11 +65,11 @@ const part1 = input => {
 
 describe('day 7', () => {
   test('example', () => {
-    expect(part1(EXAMPLE)).toEqual('CABDFE');
+    expect(part1(EXAMPLE_INPUT)).toEqual('CABDFE');
   });
 
   test('part 1', () => {
-    expect(part1(INPUT)).toEqual('FDSEGJLPKNRYOAMQIUHTCVWZXB');
+    expect(part1(CHALLENGE_INPUT)).toEqual('FDSEGJLPKNRYOAMQIUHTCVWZXB');
   });
 
   test.skip('part 2', () => {});

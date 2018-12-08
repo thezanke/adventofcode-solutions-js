@@ -1,4 +1,4 @@
-module.exports = `137, 282
+exports.CHALLENGE_INPUT = `137, 282
 229, 214
 289, 292
 249, 305

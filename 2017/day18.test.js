@@ -1,5 +1,5 @@
-const { createProgram, findFirstRecovered } = require('./day18');
-const { EXAMPLE_INPUT, CHALLENGE_INPUT } = require('./day18.input');
+const { createProgram, findFirstRecovered } = require('./lib/day18');
+const { EXAMPLE_INPUT, CHALLENGE_INPUT } = require('./input/day18');
 
 test('find first recovered value for example input', () => {
   const program = createProgram(EXAMPLE_INPUT);

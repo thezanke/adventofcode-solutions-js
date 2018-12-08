@@ -1,5 +1,5 @@
-const { processStream, calculateTotal, countGroups, countGarbage } = require('./day9');
-const { CHALLENGE_INPUT } = require('./day9.input');
+const { CHALLENGE_INPUT } = require('./input/day9');
+const { processStream, calculateTotal, countGroups, countGarbage } = require('./lib/day9');
 
 test('process example input streams', () => {
   expect(countGroups(processStream('{}'))).toEqual(1);

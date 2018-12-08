@@ -1,4 +1,4 @@
-module.exports = `+13
+exports.CHALLENGE_INPUT = `+13
 +19
 +11
 +15

@@ -1,5 +1,5 @@
-const { solveCaptcha } = require('./day1');
-const { CHALLENGE_INPUT } = require('./day1.input');
+const { CHALLENGE_INPUT } = require('./input/day1');
+const { solveCaptcha, solveAdvancedCaptcha } = require('./lib/day1');
 
 test('solves example captcha', () => {
   expect(solveCaptcha('1122')).toEqual(3);
@@ -20,8 +20,6 @@ test('solves example captcha', () => {
 test('solves challenge captcha', () => {
   expect(solveCaptcha(CHALLENGE_INPUT)).toEqual(1031);
 });
-
-const { solveAdvancedCaptcha } = require('./day1');
 
 test('solves advanced example captcha', () => {
   expect(solveAdvancedCaptcha('1212')).toEqual(6);

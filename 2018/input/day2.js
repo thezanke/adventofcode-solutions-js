@@ -1,4 +1,4 @@
-module.exports = `xdmgyjkpruszabaqwficevtjeo
+exports.CHALLENGE_INPUT = `xdmgyjkpruszabaqwficevtjeo
 xdmgybkgwuszlbaqwfichvtneo
 xdmgyjkpruszlbcwwfichvtndo
 xdmgcjkprusyibaqwfichvtneo
