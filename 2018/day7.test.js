@@ -69,7 +69,7 @@ describe('day 7', () => {
   });
 
   test('part 1', () => {
-    expect(part1(INPUT)).toEqual(1);
+    expect(part1(INPUT)).toEqual('FDSEGJLPKNRYOAMQIUHTCVWZXB');
   });
 
   test.skip('part 2', () => {});
