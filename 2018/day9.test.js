@@ -1,7 +1,7 @@
 const { createMarbleCircle, playGame } = require('./lib/day9');
 
 describe('day 9', () => {
-  describe('marbleCircle', () => {
+  describe.skip('marbleCircle', () => {
     test('findForward', () => {
       const marbleCircle = createMarbleCircle([0, 1, 2, 3, 4, 5, 6]);
       expect(marbleCircle.findForward(4, 3)).toEqual(0);
@@ -39,10 +39,10 @@ describe('day 9', () => {
   });
 
   test('part 1', () => {
-    expect(playGame({ playerCount: 459, max: 72103 })).toEqual(37305)
+    expect(playGame({ playerCount: 459, max: 72103 })).toEqual(388131)
   });
 
-  test('part 2', () => {
+  test.only('part 2', () => {
     expect(playGame({ playerCount: 459, max: 72103 * 100 })).toEqual(37305)
   });
 });
