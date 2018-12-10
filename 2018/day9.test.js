@@ -43,6 +43,6 @@ describe('day 9', () => {
   });
 
   test.skip('part 2', () => {
-    expect(playGame({ playerCount: 459, max: 7210300 })).toEqual(37305)
+    expect(playGame({ playerCount: 459, max: 7210300 })).toEqual(3239376988)
   });
 });
