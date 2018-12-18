@@ -57,10 +57,9 @@ const organizeInstructions = instructions => {
 const part1 = input => {
   const instructions = formatInput(input).reduce(loadInstruction, {});
   const state = organizeInstructions(instructions);
-
   return state.complete.join('');
 };
 
-const part2 = a => a;
+const part2 = a => {};
 
 module.exports = { part1, part2 };
