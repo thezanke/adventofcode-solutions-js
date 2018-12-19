@@ -1,10 +1,9 @@
-const { flatten } = require('lodash');
-
 const hasReaction = (a, b) => b && a !== b && a.toLowerCase() === b.toLowerCase();
 
-const performReactions = (inputPolymer) => {
-  let unstable = inputPolymer.split(''),
-    stack = [];
+const performReactions = inputPolymer => {
+  const unstable = inputPolymer.split('');
+
+  const stack = [];
 
   while (unstable.length) {
     const next = unstable.shift();
@@ -18,19 +17,20 @@ const performReactions = (inputPolymer) => {
   }
 
   return stack.join('');
-}
-
-const part1 = input => {
-  return performReactions(input).length;
 };
 
-const mutate = (inputPolymer, unit) => inputPolymer.split('').filter(u => u.toLowerCase() !== unit).join('');
+const part1 = input => performReactions(input).length;
+
+const mutate = (inputPolymer, unit) =>
+  inputPolymer
+    .split('')
+    .filter(u => u.toLowerCase() !== unit)
+    .join('');
 
 const createMutations = inputPolymer => {
-  let mutations = [inputPolymer];
-  let units = Array.from(new Set(inputPolymer.toLowerCase()));
+  const units = Array.from(new Set(inputPolymer.toLowerCase()));
   return units.map(unit => mutate(inputPolymer, unit));
-}
+};
 
 const part2 = input => {
   const mutations = createMutations(input).map(m => performReactions(m));

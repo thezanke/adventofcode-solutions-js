@@ -1,8 +1,13 @@
 const [TURN_LEFT, DONT_TURN, TURN_RIGHT] = [0, 1, 2];
 const [CART_UP, CART_RIGHT, CART_DOWN, CART_LEFT] = ['^', '>', 'v', '<'];
-const [VERT, HORIZ, RIGHT_DIAG, LEFT_DIAG, INTERSECTION, COLLISION] = ['|', '-', '/', '\\', '+', 'X'];
+const [VERT, HORIZ, RIGHT_DIAG, LEFT_DIAG, INTERSECTION, COLLISION] = ['|', '-', '/', '\\', '+', 'X']; // prettier-ignore
 
-const CART_MAP = new Map([[CART_UP, VERT], [CART_RIGHT, HORIZ], [CART_DOWN, VERT], [CART_LEFT, HORIZ]]);
+const CART_MAP = new Map([
+  [CART_UP, VERT],
+  [CART_RIGHT, HORIZ],
+  [CART_DOWN, VERT],
+  [CART_LEFT, HORIZ]
+]);
 
 const createSimulation = (inputStr, handleCollisions = false) => {
   let carts = [];
@@ -23,10 +28,11 @@ const createSimulation = (inputStr, handleCollisions = false) => {
   const mapWidth = map[0].length;
   const mapHeight = map.length;
 
-  const findCart = ({ x, y }, tick) => carts.find(cart => {
-    if (tick && cart.lastTick === tick) return false;
-    return cart.x === x && cart.y === y;
-  });
+  const findCart = ({ x, y }, tick) =>
+    carts.find(cart => {
+      if (tick && cart.lastTick === tick) return false;
+      return cart.x === x && cart.y === y;
+    });
 
   const detectCollision = ({ x, y }) =>
     carts.filter(cart => cart.x === x && cart.y === y).length > 1;
@@ -34,13 +40,17 @@ const createSimulation = (inputStr, handleCollisions = false) => {
   const getTrack = ({ x, y }) => map[y][x].facing;
 
   const render = () => {
-    const board = map.map((row) =>
-      row.map((pos) => {
-        const cart = findCart(pos);
-        if (cart === collided) return COLLISION;
-        return cart ? cart.facing : pos.facing;
-      }).join('')
-    ).join('\n');
+    const board = map
+      .map(row =>
+        row
+          .map(pos => {
+            const cart = findCart(pos);
+            if (cart === collided) return COLLISION;
+            return cart ? cart.facing : pos.facing;
+          })
+          .join('')
+      )
+      .join('\n');
 
     console.log(board);
   };
@@ -49,9 +59,9 @@ const createSimulation = (inputStr, handleCollisions = false) => {
     if (track === INTERSECTION) {
       if (nextTurn === TURN_LEFT) {
         if (facing === CART_UP) return CART_LEFT;
-        if (facing === CART_RIGHT) return CART_UP;
-        if (facing === CART_DOWN) return CART_RIGHT;
         if (facing === CART_LEFT) return CART_DOWN;
+        if (facing === CART_DOWN) return CART_RIGHT;
+        if (facing === CART_RIGHT) return CART_UP;
       }
 
       if (nextTurn === TURN_RIGHT) {
@@ -115,7 +125,6 @@ const createSimulation = (inputStr, handleCollisions = false) => {
           collided = cart;
           if (handleCollisions) {
             carts = carts.filter(c => c.x !== x && c.y !== y);
-            console.log(`Collision detected at ${cart.x},${cart.y}. Carts removed. ${carts.length} carts remaining.`);
           }
         }
       }
@@ -159,6 +168,6 @@ const part2 = input => {
   const cart = sim.carts[0];
 
   return `${cart.x},${cart.y}`;
-}
+};
 
 module.exports = { part1, part2 };

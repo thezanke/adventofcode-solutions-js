@@ -25,7 +25,7 @@ const createMap = () => {
   const getOverlaps = () => Object.values(map).filter(c => c.count >= 2);
 
   return { mapClaim, getOverlaps };
-}
+};
 
 const parseClaims = input =>
   input.map((line, i) => {

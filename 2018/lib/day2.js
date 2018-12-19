@@ -1,10 +1,10 @@
-
-
 const repeatCount = (input, test) => Array.from(input).filter(item => item === test).length;
 
 const part1 = input => {
   const results = input
-    .map(line => [...new Set(line)].reduce((acc, char) => ({ ...acc, [char]: repeatCount(line, char) }), {}))
+    .map(line =>
+      [...new Set(line)].reduce((acc, char) => ({ ...acc, [char]: repeatCount(line, char) }), {})
+    )
     .map(charCounts => {
       const vals = Object.values(charCounts);
       return [repeatCount(vals, 2), repeatCount(vals, 3)];

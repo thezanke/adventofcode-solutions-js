@@ -9,11 +9,11 @@ const createMarbleCircle = (startCircle = [0]) => {
     let i = start + n;
     if (i < 0) return i + circle.length;
     if (i < circle.length) return i;
-    return i = i % circle.length;
-  }
+    return (i = i % circle.length);
+  };
 
   return { at, add, remove, moveTo, circle };
-}
+};
 
 const playGame = ({ playerCount, max }) => {
   const marbleCircle = createMarbleCircle();
