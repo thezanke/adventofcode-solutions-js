@@ -19,7 +19,9 @@ const part1 = input => {
 const part2 = input => {
   const results = input
     .map((line, i) => {
-      sibling = input.slice(i + 1).find(line2 => {
+      let nextLines = input.slice(i + 1);
+
+      sibling = nextLines.find(line2 => {
         let count = 0;
         return !Array.from(line).some((letter, i) => {
           if (letter !== line2[i]) count += 1;
