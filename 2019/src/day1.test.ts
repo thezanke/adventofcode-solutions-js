@@ -1,8 +1,8 @@
 import {
   calculateAdditionalFuel,
   calculateRequiredFuel,
-  day1part1,
-  day1part2,
+  solvePart1,
+  solvePart2,
   getInput,
 } from './day1';
 
@@ -20,7 +20,7 @@ test('DAY 1: calculateRequiredFuel()', () => {
 });
 
 test('DAY 1: Part 1', async () => {
-  const res = await day1part1();
+  const res = await solvePart1();
   expect(res).toEqual(3210097);
 });
 
@@ -30,6 +30,6 @@ test('DAY 1: calculateAdditionalFuel()', async () => {
 });
 
 test('DAY 1: Part 2', async () => {
-  const res = await day1part2();
+  const res = await solvePart2();
   expect(res).toEqual(4812287);
 });

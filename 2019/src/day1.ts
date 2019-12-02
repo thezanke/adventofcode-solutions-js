@@ -12,13 +12,6 @@ export const calculateRequiredFuel = (mass: number) => {
   return Math.floor(mass / 3) - 2;
 };
 
-export const day1part1 = async () => {
-  const input = await getInput();
-  return input.reduce((total: number, mass: string) => {
-    return total + calculateRequiredFuel(Number(mass));
-  }, 0);
-};
-
 export const calculateAdditionalFuel = (initialFuel: number) => {
   let nextRequiredAmount = calculateRequiredFuel(initialFuel);
   let totalAdditional = nextRequiredAmount;
@@ -31,7 +24,14 @@ export const calculateAdditionalFuel = (initialFuel: number) => {
   return totalAdditional;
 };
 
-export const day1part2 = async () => {
+export const solvePart1 = async () => {
+  const input = await getInput();
+  return input.reduce((total: number, mass: string) => {
+    return total + calculateRequiredFuel(Number(mass));
+  }, 0);
+};
+
+export const solvePart2 = async () => {
   const input = await getInput();
   return input.reduce((total: number, mass: string) => {
     const initialFuel = calculateRequiredFuel(Number(mass));
