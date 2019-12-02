@@ -1,14 +1,12 @@
 {
-  "name": "",
-  "version": "0.0.0",
-  "description": "",
+  "name": "aoc-2019",
+  "version": "0.0.1",
+  "private": true,
   "main": "build/src/index.js",
   "types": "build/src/index.d.ts",
   "files": [
     "build/src"
   ],
-  "license": "Apache-2.0",
-  "keywords": [],
   "scripts": {
     "test": "jest",
     "check": "gts check",
