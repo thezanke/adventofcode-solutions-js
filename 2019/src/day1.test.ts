@@ -1,9 +1,4 @@
-import {
-  calculateAdditionalFuel,
-  calculateRequiredFuel,
-  solvePart1,
-  solvePart2,
-} from './day1';
+import { calculateAdditionalFuel, calculateRequiredFuel, solvePart1, solvePart2 } from './day1';
 
 test('DAY 1: calculateRequiredFuel()', () => {
   expect(calculateRequiredFuel(12)).toEqual(2);
