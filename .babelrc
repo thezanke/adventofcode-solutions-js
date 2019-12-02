@@ -1,5 +1,5 @@
 {
   "presets": [
-    "flow"
+    "@babel/preset-flow"
   ]
 }
