@@ -10,20 +10,19 @@
   "license": "Apache-2.0",
   "keywords": [],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "check": "gts check",
     "clean": "gts clean",
     "compile": "tsc -p .",
     "fix": "gts fix",
-    "prepare": "npm run compile",
-    "pretest": "npm run compile",
-    "posttest": "npm run check"
+    "prepare": "npm run compile"
   },
   "devDependencies": {
     "@types/jest": "^24.0.23",
     "@types/node": "^10.0.3",
     "gts": "^1.1.2",
     "jest": "^24.9.0",
+    "ts-jest": "^24.2.0",
     "typescript": "~3.7.0"
   }
 }
