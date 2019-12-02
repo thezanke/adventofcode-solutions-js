@@ -1,12 +1,4 @@
-import * as path from 'path';
-import { readFile } from 'fs-extra';
-
-const INPUT_PATH = path.resolve(__dirname, 'input', 'day1.txt');
-
-export const getInput = async () => {
-  const input = await readFile(INPUT_PATH, 'utf8');
-  return input.split('\n');
-};
+import { getInput } from './utils/getInput';
 
 export const calculateRequiredFuel = (mass: number) => {
   return Math.floor(mass / 3) - 2;
@@ -25,15 +17,16 @@ export const calculateAdditionalFuel = (initialFuel: number) => {
 };
 
 export const solvePart1 = async () => {
-  const input = await getInput();
-  return input.reduce((total: number, mass: string) => {
-    return total + calculateRequiredFuel(Number(mass));
-  }, 0);
+  const input = await getInput('day1.txt', n =>
+    calculateRequiredFuel(Number(n))
+  );
+
+  return input.reduce<number>((total, fuel) => total + fuel, 0);
 };
 
 export const solvePart2 = async () => {
-  const input = await getInput();
-  return input.reduce((total: number, mass: string) => {
+  const input = await getInput('day1.txt');
+  return input.reduce<number>((total, mass) => {
     const initialFuel = calculateRequiredFuel(Number(mass));
     return total + initialFuel + calculateAdditionalFuel(initialFuel);
   }, 0);

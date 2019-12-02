@@ -3,14 +3,7 @@ import {
   calculateRequiredFuel,
   solvePart1,
   solvePart2,
-  getInput,
 } from './day1';
-
-test(`DAY 1: getInput()`, async () => {
-  const input = await getInput();
-  expect(input).toBeInstanceOf(Array);
-  expect(input.length).toEqual(100);
-});
 
 test('DAY 1: calculateRequiredFuel()', () => {
   expect(calculateRequiredFuel(12)).toEqual(2);
