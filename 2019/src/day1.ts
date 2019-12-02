@@ -5,29 +5,28 @@ export const calculateRequiredFuel = (mass: number) => {
 };
 
 export const calculateAdditionalFuel = (initialFuel: number) => {
-  let nextRequiredAmount = calculateRequiredFuel(initialFuel);
-  let totalAdditional = nextRequiredAmount;
+  let totalAdditional = 0;
+  let nextRequiredAmount = initialFuel;
 
-  while (nextRequiredAmount > 0) {
+  while (true) {
     nextRequiredAmount = calculateRequiredFuel(nextRequiredAmount);
-    if (nextRequiredAmount > 0) totalAdditional += nextRequiredAmount;
+    if (nextRequiredAmount < 0) break;
+    totalAdditional += nextRequiredAmount;
   }
 
   return totalAdditional;
 };
 
-export const solvePart1 = async () => {
-  const input = await getInput('day1.txt', n =>
-    calculateRequiredFuel(Number(n))
-  );
+const inputFuelMapper = (n: string) => calculateRequiredFuel(Number(n));
 
+export const solvePart1 = async () => {
+  const input = await getInput('day1.txt', inputFuelMapper);
   return input.reduce<number>((total, fuel) => total + fuel, 0);
 };
 
 export const solvePart2 = async () => {
-  const input = await getInput('day1.txt');
-  return input.reduce<number>((total, mass) => {
-    const initialFuel = calculateRequiredFuel(Number(mass));
+  const input = await getInput('day1.txt', inputFuelMapper);
+  return input.reduce<number>((total, initialFuel) => {
     return total + initialFuel + calculateAdditionalFuel(initialFuel);
   }, 0);
 };
