@@ -1,4 +1,3 @@
-import { chunk } from 'lodash';
 import { getInput } from './utils/getInput';
 
 export enum OP {
@@ -7,20 +6,20 @@ export enum OP {
   EXT = 99,
 }
 
-export const runProgram = (initialMemory: number[]) => {
+export const runProgram = (
+  initialMemory: number[],
+  input?: [number, number]
+) => {
   const memory = [...initialMemory];
 
-  let instructionPointer = 0;
+  if (input) {
+    Object.assign(memory, { 1: input[0], 2: input[1] });
+  }
 
-  const nextInstruction = () => {
-    instructionPointer += 4;
-  };
+  let iPointer = 0;
 
   while (true) {
-    const [op, xPointer, yPointer, savePointer] = memory.slice(
-      instructionPointer,
-      instructionPointer + 4
-    );
+    const [op, xPointer, yPointer, writePointer] = memory.slice(iPointer);
 
     if (op === OP.EXT) break;
 
@@ -29,32 +28,38 @@ export const runProgram = (initialMemory: number[]) => {
 
     switch (op) {
       case OP.ADD:
-        memory[savePointer] = x + y;
-        nextInstruction();
+        memory[writePointer] = x + y;
         break;
       case OP.MULTIPLY:
-        memory[savePointer] = x * y;
-        nextInstruction();
+        memory[writePointer] = x * y;
         break;
       default:
         throw Error('invalid op code: ' + op);
     }
+
+    iPointer += 4;
   }
 
   return memory;
 };
 
+const challengeInputPromise = getInput('day2.txt', ',', n => Number(n));
+
 export const solvePart1 = async () => {
-  const program = await getInput('day2.txt', ',', n => Number(n));
+  const initalMemory = await challengeInputPromise;
+  const [output] = runProgram(initalMemory, [12, 2]);
+  return output;
+};
 
-  /**
-   * !! NOTICE !!
-   * Before running the program, replace position 1 with the value 12
-   * and replace position 2 with the value 2.
-   */
-  Object.assign(program, { 1: 12, 2: 2 });
+export const solvePart2 = async (target: number) => {
+  const initalMemory = await challengeInputPromise;
 
-  const output = runProgram(program);
+  for (let noun = 0; noun < 100; noun += 1) {
+    for (let verb = 0; verb < 100; verb += 1) {
+      const [output] = runProgram(initalMemory, [noun, verb]);
+      if (output === target) return 100 * noun + verb;
+    }
+  }
 
-  return output[0];
+  throw Error('unsolvable');
 };
