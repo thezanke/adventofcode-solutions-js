@@ -1,4 +1,4 @@
-import * as _ from 'lodash';
+import { map } from 'lodash';
 
 interface Point {
   x: number;
@@ -84,7 +84,7 @@ export const solvePart1 = (input: [string[], string[]]) => {
 export const determineShortestIntersection = (
   intersections: Intersection[]
 ) => {
-  const stepsArr = _.map(intersections, 'totalSteps')
+  const stepsArr = map(intersections, 'totalSteps');
   return Math.min(...stepsArr);
 };
 
