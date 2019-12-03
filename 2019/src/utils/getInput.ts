@@ -5,8 +5,12 @@ type MapperFunction = (n: string) => any; // tslint:disable-line no-any
 
 const DEFAULT_MAPPER: MapperFunction = n => n;
 
-export const getInput = async (fileName: string, mapper = DEFAULT_MAPPER) => {
+export const getInput = async (
+  fileName: string,
+  separator: string,
+  mapper = DEFAULT_MAPPER
+) => {
   const inputPath = path.resolve(__dirname, '..', 'input', fileName);
   const input = await readFile(inputPath, 'utf8');
-  return input.split('\n').map(mapper);
+  return input.split(separator).map(mapper);
 };

@@ -20,12 +20,12 @@ export const calculateAdditionalFuel = (initialFuel: number) => {
 const inputFuelMapper = (n: string) => calculateRequiredFuel(Number(n));
 
 export const solvePart1 = async () => {
-  const input: number[] = await getInput('day1.txt', inputFuelMapper);
+  const input: number[] = await getInput('day1.txt', '\n', inputFuelMapper);
   return input.reduce((total, fuel) => total + fuel, 0);
 };
 
 export const solvePart2 = async () => {
-  const input: number[] = await getInput('day1.txt', inputFuelMapper);
+  const input: number[] = await getInput('day1.txt', '\n', inputFuelMapper);
   return input.reduce((total, initialFuel) => {
     return total + initialFuel + calculateAdditionalFuel(initialFuel);
   }, 0);
