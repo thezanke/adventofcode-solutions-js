@@ -25,6 +25,8 @@
   },
   "dependencies": {
     "@types/fs-extra": "^8.0.1",
-    "fs-extra": "^8.1.0"
+    "@types/lodash": "^4.14.149",
+    "fs-extra": "^8.1.0",
+    "lodash": "^4.17.15"
   }
 }

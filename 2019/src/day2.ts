@@ -1,3 +1,4 @@
+import { chunk } from 'lodash';
 import { getInput } from './utils/getInput';
 
 export enum OP {
@@ -6,51 +7,54 @@ export enum OP {
   EXT = 99,
 }
 
-export const runProgram = (initialArr: number[]) => {
-  const arr = [...initialArr];
+export const runProgram = (initialMemory: number[]) => {
+  const memory = [...initialMemory];
 
-  let last: number;
-  let i = 0;
+  let instructionPointer = 0;
 
-  const next = () => (i += 4);
-  const getArguments = () => [arr[arr[i + 1]], arr[arr[i + 2]], arr[i + 3]];
+  const nextInstruction = () => {
+    instructionPointer += 4;
+  };
 
   while (true) {
-    last = i;
-    const op = arr[i];
+    const [op, xPointer, yPointer, savePointer] = memory.slice(
+      instructionPointer,
+      instructionPointer + 4
+    );
 
     if (op === OP.EXT) break;
 
-    const [x, y, t] = getArguments();
+    const x = memory[xPointer];
+    const y = memory[yPointer];
+
     switch (op) {
       case OP.ADD:
-        arr[t] = x + y;
-        next();
+        memory[savePointer] = x + y;
+        nextInstruction();
         break;
       case OP.MULTIPLY:
-        arr[t] = x * y;
-        next();
+        memory[savePointer] = x * y;
+        nextInstruction();
         break;
       default:
         throw Error('invalid op code: ' + op);
     }
-
-    if (i <= last) break;
   }
 
-  return arr;
+  return memory;
 };
 
 export const solvePart1 = async () => {
-  const input = await getInput('day2.txt', ',', n => Number(n));
+  const program = await getInput('day2.txt', ',', n => Number(n));
 
   /**
-   * "before running the program, replace position 1 with the value 12 and replace position 2 with the value 2"
+   * !! NOTICE !!
+   * Before running the program, replace position 1 with the value 12
+   * and replace position 2 with the value 2.
    */
-  input[1] = 12;
-  input[2] = 2;
+  Object.assign(program, { 1: 12, 2: 2 });
 
-  const output = runProgram(input);
+  const output = runProgram(program);
 
   return output[0];
 };
