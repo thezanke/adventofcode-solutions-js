@@ -29,11 +29,11 @@ export const containsTwinDigits = (digits: number[], strict = false) => {
   return digits.some((current, i) => {
     const last = digits[i - 1];
     const matchesLast = current === last;
-    const next = digits[i + 1];
-
+    
     if (matchesLast) {
       if (strict) {
         matchedDigits += 1;
+        const next = digits[i + 1];
         return matchedDigits === 1 && current !== next;
       }
 
