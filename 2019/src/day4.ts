@@ -24,7 +24,7 @@ const testDigitSequence = (digits: number[]) => {
 };
 
 export const containsTwinDigits = (digits: number[], strict = false) => {
-  let series = 1;
+  let matchedDigits = 0;
 
   return digits.some((current, i) => {
     const last = digits[i - 1];
@@ -33,14 +33,15 @@ export const containsTwinDigits = (digits: number[], strict = false) => {
 
     if (matchesLast) {
       if (strict) {
-        series += 1;
-        return series === 2 && current !== next;
+        matchedDigits += 1;
+        return matchedDigits === 1 && current !== next;
       }
 
       return true;
     } else if (strict) {
-      series = 1;
+      matchedDigits = 0;
     }
+
     return false;
   });
 };

@@ -22,6 +22,6 @@ describe('Day 4', () => {
   });
 
   test('Part 2', () => {
-    expect(solvePart2(INPUT)).toEqual(0);
+    expect(solvePart2(INPUT)).toEqual(1102);
   });
 });
