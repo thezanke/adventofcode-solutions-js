@@ -23,31 +23,46 @@ const testDigitSequence = (digits: number[]) => {
   });
 };
 
-export const findMatchingPairs = (digits: number[]) => {
-  let last: number;
+export const containsTwinDigits = (digits: number[], strict = false) => {
+  let series = 1;
 
-  return digits.some(d => {
-    const pass = d === last;
-    last = d;
-    return pass;
+  return digits.some((current, i) => {
+    const last = digits[i - 1];
+    const matchesLast = current === last;
+    const next = digits[i + 1];
+
+    if (matchesLast) {
+      if (strict) {
+        series += 1;
+        return series === 2 && current !== next;
+      }
+
+      return true;
+    } else if (strict) {
+      series = 1;
+    }
+    return false;
   });
 };
 
-const findMatchingNumbers = (start: number, end: number) => {
+const findMatchingNumbers = (input: number[], strict = false) => {
+  const [start, end] = input;
   const matchingNumbers: number[] = [];
 
   for (let i = start; i < end + 1; i += 1) {
     const digits = getDigits(i);
     if (!testDigitSequence(digits)) continue;
-    if (!findMatchingPairs(digits)) continue;
+    if (!containsTwinDigits(digits, strict)) continue;
     matchingNumbers.push(i);
   }
 
   return matchingNumbers;
 };
 
-export const solvePart1 = () => {
-  return findMatchingNumbers(193651, 649729).length;
+export const solvePart1 = (input: number[]) => {
+  return findMatchingNumbers(input).length;
 };
 
-export const solvePart2 = () => {};
+export const solvePart2 = (input: number[]) => {
+  return findMatchingNumbers(input, true).length;
+};
