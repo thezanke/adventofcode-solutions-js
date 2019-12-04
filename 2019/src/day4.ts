@@ -29,7 +29,7 @@ export const containsTwinDigits = (digits: number[], strict = false) => {
   return digits.some((current, i) => {
     const last = digits[i - 1];
     const matchesLast = current === last;
-    
+
     if (matchesLast) {
       if (strict) {
         matchedDigits += 1;
@@ -39,9 +39,7 @@ export const containsTwinDigits = (digits: number[], strict = false) => {
       }
 
       return true;
-    } else if (strict) {
-      matchedDigits = 0;
-    }
+    } else if (strict) matchedDigits = 0;
 
     return false;
   });
