@@ -34,7 +34,8 @@ export const containsTwinDigits = (digits: number[], strict = false) => {
       if (strict) {
         matchedDigits += 1;
         const next = digits[i + 1];
-        return matchedDigits === 1 && current !== next;
+        const matchesNext = current === next;
+        return matchedDigits === 1 && !matchesNext;
       }
 
       return true;
