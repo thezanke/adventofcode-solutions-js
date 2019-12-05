@@ -5,11 +5,9 @@ export enum OP {
   MULTIPLY = 2,
   SAVE_INPUT = 3,
   OUTPUT_VALUE = 4,
+  TRUE_JUMP = 5,
+  // FALSE_JUMP = 6,
   EXT = 99,
-}
-
-interface OpcodeInfo {
-  arguments: number;
 }
 
 export const getOpcode = (value: number): [number, number[]] => {
@@ -26,23 +24,16 @@ export const getOpcode = (value: number): [number, number[]] => {
   return [opcode, args];
 };
 
-export const getParameter = (value: number, mode: number, memory: number[]) => {
+const getParameter = (value: number, mode: number, memory: number[]) => {
   if (mode === 1) return value;
   return memory[value];
-};
-
-export const getParams = (
-  params: number[],
-  modes: number[],
-  memory: number[]
-) => {
-  return params.map((p, i) => getParameter(p, modes[i], memory));
 };
 
 export const runProgram = (
   initialMemory: number[],
   overrides?: { [key: number]: number },
-  input: number[] = []
+  input: number[] = [],
+  outputHandler?: Function
 ) => {
   const memory = [...initialMemory];
   if (overrides) Object.assign(memory, overrides);
@@ -81,9 +72,20 @@ export const runProgram = (
         break;
       }
       case OP.OUTPUT_VALUE: {
+        if (!outputHandler) throw Error('output called with no handler');
         const value = getParameter(params[0], modes[0], memory);
-        console.log(value);
+        outputHandler(value);
         iPointer += 2;
+        break;
+      }
+      case OP.TRUE_JUMP: {
+        const x = getParameter(params[0], modes[0], memory);
+        const y = getParameter(params[1], modes[1], memory);
+        if (x) {
+          iPointer = y;
+        } else {
+          iPointer += 3;
+        }
         break;
       }
       default:

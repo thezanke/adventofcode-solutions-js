@@ -22,9 +22,9 @@ describe('runProgram()', () => {
     const overrides = { 1: 3, 2: 0 };
     expect(runProgram([2, 0, 0, 3, 99], overrides)).toEqual([2, 3, 0, 6, 99]);
 
-    const input = [1, 1, 1, 4, 99, 5, 6, 0, 99];
-    const output = [30, 1, 1, 4, 2, 5, 6, 0, 99];
-    expect(runProgram(input)).toEqual(output);
+    const startingMemory = [1, 1, 1, 4, 99, 5, 6, 0, 99];
+    const endingMemory = [30, 1, 1, 4, 2, 5, 6, 0, 99];
+    expect(runProgram(startingMemory)).toEqual(endingMemory);
   });
 
   test('handles negatives', () => {
@@ -32,6 +32,17 @@ describe('runProgram()', () => {
   });
 
   test('handles input', () => {
-    expect(runProgram([3, 3, 99, 0], undefined, [1337])).toEqual([3, 3, 99, 1337]);
+    const startingMemory = [3, 3, 99, 0];
+    const endingMemory = [3, 3, 99, 1337];
+    expect(runProgram(startingMemory, undefined, [1337])).toEqual(endingMemory);
+  });
+
+  test('handles output', () => {
+    const mockFn = jest.fn();
+    const res = runProgram([104, 2, 4, 2, 99], undefined, undefined, mockFn);
+    expect(res).toEqual([104, 2, 4, 2, 99]);
+    expect(mockFn).toBeCalledTimes(2);
+    expect(mockFn).nthCalledWith(1, 2);
+    expect(mockFn).nthCalledWith(2, 4);
   });
 });
