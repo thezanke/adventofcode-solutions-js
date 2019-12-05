@@ -6,7 +6,7 @@ export enum OP {
   SAVE_INPUT = 3,
   OUTPUT_VALUE = 4,
   TRUE_JUMP = 5,
-  // FALSE_JUMP = 6,
+  FALSE_JUMP = 6,
   EXT = 99,
 }
 
@@ -45,6 +45,8 @@ export const runProgram = (
     const [opcode, modes] = getOpcode(opVal);
     const params = memory.slice(iPointer + 1, iPointer + 4);
 
+    // console.log({ opcode: OP[opcode], modes, params });
+
     if (opcode === OP.EXT) break;
 
     switch (opcode) {
@@ -82,6 +84,16 @@ export const runProgram = (
         const x = getParameter(params[0], modes[0], memory);
         const y = getParameter(params[1], modes[1], memory);
         if (x) {
+          iPointer = y;
+        } else {
+          iPointer += 3;
+        }
+        break;
+      }
+      case OP.FALSE_JUMP: {
+        const x = getParameter(params[0], modes[0], memory);
+        const y = getParameter(params[1], modes[1], memory);
+        if (!x) {
           iPointer = y;
         } else {
           iPointer += 3;

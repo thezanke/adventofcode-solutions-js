@@ -10,4 +10,11 @@ describe('DAY 5', () => {
     solvePart1(challengeInput, mockFn);
     expect(mockFn).toHaveBeenLastCalledWith(16348437);
   });
+
+  // test('Part 2', async () => {
+  //   const challengeInput = await challengeInputPromise;
+  //   const mockFn = jest.fn();
+  //   solvePart1(challengeInput, mockFn);
+  //   expect(mockFn).toHaveBeenLastCalledWith(16348437);
+  // });
 });
