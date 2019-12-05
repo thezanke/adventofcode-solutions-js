@@ -26,4 +26,12 @@ describe('runProgram()', () => {
     const output = [30, 1, 1, 4, 2, 5, 6, 0, 99];
     expect(runProgram(input)).toEqual(output);
   });
+
+  test('handles negatives', () => {
+    expect(runProgram([1101, 100, -1, 4, 0])).toEqual([1101, 100, -1, 4, 99]);
+  });
+
+  test('handles input', () => {
+    expect(runProgram([3, 3, 99, 0], undefined, [1337])).toEqual([3, 3, 99, 1337]);
+  });
 });

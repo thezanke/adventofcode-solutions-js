@@ -3,8 +3,8 @@ import * as _ from 'lodash';
 export enum OP {
   ADD = 1,
   MULTIPLY = 2,
-  SAVE = 3,
-  OUTPUT = 4,
+  SAVE_INPUT = 3,
+  OUTPUT_VALUE = 4,
   EXT = 99,
 }
 
@@ -42,14 +42,10 @@ export const getParams = (
 export const runProgram = (
   initialMemory: number[],
   overrides?: { [key: number]: number },
-  input?: [number, number]
+  input: number[] = []
 ) => {
   const memory = [...initialMemory];
-
-  console.log({ overrides });
-  if (overrides) {
-    Object.assign(memory, overrides);
-  }
+  if (overrides) Object.assign(memory, overrides);
 
   let iPointer = 0;
 
@@ -75,6 +71,19 @@ export const runProgram = (
         const writePointer = params[2];
         memory[writePointer] = x * y;
         iPointer += 4;
+        break;
+      }
+      case OP.SAVE_INPUT: {
+        const [x] = input;
+        const [writePointer] = params;
+        memory[writePointer] = x;
+        iPointer += 2;
+        break;
+      }
+      case OP.OUTPUT_VALUE: {
+        const value = getParameter(params[0], modes[0], memory);
+        console.log(value);
+        iPointer += 2;
         break;
       }
       default:
