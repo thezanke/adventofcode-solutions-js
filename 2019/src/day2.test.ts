@@ -1,7 +1,7 @@
 import { solvePart1, solvePart2 } from './day2';
 
 describe('DAY 2', () => {
-  test.skip('Part 1', async () => {
+  test('Part 1', async () => {
     const res = await solvePart1();
     expect(res).toBe(6730673);
   });
