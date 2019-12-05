@@ -7,6 +7,7 @@ export enum OP {
   OUTPUT_VALUE = 4,
   TRUE_JUMP = 5,
   FALSE_JUMP = 6,
+  LESS_THAN = 7,
   EXT = 99,
 }
 
@@ -98,6 +99,14 @@ export const runProgram = (
         } else {
           iPointer += 3;
         }
+        break;
+      }
+      case OP.LESS_THAN: {
+        const x = getParameter(params[0], modes[0], memory);
+        const y = getParameter(params[1], modes[1], memory);
+        const writePointer = params[2];
+        memory[writePointer] = Number(x < y);
+        iPointer += 4;
         break;
       }
       default:

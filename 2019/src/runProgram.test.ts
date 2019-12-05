@@ -83,4 +83,14 @@ describe('runProgram()', () => {
       expect(mockFn).toHaveBeenCalledWith(4);
     });
   });
+  
+  describe('OP: LESS_THAN', () => {
+    test('stores 1 if less than', () => {
+      expect(runProgram([1107, 1, 2, 5, 99, 99])).toEqual([1107, 1, 2, 5, 99, 1]);
+    });
+
+    test('stores 0 if not less than', () => {
+      expect(runProgram([1107, 3, 2, 5, 99, 99])).toEqual([1107, 3, 2, 5, 99, 0]);
+    });
+  });
 });
