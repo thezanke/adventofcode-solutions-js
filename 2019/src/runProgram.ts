@@ -8,6 +8,7 @@ export enum OP {
   TRUE_JUMP = 5,
   FALSE_JUMP = 6,
   LESS_THAN = 7,
+  EQUALS = 8,
   EXT = 99,
 }
 
@@ -106,6 +107,14 @@ export const runProgram = (
         const y = getParameter(params[1], modes[1], memory);
         const writePointer = params[2];
         memory[writePointer] = Number(x < y);
+        iPointer += 4;
+        break;
+      }
+      case OP.EQUALS: {
+        const x = getParameter(params[0], modes[0], memory);
+        const y = getParameter(params[1], modes[1], memory);
+        const writePointer = params[2];
+        memory[writePointer] = Number(x === y);
         iPointer += 4;
         break;
       }

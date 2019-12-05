@@ -83,14 +83,32 @@ describe('runProgram()', () => {
       expect(mockFn).toHaveBeenCalledWith(4);
     });
   });
-  
+
   describe('OP: LESS_THAN', () => {
     test('stores 1 if less than', () => {
-      expect(runProgram([1107, 1, 2, 5, 99, 99])).toEqual([1107, 1, 2, 5, 99, 1]);
+      const inital = [1107, 1, 2, 5, 99, 99];
+      const expected = [1107, 1, 2, 5, 99, 1];
+      expect(runProgram(inital)).toEqual(expected);
     });
 
     test('stores 0 if not less than', () => {
-      expect(runProgram([1107, 3, 2, 5, 99, 99])).toEqual([1107, 3, 2, 5, 99, 0]);
+      const inital = [1107, 3, 2, 5, 99, 99];
+      const expected = [1107, 3, 2, 5, 99, 0];
+      expect(runProgram(inital)).toEqual(expected);
+    });
+  });
+
+  describe('OP: EQUALS', () => {
+    test('stores 1 if equal', () => {
+      const inital = [1108, 1, 1, 5, 99, 99];
+      const expected = [1108, 1, 1, 5, 99, 1];
+      expect(runProgram(inital)).toEqual(expected);
+    });
+
+    test('stores 0 if not equal', () => {
+      const inital = [1108, 3, 2, 5, 99, 99];
+      const expected = [1108, 3, 2, 5, 99, 0];
+      expect(runProgram(inital)).toEqual(expected);
     });
   });
 });
