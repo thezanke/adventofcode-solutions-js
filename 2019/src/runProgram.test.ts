@@ -1,4 +1,5 @@
 import { runProgram, getOpcode } from './runProgram';
+import { getInput } from './utils/getInput';
 
 describe('getOpcode()', () => {
   test('handles single digit', () => {
@@ -110,5 +111,16 @@ describe('runProgram()', () => {
       const expected = [1108, 3, 2, 5, 99, 0];
       expect(runProgram(inital)).toEqual(expected);
     });
+  });
+
+  test('Advanced', async () => {
+    const input = await getInput('day5-2-example.txt', ',', n => Number(n));
+    const mockFn = jest.fn();
+    runProgram(input, undefined, [5], mockFn);
+    expect(mockFn).toHaveBeenCalledWith(999);
+    runProgram(input, undefined, [8], mockFn);
+    expect(mockFn).toHaveBeenCalledWith(1000);
+    runProgram(input, undefined, [10], mockFn);
+    expect(mockFn).toHaveBeenCalledWith(1001);
   });
 });
