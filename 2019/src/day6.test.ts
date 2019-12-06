@@ -32,7 +32,7 @@ describe('DAY 6', () => {
     });
   });
 
-  describe('isOribitedBy()', () => {
+  describe('isOrbitedBy()', () => {
     test('returns true', () => {
       const orbitMap = createOrbitMap(EXAMPLE_INPUT);
       expect(isOrbitedBy(orbitMap.COM, orbitMap.I)).toBeTruthy();
