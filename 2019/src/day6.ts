@@ -7,10 +7,6 @@ interface OrbitMap {
   [key: string]: OrbitMapObject;
 }
 
-const inputMapper = (line: string) => {
-  return line.split(')');
-};
-
 export const createOrbitMap = (input: string[]): OrbitMap => {
   return input.reduce<OrbitMap>((map, inputLine) => {
     const [orbitingId, currentId] = inputLine.split(')');
@@ -41,10 +37,6 @@ export const countTotalOrbits = (orbitMap: OrbitMap): number => {
   }, 0);
 };
 
-const getSatellites = (target: OrbitMapObject, orbitMap: OrbitMap) => {
-  return Object.values(orbitMap).filter(obj => obj.orbiting === target);
-};
-
 export const isOrbitedBy = (
   object1: OrbitMapObject,
   object2: OrbitMapObject
@@ -65,12 +57,10 @@ export const solvePart1 = (input: string[]) => {
 
 export const solvePart2 = (input: string[]) => {
   const orbitMap = createOrbitMap(input);
-  const { YOU, SAN } = orbitMap;
+  const { orbiting: start } = orbitMap.YOU;
+  const { orbiting: destination } = orbitMap.SAN;
 
-  if (!YOU.orbiting || !SAN.orbiting) throw Error('problem with input');
-
-  const { orbiting: start } = YOU;
-  const { orbiting: destination } = SAN;
+  if (!start || !destination) throw Error('problem with input');
 
   let { orbiting } = start;
   let pivotObject: OrbitMapObject | undefined;
@@ -86,12 +76,13 @@ export const solvePart2 = (input: string[]) => {
     }
   }
 
-  orbiting = destination;
+  ({ orbiting } = destination);
 
-  while (orbiting && orbiting !== pivotObject) {
+  while (orbiting) {
     total += 1;
+    if (orbiting === pivotObject) return total;
     ({ orbiting } = orbiting);
   }
 
-  return total;
+  throw Error("couldn't reach pivot object");
 };

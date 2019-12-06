@@ -66,6 +66,6 @@ describe('DAY 6', () => {
 
   test('Part 2', async () => {
     const input = await challengeInputPromise;
-    expect(solvePart2(input)).toEqual(4);
+    expect(solvePart2(input)).toEqual(436);
   });
 });
