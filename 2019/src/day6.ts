@@ -23,20 +23,6 @@ export const createOrbitMap = (input: string[]): OrbitMap => {
   }, {});
 };
 
-export const countTotalOrbits = (orbitMap: OrbitMap): number => {
-  return Object.values(orbitMap).reduce((total, mapObject) => {
-    let localOrbits = 0;
-    let { orbiting } = mapObject;
-
-    while (orbiting) {
-      localOrbits += 1;
-      ({ orbiting } = orbiting);
-    }
-
-    return total + localOrbits;
-  }, 0);
-};
-
 export const isOrbitedBy = (
   object1: OrbitMapObject,
   object2: OrbitMapObject
@@ -52,7 +38,19 @@ export const isOrbitedBy = (
 };
 
 export const solvePart1 = (input: string[]) => {
-  return countTotalOrbits(createOrbitMap(input));
+  const orbitMap = createOrbitMap(input);
+
+  return Object.values(orbitMap).reduce((total, mapObject) => {
+    let localOrbits = 0;
+    let { orbiting } = mapObject;
+
+    while (orbiting) {
+      localOrbits += 1;
+      ({ orbiting } = orbiting);
+    }
+
+    return total + localOrbits;
+  }, 0);
 };
 
 export const solvePart2 = (input: string[]) => {
