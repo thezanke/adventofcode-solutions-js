@@ -7,7 +7,7 @@ const DEFAULT_MAPPER: MapperFunction = n => n;
 
 export const getInput = async (
   fileName: string,
-  separator: string,
+  separator: string | RegExp,
   mapper = DEFAULT_MAPPER
 ) => {
   const inputPath = path.resolve(__dirname, '..', 'input', fileName);
