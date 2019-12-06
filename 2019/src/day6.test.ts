@@ -22,16 +22,11 @@ describe('DAY 6', () => {
   ];
 
   describe('createOrbitMap()', () => {
-    test('returns a orbit map', () => {
+    test('returns an orbit map', () => {
       expect(createOrbitMap([])).toEqual({});
     });
 
-    test('returns oribt map with all map objects ', () => {
-      const orbitMap = createOrbitMap(EXAMPLE_INPUT);
-      expect(Object.keys(orbitMap)).toHaveLength(12);
-    });
-
-    test('returns orbit map', () => {
+    test('returns orbit map with all map objects ', () => {
       const orbitMap = createOrbitMap(EXAMPLE_INPUT);
       expect(Object.keys(orbitMap)).toHaveLength(12);
     });
