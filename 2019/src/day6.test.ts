@@ -3,6 +3,7 @@ import {
   countTotalOrbits,
   solvePart1,
   solvePart2,
+  isOrbitedBy,
 } from './day6';
 import { getInput } from './utils/getInput';
 
@@ -46,8 +47,25 @@ describe('DAY 6', () => {
     expect(solvePart1(input)).toEqual(344238);
   });
 
+  describe('isOribitedBy()', () => {
+    test('returns true', () => {
+      const orbitMap = createOrbitMap(EXAMPLE_INPUT);
+      expect(isOrbitedBy(orbitMap.COM, orbitMap.I)).toBeTruthy();
+    });
+
+    test('returns false', () => {
+      const orbitMap = createOrbitMap(EXAMPLE_INPUT);
+      expect(isOrbitedBy(orbitMap.L, orbitMap.K)).toBeFalsy();
+    });
+  });
+
+  test('Part 2 - Example', async () => {
+    const input = [...EXAMPLE_INPUT, 'K)YOU', 'I)SAN'];
+    expect(solvePart2(input)).toEqual(4);
+  });
+
   test('Part 2', async () => {
     const input = await challengeInputPromise;
-    expect(solvePart2(input)).toEqual(0);
+    expect(solvePart2(input)).toEqual(4);
   });
 });
