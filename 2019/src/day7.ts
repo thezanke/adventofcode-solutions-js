@@ -47,7 +47,7 @@ export const runAmplifiers = (
   const amplifiers = phases.map(phase => new Amplifier(initialMemory, phase));
   let output = amplifiers.reduce(amplify, 0);
 
-  while (loopMode && amplifiers.find(a => !a.exited)) {
+  while (loopMode && amplifiers.some(a => !a.exited)) {
     output = amplifiers.reduce(amplify, output);
   }
 
