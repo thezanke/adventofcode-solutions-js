@@ -1,3 +1,4 @@
+// tslint:disable no-any
 import * as _ from 'lodash';
 
 export enum OP {
