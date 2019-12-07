@@ -62,14 +62,14 @@ export const runAmplifiers = (
   }
 };
 
-export const solvePart1 = (intcode: number[]) => {
-  const perms = permute([0, 1, 2, 3, 4]) as number[][];
-  const results = perms.map(phases => runAmplifiers(intcode, phases));
+export const solvePart1 = (intcode: number[], digits: number[]) => {
+  const phasePerms = permute(digits) as number[][];
+  const results = phasePerms.map(perm => runAmplifiers(intcode, perm));
   return Math.max(...results);
 };
 
-export const solvePart2 = (intcode: number[]) => {
-  const perms = permute([5, 6, 7, 8, 9]) as number[][];
-  const results = perms.map(phases => runAmplifiers(intcode, phases, true));
+export const solvePart2 = (intcode: number[], digits: number[]) => {
+  const phasePerms = permute(digits) as number[][];
+  const results = phasePerms.map(perm => runAmplifiers(intcode, perm, true));
   return Math.max(...results);
 };
