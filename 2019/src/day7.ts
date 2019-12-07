@@ -29,7 +29,11 @@ const createAmplifier = (initialMemory: number[], phase: number) => {
   };
 };
 
-export const runAmplifiers = (
+export const amplifierReducer = (inputSignal: number, amplifier: Amplifier) => {
+  return amplifier(inputSignal);
+};
+
+export const findOptimalPhasing = (
   initialMemory: number[],
   phases: number[],
   loopMode = false
@@ -39,37 +43,21 @@ export const runAmplifiers = (
   const amplifiers = phases.map(phase => createAmplifier(initialMemory, phase));
 
   if (!loopMode) {
-    return amplifiers.reduce((inputSignal: number, amplifier: Amplifier) => {
-      return amplifier(inputSignal);
-    }, 0);
+    return amplifiers.reduce(amplifierReducer, 0);
   } else {
-    let lastOutput: number | undefined;
-
-    while (true) {
-      const output = amplifiers.reduce(
-        (inputSignal: number, amplifier: Amplifier) => {
-          return amplifier(inputSignal);
-        },
-        lastOutput || 0
-      );
-      console.log({ lastOutput, output });
-
-      if (output === lastOutput) return output;
-      if (isNaN(output)) throw Error('what');
-
-      lastOutput = output;
-    }
+    const output = amplifiers.reduce(amplifierReducer, 0);
+    return output
   }
 };
 
 export const solvePart1 = (intcode: number[], digits: number[]) => {
   const phasePerms = permute(digits) as number[][];
-  const results = phasePerms.map(perm => runAmplifiers(intcode, perm));
+  const results = phasePerms.map(perm => findOptimalPhasing(intcode, perm));
   return Math.max(...results);
 };
 
 export const solvePart2 = (intcode: number[], digits: number[]) => {
   const phasePerms = permute(digits) as number[][];
-  const results = phasePerms.map(perm => runAmplifiers(intcode, perm, true));
+  const results = phasePerms.map(perm => findOptimalPhasing(intcode, perm, true));
   return Math.max(...results);
 };
