@@ -37,7 +37,7 @@ const amplify = (inputSignal: number, amplifier: Amplifier) => {
   return amplifier.outputSignal;
 };
 
-export const findOptimalPhasing = (
+export const runAmplifiers = (
   initialMemory: number[],
   phases: number[],
   loopMode = false
@@ -56,14 +56,12 @@ export const findOptimalPhasing = (
 
 export const solvePart1 = (intcode: number[], digits: number[]) => {
   const phasePerms = permute(digits);
-  const results = phasePerms.map(perm => findOptimalPhasing(intcode, perm));
+  const results = phasePerms.map(perm => runAmplifiers(intcode, perm));
   return Math.max(...results);
 };
 
 export const solvePart2 = (intcode: number[], digits: number[]) => {
   const phasePerms = permute(digits);
-  const results = phasePerms.map(perm => {
-    return findOptimalPhasing(intcode, perm, true);
-  });
+  const results = phasePerms.map(perm => runAmplifiers(intcode, perm, true));
   return Math.max(...results);
 };
