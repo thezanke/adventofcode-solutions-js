@@ -21,7 +21,6 @@ export class Amplifier {
 
   set inputSignal(n: number) {
     this.program.input(n);
-    if (this.program.waiting) this.program.run();
   }
 
   get outputSignal() {

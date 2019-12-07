@@ -25,11 +25,13 @@ describe('runProgram()', () => {
     program = runProgram([2, 4, 4, 5, 99, 0]);
     expect(program.memory).toEqual([2, 4, 4, 5, 99, 9801]);
 
-    program = runProgram([2, 0, 0, 3, 99], { 1: 3, 2: 0 });
-    expect(program.memory).toEqual([2, 3, 0, 6, 99]);
-
     program = runProgram([1, 1, 1, 4, 99, 5, 6, 0, 99]);
     expect(program.memory).toEqual([30, 1, 1, 4, 2, 5, 6, 0, 99]);
+  });
+
+  test('handles overrides', () => {
+    const program = runProgram([2, 0, 0, 3, 99], { 1: 3, 2: 0 });
+    expect(program.memory).toEqual([2, 3, 0, 6, 99]);
   });
 
   test('handles negatives', () => {
@@ -37,9 +39,23 @@ describe('runProgram()', () => {
     expect(program.memory).toEqual([1101, 100, -1, 4, 99]);
   });
 
-  test('OP: SAVE_INPUT', () => {
-    const program = runProgram([3, 3, 99, 0], undefined, [1337]);
-    expect(program.memory).toEqual([3, 3, 99, 1337]);
+  describe('OP: SAVE_INPUT', () => {
+    test('saves existing input and exits', () => {
+      const program = runProgram([3, 3, 99, 0], undefined, [1337]);
+      expect(program.memory).toEqual([3, 3, 99, 1337]);
+    });
+
+    test("waits for input if ones doesn't exist", () => {
+      const program = runProgram([3, 3, 99, 0], undefined);
+      expect(program.memory).toEqual([3, 3, 99, 0]);
+      expect(program.waiting).toBeTruthy();
+
+      program.input(1337);
+
+      expect(program.memory).toEqual([3, 3, 99, 1337]);
+      expect(program.waiting).toBeFalsy();
+      expect(program.exited).toBeTruthy();
+    });
   });
 
   test('OP: OUTPUT_VALUE', () => {
@@ -50,6 +66,7 @@ describe('runProgram()', () => {
       undefined,
       mockFn
     );
+
     expect(program.memory).toEqual([104, 2, 4, 2, 99]);
     expect(mockFn).toBeCalledTimes(2);
     expect(mockFn).nthCalledWith(1, 2);
@@ -121,10 +138,13 @@ describe('runProgram()', () => {
   test('Advanced', async () => {
     const input = await getInput('day5-2-example.txt', ',', n => Number(n));
     const mockFn = jest.fn();
+
     runProgram(input, undefined, [5], mockFn);
     expect(mockFn).toHaveBeenCalledWith(999);
+
     runProgram(input, undefined, [8], mockFn);
     expect(mockFn).toHaveBeenCalledWith(1000);
+
     runProgram(input, undefined, [10], mockFn);
     expect(mockFn).toHaveBeenCalledWith(1001);
   });
