@@ -106,7 +106,10 @@ export class Program {
         break;
       }
       case OP.OUTPUT_VALUE: {
-        if (!this.outputHandler) throw Error('output called with no handler');
+        if (!this.outputHandler) {
+          throw Error('output called with no handler');
+        }
+
         const output = getParameter(params[0], modes[0], this._memory);
         this.outputHandler(output);
         this.debug('OUTPUT_VALUE', { output });
@@ -117,22 +120,14 @@ export class Program {
         const x = getParameter(params[0], modes[0], this._memory);
         const y = getParameter(params[1], modes[1], this._memory);
         this.debug('TRUE_JUMP', { truthy: !!x });
-        if (x) {
-          this.iPointer = y;
-        } else {
-          this.iPointer += 3;
-        }
+        this.iPointer = x ? y : this.iPointer + 3;
         break;
       }
       case OP.FALSE_JUMP: {
         const x = getParameter(params[0], modes[0], this._memory);
         const y = getParameter(params[1], modes[1], this._memory);
         this.debug('FALSE_JUMP', { falsy: !x });
-        if (!x) {
-          this.iPointer = y;
-        } else {
-          this.iPointer += 3;
-        }
+        this.iPointer = !x ? y : this.iPointer + 3;
         break;
       }
       case OP.LESS_THAN: {
