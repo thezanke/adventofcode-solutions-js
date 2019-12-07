@@ -8,9 +8,11 @@ describe('DAY 7', () => {
     test('waits for input, produces output, exits', () => {
       // prettier-ignore
       const initialMemory = [3,15,3,16,1002,16,10,16,1,16,15,15,4,15,99,0,0];
+
       const amp = new Amplifier(initialMemory, 1);
       expect(amp.outputSignal).toBeNaN();
       expect(amp.exited).toBeFalsy();
+
       amp.inputSignal = 1;
       expect(amp.outputSignal).toEqual(11);
       expect(amp.exited).toBeTruthy();
