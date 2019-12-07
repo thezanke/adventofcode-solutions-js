@@ -76,11 +76,8 @@ export class Program {
         const y = getParameter(params[1], modes[1], this._memory);
         const writePointer = params[2];
         const result = x + y;
-
         this._memory[writePointer] = result;
-
         this.debug('ADD', { x, y, result, writePointer });
-
         this.iPointer += 4;
         break;
       }
@@ -90,9 +87,7 @@ export class Program {
         const writePointer = params[2];
         const result = x * y;
         this._memory[writePointer] = result;
-
         this.debug('MULTIPLY', { x, y, result, writePointer });
-
         this.iPointer += 4;
         break;
       }
@@ -106,18 +101,14 @@ export class Program {
         const x = this.inputs.shift() as number;
         const [writePointer] = params;
         this._memory[writePointer] = x;
-
         this.debug('SAVE_INPUT', { input: x, writePointer });
-
         this.iPointer += 2;
         break;
       }
       case OP.OUTPUT_VALUE: {
         if (!this.outputHandler) throw Error('output called with no handler');
-
         const output = getParameter(params[0], modes[0], this._memory);
         this.outputHandler(output);
-
         this.debug('OUTPUT_VALUE', { output });
         this.iPointer += 2;
         break;
@@ -125,9 +116,7 @@ export class Program {
       case OP.TRUE_JUMP: {
         const x = getParameter(params[0], modes[0], this._memory);
         const y = getParameter(params[1], modes[1], this._memory);
-
         this.debug('TRUE_JUMP', { truthy: !!x });
-
         if (x) {
           this.iPointer = y;
         } else {
@@ -138,9 +127,7 @@ export class Program {
       case OP.FALSE_JUMP: {
         const x = getParameter(params[0], modes[0], this._memory);
         const y = getParameter(params[1], modes[1], this._memory);
-
         this.debug('FALSE_JUMP', { falsy: !x });
-
         if (!x) {
           this.iPointer = y;
         } else {
@@ -154,9 +141,7 @@ export class Program {
         const writePointer = params[2];
         const result = Number(x < y);
         this._memory[writePointer] = result;
-
         this.debug('LESS_THAN', { x, y, result, writePointer });
-
         this.iPointer += 4;
         break;
       }
@@ -166,9 +151,7 @@ export class Program {
         const writePointer = params[2];
         const result = Number(x === y);
         this._memory[writePointer] = result;
-
         this.debug('LESS_THAN', { x, y, result, writePointer });
-
         this.iPointer += 4;
         break;
       }
