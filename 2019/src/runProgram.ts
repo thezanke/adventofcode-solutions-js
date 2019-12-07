@@ -59,7 +59,7 @@ export class Program {
     }
   }
 
-  private next(): OP {
+  private nextInstruction() {
     const opVal = this._memory[this.iPointer];
     const [opcode, modes] = getOpcode(opVal);
     const params = this._memory.slice(this.iPointer + 1, this.iPointer + 4);
@@ -175,8 +175,6 @@ export class Program {
       default:
         throw Error('invalid op code: ' + opcode);
     }
-
-    return opcode;
   }
 
   run() {
@@ -185,9 +183,9 @@ export class Program {
     this.waiting = false;
 
     while (true) {
-      const opcode = this.next();
-      if (opcode === OP.EXT) break;
-      if (opcode === OP.SAVE_INPUT && this.waiting) break;
+      this.nextInstruction();
+      if (this.exited) break;
+      if (this.waiting) break;
     }
   }
 
