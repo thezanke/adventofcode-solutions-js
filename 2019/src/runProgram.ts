@@ -51,7 +51,7 @@ export class Program {
     if (overrides) Object.assign(this._memory, overrides);
     this.run();
   }
-  
+
   // tslint:disable-next-line no-any
   private debug(...args: any[]) {
     if (this.debugging) {
