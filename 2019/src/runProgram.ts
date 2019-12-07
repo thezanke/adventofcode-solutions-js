@@ -35,7 +35,8 @@ export const runProgram = (
   initialMemory: number[],
   overrides?: { [key: number]: number },
   input: number[] = [],
-  outputHandler?: Function
+  outputHandler?: Function,
+  debug = false
 ) => {
   const memory = [...initialMemory];
   if (overrides) Object.assign(memory, overrides);
@@ -56,7 +57,11 @@ export const runProgram = (
         const x = getParameter(params[0], modes[0], memory);
         const y = getParameter(params[1], modes[1], memory);
         const writePointer = params[2];
-        memory[writePointer] = x + y;
+        const result = x + y;
+        memory[writePointer] = result;
+        if (debug) {
+          console.log('ADD', { x, y, result, writePointer, iPointer });
+        }
         iPointer += 4;
         break;
       }
@@ -64,7 +69,11 @@ export const runProgram = (
         const x = getParameter(params[0], modes[0], memory);
         const y = getParameter(params[1], modes[1], memory);
         const writePointer = params[2];
-        memory[writePointer] = x * y;
+        const result = x * y;
+        memory[writePointer] = result;
+        if (debug) {
+          console.log('MULTIPLY', { x, y, result, writePointer, iPointer });
+        }
         iPointer += 4;
         break;
       }
@@ -72,19 +81,28 @@ export const runProgram = (
         const [x] = input;
         const [writePointer] = params;
         memory[writePointer] = x;
+        if (debug) {
+          console.log('SAVE_INPUT', { input: x, writePointer, iPointer });
+        }
         iPointer += 2;
         break;
       }
       case OP.OUTPUT_VALUE: {
         if (!outputHandler) throw Error('output called with no handler');
-        const value = getParameter(params[0], modes[0], memory);
-        outputHandler(value);
+        const output = getParameter(params[0], modes[0], memory);
+        outputHandler(output);
+        if (debug) {
+          console.log('OUTPUT_VALUE', { output, iPointer });
+        }
         iPointer += 2;
         break;
       }
       case OP.TRUE_JUMP: {
         const x = getParameter(params[0], modes[0], memory);
         const y = getParameter(params[1], modes[1], memory);
+        if (debug) {
+          console.log('TRUE_JUMP', { truthy: !!x, iPointer });
+        }
         if (x) {
           iPointer = y;
         } else {
@@ -95,6 +113,9 @@ export const runProgram = (
       case OP.FALSE_JUMP: {
         const x = getParameter(params[0], modes[0], memory);
         const y = getParameter(params[1], modes[1], memory);
+        if (debug) {
+          console.log('FALSE_JUMP', { falsy: !x, iPointer });
+        }
         if (!x) {
           iPointer = y;
         } else {
@@ -106,7 +127,11 @@ export const runProgram = (
         const x = getParameter(params[0], modes[0], memory);
         const y = getParameter(params[1], modes[1], memory);
         const writePointer = params[2];
-        memory[writePointer] = Number(x < y);
+        const result = Number(x < y);
+        memory[writePointer] = result;
+        if (debug) {
+          console.log('LESS_THAN', { x, y, result, writePointer, iPointer });
+        }
         iPointer += 4;
         break;
       }
@@ -114,7 +139,11 @@ export const runProgram = (
         const x = getParameter(params[0], modes[0], memory);
         const y = getParameter(params[1], modes[1], memory);
         const writePointer = params[2];
-        memory[writePointer] = Number(x === y);
+        const result = Number(x === y);
+        memory[writePointer] = result;
+        if (debug) {
+          console.log('LESS_THAN', { x, y, result, writePointer, iPointer });
+        }
         iPointer += 4;
         break;
       }
