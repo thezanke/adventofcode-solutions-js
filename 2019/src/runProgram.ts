@@ -156,8 +156,12 @@ export class Program {
   }
 
   run() {
-    if (this.exited) throw Error('tried to run exited program');
+    if (this.exited) {
+      throw Error('tried to run exited program');
+    }
+
     this.waiting = false;
+
     while (true && !this.exited && !this.waiting) {
       this.nextInstruction();
     }
