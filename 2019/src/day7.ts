@@ -1,22 +1,14 @@
-import { runProgram, Computer } from './runProgram';
+import { runProgram, Program } from './runProgram';
 import { permute } from './utils/permute';
-
-// INPUT phaseSetting
-// INPUT inputSignal
 
 const DEBUG = false;
 
-// interface Amplifier {
-//   (inputSignal: number): number;
-//   input(n: number): void;
-// }
-
 export class Amplifier {
   private _outputSignal = NaN;
-  private computer: Computer;
+  private program: Program;
 
   constructor(initialMemory: number[] = [], phase: number) {
-    this.computer = runProgram(
+    this.program = runProgram(
       initialMemory,
       undefined,
       [phase],
@@ -28,8 +20,8 @@ export class Amplifier {
   }
 
   set inputSignal(n: number) {
-    this.computer.input(n);
-    if (this.computer.waiting) this.computer.run();
+    this.program.input(n);
+    if (this.program.waiting) this.program.run();
   }
 
   get outputSignal() {
@@ -37,7 +29,7 @@ export class Amplifier {
   }
 
   get exited() {
-    return this.computer.exited;
+    return this.program.exited;
   }
 }
 

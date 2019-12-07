@@ -31,8 +31,8 @@ const getParameter = (value: number, mode: number, memory: number[]) => {
   return memory[value];
 };
 
-export class Computer {
-  private memory: number[];
+export class Program {
+  private _memory: number[];
   private inputs: number[];
   private iPointer = 0;
 
@@ -46,22 +46,22 @@ export class Computer {
     private outputHandler?: Function,
     private debugging = false
   ) {
-    this.memory = [...initialMemory];
+    this._memory = [...initialMemory];
     this.inputs = [...initalInputs];
-    if (overrides) Object.assign(this.memory, overrides);
+    if (overrides) Object.assign(this._memory, overrides);
     this.run();
   }
 
   private debug(...args: any[]) {
     if (this.debugging) {
-      console.log(...args, { iPointer: this.iPointer });
+      console.log(`${this.iPointer}: `, ...args);
     }
   }
 
   private next(): OP {
-    const opVal = this.memory[this.iPointer];
+    const opVal = this._memory[this.iPointer];
     const [opcode, modes] = getOpcode(opVal);
-    const params = this.memory.slice(this.iPointer + 1, this.iPointer + 4);
+    const params = this._memory.slice(this.iPointer + 1, this.iPointer + 4);
 
     // console.log({ opcode: OP[opcode], modes, params });
 
@@ -71,12 +71,12 @@ export class Computer {
         break;
       }
       case OP.ADD: {
-        const x = getParameter(params[0], modes[0], this.memory);
-        const y = getParameter(params[1], modes[1], this.memory);
+        const x = getParameter(params[0], modes[0], this._memory);
+        const y = getParameter(params[1], modes[1], this._memory);
         const writePointer = params[2];
         const result = x + y;
 
-        this.memory[writePointer] = result;
+        this._memory[writePointer] = result;
 
         this.debug('ADD', { x, y, result, writePointer });
 
@@ -84,11 +84,11 @@ export class Computer {
         break;
       }
       case OP.MULTIPLY: {
-        const x = getParameter(params[0], modes[0], this.memory);
-        const y = getParameter(params[1], modes[1], this.memory);
+        const x = getParameter(params[0], modes[0], this._memory);
+        const y = getParameter(params[1], modes[1], this._memory);
         const writePointer = params[2];
         const result = x * y;
-        this.memory[writePointer] = result;
+        this._memory[writePointer] = result;
 
         this.debug('MULTIPLY', { x, y, result, writePointer });
 
@@ -104,7 +104,7 @@ export class Computer {
 
         const x = this.inputs.shift() as number;
         const [writePointer] = params;
-        this.memory[writePointer] = x;
+        this._memory[writePointer] = x;
 
         this.debug('SAVE_INPUT', { input: x, writePointer });
 
@@ -114,7 +114,7 @@ export class Computer {
       case OP.OUTPUT_VALUE: {
         if (!this.outputHandler) throw Error('output called with no handler');
 
-        const output = getParameter(params[0], modes[0], this.memory);
+        const output = getParameter(params[0], modes[0], this._memory);
         this.outputHandler(output);
 
         this.debug('OUTPUT_VALUE', { output });
@@ -122,8 +122,8 @@ export class Computer {
         break;
       }
       case OP.TRUE_JUMP: {
-        const x = getParameter(params[0], modes[0], this.memory);
-        const y = getParameter(params[1], modes[1], this.memory);
+        const x = getParameter(params[0], modes[0], this._memory);
+        const y = getParameter(params[1], modes[1], this._memory);
 
         this.debug('TRUE_JUMP', { truthy: !!x });
 
@@ -135,8 +135,8 @@ export class Computer {
         break;
       }
       case OP.FALSE_JUMP: {
-        const x = getParameter(params[0], modes[0], this.memory);
-        const y = getParameter(params[1], modes[1], this.memory);
+        const x = getParameter(params[0], modes[0], this._memory);
+        const y = getParameter(params[1], modes[1], this._memory);
 
         this.debug('FALSE_JUMP', { falsy: !x });
 
@@ -148,11 +148,11 @@ export class Computer {
         break;
       }
       case OP.LESS_THAN: {
-        const x = getParameter(params[0], modes[0], this.memory);
-        const y = getParameter(params[1], modes[1], this.memory);
+        const x = getParameter(params[0], modes[0], this._memory);
+        const y = getParameter(params[1], modes[1], this._memory);
         const writePointer = params[2];
         const result = Number(x < y);
-        this.memory[writePointer] = result;
+        this._memory[writePointer] = result;
 
         this.debug('LESS_THAN', { x, y, result, writePointer });
 
@@ -160,11 +160,11 @@ export class Computer {
         break;
       }
       case OP.EQUALS: {
-        const x = getParameter(params[0], modes[0], this.memory);
-        const y = getParameter(params[1], modes[1], this.memory);
+        const x = getParameter(params[0], modes[0], this._memory);
+        const y = getParameter(params[1], modes[1], this._memory);
         const writePointer = params[2];
         const result = Number(x === y);
-        this.memory[writePointer] = result;
+        this._memory[writePointer] = result;
 
         this.debug('LESS_THAN', { x, y, result, writePointer });
 
@@ -193,6 +193,10 @@ export class Computer {
   input(...input: any) {
     this.inputs.push(...input);
   }
+
+  get memory() {
+    return [...this._memory];
+  }
 }
 
 export const runProgram = (
@@ -202,7 +206,7 @@ export const runProgram = (
   outputHandler?: Function,
   debugging = false
 ) => {
-  return new Computer(
+  return new Program(
     initialMemory,
     overrides,
     initalInputs,
