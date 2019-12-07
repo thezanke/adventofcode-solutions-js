@@ -42,22 +42,21 @@ export const findOptimalPhasing = (
   phases: number[],
   loopMode = false
 ) => {
-  if (DEBUG) console.log('RUNNING AMPLIFIERS ', { phases });
+  if (DEBUG) console.log('RUNNING AMPLIFIERS ', { phases, loopMode });
 
   const amplifiers = phases.map(phase => new Amplifier(initialMemory, phase));
+  let output = amplifiers.reduce(amplifierReducer, 0);
 
-  if (!loopMode) {
-    return amplifiers.reduce(amplifierReducer, 0);
-  } else {
-    let lastOutput: number | undefined;
-    let output = amplifiers.reduce<number>(amplifierReducer, 0);
+  if (loopMode) {
+    let lastOutput: number;
 
-    while (amplifiers.map(a => a.exited).includes(false)) {
+    while (amplifiers.find(a => !a.exited)) {
       lastOutput = output;
       output = amplifiers.reduce(amplifierReducer, lastOutput);
     }
-    return output;
   }
+
+  return output;
 };
 
 export const solvePart1 = (intcode: number[], digits: number[]) => {
