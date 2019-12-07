@@ -31,131 +31,326 @@ const getParameter = (value: number, mode: number, memory: number[]) => {
   return memory[value];
 };
 
-export const runProgram = (
-  memory: number[],
-  overrides?: { [key: number]: number },
-  input: number[] = [],
-  outputHandler?: Function,
-  debug = false
-) => {
-  if (overrides) Object.assign(memory, overrides);
+export class Computer {
+  private memory: number[];
+  private inputs: number[];
+  private iPointer = 0;
 
-  let iPointer = 0;
+  waiting = false;
+  exited = false;
 
-  while (true) {
-    const opVal = memory[iPointer];
+  constructor(
+    initialMemory: number[],
+    overrides?: { [key: number]: number },
+    initalInputs: any[] = [],
+    private outputHandler?: Function,
+    private debugging = false
+  ) {
+    this.memory = [...initialMemory];
+    this.inputs = [...initalInputs];
+    if (overrides) Object.assign(this.memory, overrides);
+    this.run();
+  }
+
+  private debug(...args: any[]) {
+    if (this.debugging) {
+      console.log(...args, { iPointer: this.iPointer });
+    }
+  }
+
+  private next(): OP {
+    const opVal = this.memory[this.iPointer];
     const [opcode, modes] = getOpcode(opVal);
-    const params = memory.slice(iPointer + 1, iPointer + 4);
+    const params = this.memory.slice(this.iPointer + 1, this.iPointer + 4);
 
     // console.log({ opcode: OP[opcode], modes, params });
 
-    if (opcode === OP.EXT) break;
-
     switch (opcode) {
+      case OP.EXT: {
+        this.exited = true;
+        break;
+      }
       case OP.ADD: {
-        const x = getParameter(params[0], modes[0], memory);
-        const y = getParameter(params[1], modes[1], memory);
+        const x = getParameter(params[0], modes[0], this.memory);
+        const y = getParameter(params[1], modes[1], this.memory);
         const writePointer = params[2];
         const result = x + y;
-        memory[writePointer] = result;
-        if (debug) {
-          console.log('ADD', { x, y, result, writePointer, iPointer });
-        }
-        iPointer += 4;
+
+        this.memory[writePointer] = result;
+
+        this.debug('ADD', { x, y, result, writePointer });
+
+        this.iPointer += 4;
         break;
       }
       case OP.MULTIPLY: {
-        const x = getParameter(params[0], modes[0], memory);
-        const y = getParameter(params[1], modes[1], memory);
+        const x = getParameter(params[0], modes[0], this.memory);
+        const y = getParameter(params[1], modes[1], this.memory);
         const writePointer = params[2];
         const result = x * y;
-        memory[writePointer] = result;
-        if (debug) {
-          console.log('MULTIPLY', { x, y, result, writePointer, iPointer });
-        }
-        iPointer += 4;
+        this.memory[writePointer] = result;
+
+        this.debug('MULTIPLY', { x, y, result, writePointer });
+
+        this.iPointer += 4;
         break;
       }
       case OP.SAVE_INPUT: {
-        const x = input.shift();
-
-        console.log({ x });
-
         // wait for the input to exist
-        if (!x) break;
-
-        const [writePointer] = params;
-        memory[writePointer] = x;
-        if (debug) {
-          console.log('SAVE_INPUT', { input: x, writePointer, iPointer });
+        if (!this.inputs.length) {
+          this.waiting = true;
+          break;
         }
-        iPointer += 2;
+
+        const x = this.inputs.shift() as number;
+        const [writePointer] = params;
+        this.memory[writePointer] = x;
+
+        this.debug('SAVE_INPUT', { input: x, writePointer });
+
+        this.iPointer += 2;
         break;
       }
       case OP.OUTPUT_VALUE: {
-        if (!outputHandler) throw Error('output called with no handler');
-        const output = getParameter(params[0], modes[0], memory);
-        outputHandler(output);
-        if (debug) {
-          console.log('OUTPUT_VALUE', { output, iPointer });
-        }
-        iPointer += 2;
+        if (!this.outputHandler) throw Error('output called with no handler');
+
+        const output = getParameter(params[0], modes[0], this.memory);
+        this.outputHandler(output);
+
+        this.debug('OUTPUT_VALUE', { output });
+        this.iPointer += 2;
         break;
       }
       case OP.TRUE_JUMP: {
-        const x = getParameter(params[0], modes[0], memory);
-        const y = getParameter(params[1], modes[1], memory);
-        if (debug) {
-          console.log('TRUE_JUMP', { truthy: !!x, iPointer });
-        }
+        const x = getParameter(params[0], modes[0], this.memory);
+        const y = getParameter(params[1], modes[1], this.memory);
+
+        this.debug('TRUE_JUMP', { truthy: !!x });
+
         if (x) {
-          iPointer = y;
+          this.iPointer = y;
         } else {
-          iPointer += 3;
+          this.iPointer += 3;
         }
         break;
       }
       case OP.FALSE_JUMP: {
-        const x = getParameter(params[0], modes[0], memory);
-        const y = getParameter(params[1], modes[1], memory);
-        if (debug) {
-          console.log('FALSE_JUMP', { falsy: !x, iPointer });
-        }
+        const x = getParameter(params[0], modes[0], this.memory);
+        const y = getParameter(params[1], modes[1], this.memory);
+
+        this.debug('FALSE_JUMP', { falsy: !x });
+
         if (!x) {
-          iPointer = y;
+          this.iPointer = y;
         } else {
-          iPointer += 3;
+          this.iPointer += 3;
         }
         break;
       }
       case OP.LESS_THAN: {
-        const x = getParameter(params[0], modes[0], memory);
-        const y = getParameter(params[1], modes[1], memory);
+        const x = getParameter(params[0], modes[0], this.memory);
+        const y = getParameter(params[1], modes[1], this.memory);
         const writePointer = params[2];
         const result = Number(x < y);
-        memory[writePointer] = result;
-        if (debug) {
-          console.log('LESS_THAN', { x, y, result, writePointer, iPointer });
-        }
-        iPointer += 4;
+        this.memory[writePointer] = result;
+
+        this.debug('LESS_THAN', { x, y, result, writePointer });
+
+        this.iPointer += 4;
         break;
       }
       case OP.EQUALS: {
-        const x = getParameter(params[0], modes[0], memory);
-        const y = getParameter(params[1], modes[1], memory);
+        const x = getParameter(params[0], modes[0], this.memory);
+        const y = getParameter(params[1], modes[1], this.memory);
         const writePointer = params[2];
         const result = Number(x === y);
-        memory[writePointer] = result;
-        if (debug) {
-          console.log('LESS_THAN', { x, y, result, writePointer, iPointer });
-        }
-        iPointer += 4;
+        this.memory[writePointer] = result;
+
+        this.debug('LESS_THAN', { x, y, result, writePointer });
+
+        this.iPointer += 4;
         break;
       }
       default:
         throw Error('invalid op code: ' + opcode);
     }
+
+    return opcode;
   }
 
-  return memory;
+  run() {
+    if (this.exited) throw Error('tried to run exited program');
+
+    this.waiting = false;
+
+    while (true) {
+      const opcode = this.next();
+      if (opcode === OP.EXT) break;
+      if (opcode === OP.SAVE_INPUT && this.waiting) break;
+    }
+  }
+
+  input(...input: any) {
+    this.inputs.push(...input);
+  }
+}
+
+export const runProgram = (
+  initialMemory: number[],
+  overrides?: { [key: number]: number },
+  initalInputs?: any[],
+  outputHandler?: Function,
+  debugging = false
+) => {
+  return new Computer(
+    initialMemory,
+    overrides,
+    initalInputs,
+    outputHandler,
+    debugging
+  );
+  // if (overrides) Object.assign(memory, overrides);
+
+  // let iPointer = 0;
+  // let waiting = false;
+  // let exited = false;
+
+  // const next = (): number => {
+  //   const opVal = memory[iPointer];
+  //   const [opcode, modes] = getOpcode(opVal);
+  //   const params = memory.slice(iPointer + 1, iPointer + 4);
+
+  //   // console.log({ opcode: OP[opcode], modes, params });
+
+  //   switch (opcode) {
+  //     case OP.EXT: {
+  //       exited = true;
+  //       break;
+  //     }
+  //     case OP.ADD: {
+  //       const x = getParameter(params[0], modes[0], memory);
+  //       const y = getParameter(params[1], modes[1], memory);
+  //       const writePointer = params[2];
+  //       const result = x + y;
+  //       memory[writePointer] = result;
+  //       if (debug) {
+  //         console.log('ADD', { x, y, result, writePointer, iPointer });
+  //       }
+  //       iPointer += 4;
+  //       break;
+  //     }
+  //     case OP.MULTIPLY: {
+  //       const x = getParameter(params[0], modes[0], memory);
+  //       const y = getParameter(params[1], modes[1], memory);
+  //       const writePointer = params[2];
+  //       const result = x * y;
+  //       memory[writePointer] = result;
+  //       if (debug) {
+  //         console.log('MULTIPLY', { x, y, result, writePointer, iPointer });
+  //       }
+  //       iPointer += 4;
+  //       break;
+  //     }
+  //     case OP.SAVE_INPUT: {
+  //       // wait for the input to exist
+  //       if (!input.length) {
+  //         console.log('SAVE_INPUT called but no input exists, waiting');
+  //         waiting = true;
+  //         break;
+  //       }
+
+  //       const x = input.shift() as number;
+
+  //       console.log({ x });
+
+  //       const [writePointer] = params;
+  //       memory[writePointer] = x;
+  //       if (debug) {
+  //         console.log('SAVE_INPUT', { input: x, writePointer, iPointer });
+  //       }
+  //       iPointer += 2;
+  //       break;
+  //     }
+  //     case OP.OUTPUT_VALUE: {
+  //       if (!outputHandler) throw Error('output called with no handler');
+  //       const output = getParameter(params[0], modes[0], memory);
+  //       outputHandler(output);
+  //       if (debug) {
+  //         console.log('OUTPUT_VALUE', { output, iPointer });
+  //       }
+  //       iPointer += 2;
+  //       break;
+  //     }
+  //     case OP.TRUE_JUMP: {
+  //       const x = getParameter(params[0], modes[0], memory);
+  //       const y = getParameter(params[1], modes[1], memory);
+  //       if (debug) {
+  //         console.log('TRUE_JUMP', { truthy: !!x, iPointer });
+  //       }
+  //       if (x) {
+  //         iPointer = y;
+  //       } else {
+  //         iPointer += 3;
+  //       }
+  //       break;
+  //     }
+  //     case OP.FALSE_JUMP: {
+  //       const x = getParameter(params[0], modes[0], memory);
+  //       const y = getParameter(params[1], modes[1], memory);
+  //       if (debug) {
+  //         console.log('FALSE_JUMP', { falsy: !x, iPointer });
+  //       }
+  //       if (!x) {
+  //         iPointer = y;
+  //       } else {
+  //         iPointer += 3;
+  //       }
+  //       break;
+  //     }
+  //     case OP.LESS_THAN: {
+  //       const x = getParameter(params[0], modes[0], memory);
+  //       const y = getParameter(params[1], modes[1], memory);
+  //       const writePointer = params[2];
+  //       const result = Number(x < y);
+  //       memory[writePointer] = result;
+  //       if (debug) {
+  //         console.log('LESS_THAN', { x, y, result, writePointer, iPointer });
+  //       }
+  //       iPointer += 4;
+  //       break;
+  //     }
+  //     case OP.EQUALS: {
+  //       const x = getParameter(params[0], modes[0], memory);
+  //       const y = getParameter(params[1], modes[1], memory);
+  //       const writePointer = params[2];
+  //       const result = Number(x === y);
+  //       memory[writePointer] = result;
+  //       if (debug) {
+  //         console.log('LESS_THAN', { x, y, result, writePointer, iPointer });
+  //       }
+  //       iPointer += 4;
+  //       break;
+  //     }
+  //     default:
+  //       throw Error('invalid op code: ' + opcode);
+  //   }
+
+  //   return opcode;
+  // };
+
+  // const run = () => {
+  //   if (exited) throw Error('tried to run exited program');
+
+  //   waiting = false;
+
+  //   while (true) {
+  //     const opcode = next();
+  //     if (opcode === OP.EXT) break;
+  //     if (opcode === OP.SAVE_INPUT && waiting) break;
+  //   }
+  // };
+
+  // run();
+
+  // return { next, run, memory, waiting, exited };
 };

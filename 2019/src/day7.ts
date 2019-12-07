@@ -1,10 +1,10 @@
-import { runProgram } from './runProgram';
+import { runProgram, Computer } from './runProgram';
 import { permute } from './utils/permute';
 
 // INPUT phaseSetting
 // INPUT inputSignal
 
-const DEBUG = true;
+const DEBUG = false;
 
 // interface Amplifier {
 //   (inputSignal: number): number;
@@ -12,20 +12,14 @@ const DEBUG = true;
 // }
 
 export class Amplifier {
-  private memory: number[];
-  private inputs: number[] = [];
-  private _outputSignal: number | undefined;
+  private _outputSignal = NaN;
+  private computer: Computer;
 
   constructor(initialMemory: number[] = [], phase: number) {
-    this.memory = [...initialMemory];
-    this.inputs.push(phase);
-
-    console.log('creat amplifier', { amplifier: this });
-
-    runProgram(
-      this.memory,
+    this.computer = runProgram(
+      initialMemory,
       undefined,
-      this.inputs,
+      [phase],
       (_outputSignal: number) => {
         this._outputSignal = _outputSignal;
       },
@@ -34,18 +28,22 @@ export class Amplifier {
   }
 
   set inputSignal(n: number) {
-    console.log('set inputSignal', n);
-    this.inputs.push(n);
+    this.computer.input(n);
+    if (this.computer.waiting) this.computer.run();
   }
 
   get outputSignal() {
     return this._outputSignal;
   }
+
+  get exited() {
+    return this.computer.exited;
+  }
 }
 
 const amplifierReducer = (inputSignal: number, amplifier: Amplifier) => {
   amplifier.inputSignal = inputSignal;
-  return amplifier.outputSignal || 0;
+  return amplifier.outputSignal;
 };
 
 export const findOptimalPhasing = (
@@ -60,17 +58,14 @@ export const findOptimalPhasing = (
   if (!loopMode) {
     return amplifiers.reduce(amplifierReducer, 0);
   } else {
-    // let lastOutput: number | undefined;
-    let output = amplifiers.reduce(amplifierReducer, 0);
-    console.log({ output });
-    // // while (output !== lastOutput) {
-    // console.log({ lastOutput, output });
-    // lastOutput = output;
-    // output = amplifiers.reduce(amplifierReducer, lastOutput);
-    // console.log({ lastOutput, output });
-    // // }
-    // return output;
-    return 0;
+    let lastOutput: number | undefined;
+    let output = amplifiers.reduce<number>(amplifierReducer, 0);
+
+    while (amplifiers.map(a => a.exited).includes(false)) {
+      lastOutput = output;
+      output = amplifiers.reduce(amplifierReducer, lastOutput);
+    }
+    return output;
   }
 };
 
