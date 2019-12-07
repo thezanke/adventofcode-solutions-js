@@ -32,7 +32,7 @@ export class Amplifier {
   }
 }
 
-const amplifierReducer = (inputSignal: number, amplifier: Amplifier) => {
+const amplify = (inputSignal: number, amplifier: Amplifier) => {
   amplifier.inputSignal = inputSignal;
   return amplifier.outputSignal;
 };
@@ -45,12 +45,10 @@ export const findOptimalPhasing = (
   if (DEBUG) console.log('RUNNING AMPLIFIERS ', { phases, loopMode });
 
   const amplifiers = phases.map(phase => new Amplifier(initialMemory, phase));
-  let output = amplifiers.reduce(amplifierReducer, 0);
+  let output = amplifiers.reduce(amplify, 0);
 
-  if (loopMode) {
-    while (amplifiers.find(a => !a.exited)) {
-      output = amplifiers.reduce(amplifierReducer, output);
-    }
+  while (loopMode && amplifiers.find(a => !a.exited)) {
+    output = amplifiers.reduce(amplify, output);
   }
 
   return output;
