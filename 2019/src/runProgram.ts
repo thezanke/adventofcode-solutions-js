@@ -1,4 +1,3 @@
-// tslint:disable no-any
 import * as _ from 'lodash';
 
 export enum OP {
@@ -43,7 +42,7 @@ export class Program {
   constructor(
     initialMemory: number[],
     overrides?: { [key: number]: number },
-    initalInputs: any[] = [],
+    initalInputs: number[] = [],
     private outputHandler?: Function,
     private debugging = false
   ) {
@@ -52,7 +51,8 @@ export class Program {
     if (overrides) Object.assign(this._memory, overrides);
     this.run();
   }
-
+  
+  // tslint:disable-next-line no-any
   private debug(...args: any[]) {
     if (this.debugging) {
       console.log(`${this.iPointer}: `, ...args);
@@ -191,7 +191,7 @@ export class Program {
     }
   }
 
-  input(...input: any) {
+  input(...input: number[]) {
     this.inputs.push(...input);
     if (this.waiting) this.run();
   }
@@ -204,7 +204,7 @@ export class Program {
 export const runProgram = (
   initialMemory: number[],
   overrides?: { [key: number]: number },
-  initalInputs?: any[],
+  initalInputs?: number[],
   outputHandler?: Function,
   debugging = false
 ) => {
