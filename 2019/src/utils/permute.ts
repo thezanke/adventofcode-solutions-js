@@ -1,7 +1,7 @@
 // tslint:disable no-any
 /**
- * Credit to https://xaviergeerinck.com/solve-permutation-heaps
- * all I did was add types and a calling function with a result array.
+ * Credit to https://xaviergeerinck.com/solve-permutation-heaps.
+ * All I did was add types and a calling function with a result array.
  */
 export const permute = (input: any[]) => {
   const result: any[][] = [];
