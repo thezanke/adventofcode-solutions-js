@@ -42,6 +42,7 @@ export const runProgram = (
   if (overrides) Object.assign(memory, overrides);
 
   let iPointer = 0;
+  let inputIndex = 0;
 
   while (true) {
     const opVal = memory[iPointer];
@@ -78,7 +79,7 @@ export const runProgram = (
         break;
       }
       case OP.SAVE_INPUT: {
-        const [x] = input;
+        const x = input[inputIndex++];
         const [writePointer] = params;
         memory[writePointer] = x;
         if (debug) {
