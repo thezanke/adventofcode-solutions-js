@@ -4,38 +4,48 @@ import { permute } from './utils/permute';
 // INPUT phaseSetting
 // INPUT inputSignal
 
-const DEBUG = false;
+const DEBUG = true;
 
-interface Amplifier {
-  (inputSignal: number): number;
-}
+// interface Amplifier {
+//   (inputSignal: number): number;
+//   input(n: number): void;
+// }
 
-const createAmplifier = (initialMemory: number[], phase: number) => {
-  const memory = [...initialMemory];
+export class Amplifier {
+  private memory: number[];
+  private inputs: number[] = [];
+  private _outputSignal: number | undefined;
 
-  return (inputSignal: number) => {
-    if (inputSignal === undefined || Number.isNaN(inputSignal)) {
-      throw Error('bad input signal');
-    }
+  constructor(initialMemory: number[] = [], phase: number) {
+    this.memory = [...initialMemory];
+    this.inputs.push(phase);
 
-    let outputSignal: number | undefined;
+    console.log('creat amplifier', { amplifier: this });
 
     runProgram(
-      memory,
+      this.memory,
       undefined,
-      [phase, inputSignal],
+      this.inputs,
       (_outputSignal: number) => {
-        outputSignal = _outputSignal;
+        this._outputSignal = _outputSignal;
       },
       DEBUG
     );
-  
-    return outputSignal || 0;
-  };
-};
+  }
 
-export const amplifierReducer = (inputSignal: number, amplifier: Amplifier) => {
-  return amplifier(inputSignal);
+  set inputSignal(n: number) {
+    console.log('set inputSignal', n);
+    this.inputs.push(n);
+  }
+
+  get outputSignal() {
+    return this._outputSignal;
+  }
+}
+
+const amplifierReducer = (inputSignal: number, amplifier: Amplifier) => {
+  amplifier.inputSignal = inputSignal;
+  return amplifier.outputSignal || 0;
 };
 
 export const findOptimalPhasing = (
@@ -45,7 +55,7 @@ export const findOptimalPhasing = (
 ) => {
   if (DEBUG) console.log('RUNNING AMPLIFIERS ', { phases });
 
-  const amplifiers = phases.map(phase => createAmplifier(initialMemory, phase));
+  const amplifiers = phases.map(phase => new Amplifier(initialMemory, phase));
 
   if (!loopMode) {
     return amplifiers.reduce(amplifierReducer, 0);
