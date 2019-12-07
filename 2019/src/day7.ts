@@ -48,11 +48,8 @@ export const findOptimalPhasing = (
   let output = amplifiers.reduce(amplifierReducer, 0);
 
   if (loopMode) {
-    let lastOutput: number;
-
     while (amplifiers.find(a => !a.exited)) {
-      lastOutput = output;
-      output = amplifiers.reduce(amplifierReducer, lastOutput);
+      output = amplifiers.reduce(amplifierReducer, output);
     }
   }
 
