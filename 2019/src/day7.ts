@@ -5,11 +5,16 @@ import { runProgram } from './runProgram';
 
 const DEBUG = false;
 
-export const runAmplifiers = (intcode: number[], phases: number[]) => {
-  const amplify = (phase: number, inputSignal: number) => {
-    let outputSignal: number | undefined;
+interface Amplifier {
+  (inputSignal: number): number;
+}
+
+const createAmplifier = (initialMemory: number[], phase: number) => {
+  const memory = [...initialMemory];
+  return (inputSignal: number) => {
+    let outputSignal: number = NaN;
     runProgram(
-      [...intcode],
+      memory,
       undefined,
       [phase, inputSignal],
       (_outputSignal: number) => {
@@ -17,17 +22,39 @@ export const runAmplifiers = (intcode: number[], phases: number[]) => {
       },
       DEBUG
     );
+    // console.log({ inputSignal, outputSignal });
     return outputSignal;
   };
+};
 
+export const runAmplifiers = (
+  initialMemory: number[],
+  phases: number[],
+  loopMode = false
+) => {
   if (DEBUG) console.log('RUNNING AMPLIFIERS ', { phases });
 
-  return phases.reduce((inputSignal: number, phase: number) => {
-    if (DEBUG) console.log('AMPLIFYING: INPUT', { inputSignal, phase });
-    const outputSignal = amplify(phase, inputSignal);
-    if (DEBUG) console.log('AMPLIFYING: OUTPUT', { outputSignal });
-    return outputSignal || 0;
-  }, 0);
+  const amplifiers = phases.map(phase => createAmplifier(initialMemory, phase));
+
+  if (!loopMode) {
+    return amplifiers.reduce((inputSignal: number, amplifier: Amplifier) => {
+      return amplifier(inputSignal);
+    }, 0);
+  } else {
+    let lastOutput: number = 0;
+
+    do {
+      const output = amplifiers.reduce(
+        (inputSignal: number, amplifier: Amplifier) => {
+          return amplifier(inputSignal);
+        },
+        lastOutput
+      );
+      if (output === lastOutput) return output;
+      if (isNaN(output) || isNaN(lastOutput)) throw Error('what');
+      lastOutput = output;
+    } while (true);
+  }
 };
 
 export const getPermutations = (inputArr: any[]): number[] | number[][] => {
@@ -52,5 +79,11 @@ export const getPermutations = (inputArr: any[]): number[] | number[][] => {
 export const solvePart1 = (intcode: number[]) => {
   const perms = getPermutations([0, 1, 2, 3, 4]) as number[][];
   const results = perms.map(phases => runAmplifiers(intcode, phases));
+  return Math.max(...results);
+};
+
+export const solvePart2 = (intcode: number[]) => {
+  const perms = getPermutations([5, 6, 7, 8, 9]) as number[][];
+  const results = perms.map(phases => runAmplifiers(intcode, phases, true));
   return Math.max(...results);
 };

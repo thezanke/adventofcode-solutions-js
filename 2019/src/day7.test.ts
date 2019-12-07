@@ -1,4 +1,4 @@
-import { solvePart1, runAmplifiers, getPermutations } from './day7';
+import { solvePart1, solvePart2, runAmplifiers, getPermutations } from './day7';
 import { getInput } from './utils/getInput';
 describe('DAY 7', () => {
   const challengeInputPromise = getInput('day7.txt', ',', n => Number(n));
@@ -22,9 +22,15 @@ describe('DAY 7', () => {
   });
 
   describe('Part 1', () => {
-    test('solves example input', async () => {
+    test('solves challenge input', async () => {
       const input = (await challengeInputPromise) as number[];
       expect(solvePart1(input)).toEqual(273814);
+    });
+  });
+  describe('Part 2', () => {
+    test.skip('solves challenge input', async () => {
+      const input = (await challengeInputPromise) as number[];
+      expect(solvePart2(input)).toEqual(273814);
     });
   });
 });

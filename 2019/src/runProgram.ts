@@ -32,13 +32,12 @@ const getParameter = (value: number, mode: number, memory: number[]) => {
 };
 
 export const runProgram = (
-  initialMemory: number[],
+  memory: number[],
   overrides?: { [key: number]: number },
   input: number[] = [],
   outputHandler?: Function,
   debug = false
 ) => {
-  const memory = [...initialMemory];
   if (overrides) Object.assign(memory, overrides);
 
   let iPointer = 0;
