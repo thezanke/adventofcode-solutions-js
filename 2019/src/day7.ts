@@ -1,4 +1,5 @@
 import { runProgram } from './runProgram';
+import { permute } from './utils/permute';
 
 // INPUT phaseSetting
 // INPUT inputSignal
@@ -11,6 +12,7 @@ interface Amplifier {
 
 const createAmplifier = (initialMemory: number[], phase: number) => {
   const memory = [...initialMemory];
+
   return (inputSignal: number) => {
     let outputSignal: number = NaN;
     runProgram(
@@ -41,49 +43,33 @@ export const runAmplifiers = (
       return amplifier(inputSignal);
     }, 0);
   } else {
-    let lastOutput: number = 0;
+    let lastOutput: number | undefined;
 
-    do {
+    while (true) {
       const output = amplifiers.reduce(
         (inputSignal: number, amplifier: Amplifier) => {
           return amplifier(inputSignal);
         },
-        lastOutput
+        lastOutput || 0
       );
+      console.log({ lastOutput, output });
+
       if (output === lastOutput) return output;
-      if (isNaN(output) || isNaN(lastOutput)) throw Error('what');
+      if (isNaN(output)) throw Error('what');
+
       lastOutput = output;
-    } while (true);
+    }
   }
 };
 
-export const getPermutations = (inputArr: any[]): number[] | number[][] => {
-  const results: number[] = [];
-
-  const permute = (arr: any[], memo: any = []) => {
-    let current;
-
-    for (var i = 0; i < arr.length; i++) {
-      current = arr.splice(i, 1);
-      if (arr.length === 0) results.push(memo.concat(current));
-      permute(arr.slice(), memo.concat(current));
-      arr.splice(i, 0, current[0]);
-    }
-
-    return results;
-  };
-
-  return permute(inputArr);
-};
-
 export const solvePart1 = (intcode: number[]) => {
-  const perms = getPermutations([0, 1, 2, 3, 4]) as number[][];
+  const perms = permute([0, 1, 2, 3, 4]) as number[][];
   const results = perms.map(phases => runAmplifiers(intcode, phases));
   return Math.max(...results);
 };
 
 export const solvePart2 = (intcode: number[]) => {
-  const perms = getPermutations([5, 6, 7, 8, 9]) as number[][];
+  const perms = permute([5, 6, 7, 8, 9]) as number[][];
   const results = perms.map(phases => runAmplifiers(intcode, phases, true));
   return Math.max(...results);
 };
