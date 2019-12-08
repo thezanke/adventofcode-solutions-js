@@ -1,4 +1,4 @@
-import { createOrbitMap, solvePart1, solvePart2, isOrbitedBy } from './day6';
+import { createOrbitMap, solvePart1, solvePart2 } from './day6';
 import { getInput } from './utils/getInput';
 
 describe('DAY 6', () => {
@@ -32,27 +32,15 @@ describe('DAY 6', () => {
     });
   });
 
-  describe('isOrbitedBy()', () => {
-    test('returns true', () => {
-      const orbitMap = createOrbitMap(EXAMPLE_INPUT);
-      expect(isOrbitedBy(orbitMap.COM, orbitMap.I)).toBeTruthy();
-    });
-
-    test('returns false', () => {
-      const orbitMap = createOrbitMap(EXAMPLE_INPUT);
-      expect(isOrbitedBy(orbitMap.L, orbitMap.K)).toBeFalsy();
-    });
-  });
-
   describe('Part 2', () => {
     test('solves example', async () => {
       const input = [...EXAMPLE_INPUT, 'K)YOU', 'I)SAN'];
-      expect(solvePart2(input)).toEqual(4);
+      expect(solvePart2(input, 'YOU', 'SAN')).toEqual(4);
     });
 
     test('solves challenge input', async () => {
       const input = await challengeInputPromise;
-      expect(solvePart2(input)).toEqual(436);
+      expect(solvePart2(input, 'YOU', 'SAN')).toEqual(436);
     });
   });
 });

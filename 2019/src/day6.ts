@@ -23,18 +23,17 @@ export const createOrbitMap = (input: string[]): OrbitMap => {
   }, {});
 };
 
-export const isOrbitedBy = (
-  object1: OrbitMapObject,
-  object2: OrbitMapObject
-) => {
-  let { orbiting } = object2;
+export const getOrbitChain = (start: OrbitMapObject) => {
+  let { orbiting } = start;
+  if (!orbiting) return [];
+
+  const chain: OrbitMapObject[] = [];
 
   while (orbiting) {
-    if (orbiting === object1) return true;
+    chain.push(orbiting);
     ({ orbiting } = orbiting);
   }
-
-  return false;
+  return chain;
 };
 
 export const solvePart1 = (input: string[]) => {
@@ -53,34 +52,19 @@ export const solvePart1 = (input: string[]) => {
   }, 0);
 };
 
-export const solvePart2 = (input: string[]) => {
+export const solvePart2 = (input: string[], startId: string, endId: string) => {
   const orbitMap = createOrbitMap(input);
-  const { orbiting: start } = orbitMap.YOU;
-  const { orbiting: destination } = orbitMap.SAN;
 
-  if (!start || !destination) throw Error('problem with input');
+  const start = orbitMap[startId];
+  const end = orbitMap[endId];
 
-  let { orbiting } = start;
-  let pivotObject: OrbitMapObject | undefined;
-  let total = 0;
+  if (!start || !end) throw Error('problem with input');
 
-  while (orbiting && !pivotObject) {
-    total += 1;
+  const startOrbitChain = getOrbitChain(start);
+  const endOrbitChain = getOrbitChain(end);
 
-    if (isOrbitedBy(orbiting, destination)) {
-      pivotObject = orbiting;
-    } else {
-      ({ orbiting } = orbiting);
-    }
-  }
+  let pivotObject = startOrbitChain.find(o => endOrbitChain.includes(o));
+  if (!pivotObject) return Number.NEGATIVE_INFINITY;
 
-  ({ orbiting } = destination);
-
-  while (orbiting) {
-    total += 1;
-    if (orbiting === pivotObject) return total;
-    ({ orbiting } = orbiting);
-  }
-
-  throw Error("couldn't reach pivot object");
+  return startOrbitChain.indexOf(pivotObject) + endOrbitChain.indexOf(pivotObject);
 };
