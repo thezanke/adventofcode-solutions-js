@@ -40,15 +40,7 @@ export const solvePart1 = (input: string[]) => {
   const orbitMap = createOrbitMap(input);
 
   return Object.values(orbitMap).reduce((total, mapObject) => {
-    let localOrbits = 0;
-    let { orbiting } = mapObject;
-
-    while (orbiting) {
-      localOrbits += 1;
-      ({ orbiting } = orbiting);
-    }
-
-    return total + localOrbits;
+    return total + getOrbitChain(mapObject).length;
   }, 0);
 };
 
