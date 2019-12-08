@@ -63,8 +63,10 @@ export const solvePart2 = (input: string[], startId: string, endId: string) => {
   const startOrbitChain = getOrbitChain(start);
   const endOrbitChain = getOrbitChain(end);
 
-  let pivotObject = startOrbitChain.find(o => endOrbitChain.includes(o));
+  const pivotObject = startOrbitChain.find(o => endOrbitChain.includes(o));
   if (!pivotObject) return Number.NEGATIVE_INFINITY;
 
-  return startOrbitChain.indexOf(pivotObject) + endOrbitChain.indexOf(pivotObject);
+  return (
+    startOrbitChain.indexOf(pivotObject) + endOrbitChain.indexOf(pivotObject)
+  );
 };
