@@ -33,11 +33,18 @@ export const getOpcode = (value: number): [number, number[]] => {
   return [opcode, args];
 };
 
+interface Instruction {
+  opcode: number;
+  modes: number[];
+  params: number[];
+}
+
 export class Program {
   private _memory: number[];
   private inputs: number[];
   private iPointer = 0;
   private relativeBase = 0;
+  private currentInstruction?: Instruction;
 
   waiting = false;
   exited = false;
@@ -62,14 +69,32 @@ export class Program {
     }
   }
 
-  getParameter(value: number, mode: number, memory: number[]) {
-    switch (mode || 0) {
+  readMemory(pointer: number) {
+    let value = this.memory[pointer];
+    // console.log('read', { pointer, value });
+    if (!value) {
+      value = this.memory[pointer] = 0;
+    }
+    return value;
+  }
+
+  getParameter(index: number, write = false) {
+    if (!this.currentInstruction) throw Error('no current instruction');
+
+    const { modes, params } = this.currentInstruction;
+    const value = params[index];
+    const mode = modes[index] || 0;
+    
+    switch (mode) {
       case MODE.REFERENCE:
-        return memory[value];
+        if (write) return value;
+        return this.readMemory(value);
       case MODE.IMMEDIATE:
         return value;
       case MODE.RELATIVE:
-        return memory[this.relativeBase + value];
+        const pointer = this.relativeBase + value;
+        if (write) return pointer;
+        return this.readMemory(pointer);
       default:
         throw Error('invalid mode');
     }
@@ -79,18 +104,26 @@ export class Program {
     const opVal = this._memory[this.iPointer];
     const [opcode, modes] = getOpcode(opVal);
     const params = this._memory.slice(this.iPointer + 1, this.iPointer + 4);
+    this.currentInstruction = { opcode, modes, params };
 
-    // console.log({ opcode: OP[opcode], modes, params });
+    // console.log({
+    //   opcode: OP[opcode],
+    //   modes,
+    //   params,
+    //   inputs: this.inputs,
+    //   relativeBase: this.relativeBase,
+    // });
 
     switch (opcode) {
       case OP.EXT: {
+        this.debug('EXIT');
         this.exited = true;
         break;
       }
       case OP.ADD: {
-        const x = this.getParameter(params[0], modes[0], this._memory);
-        const y = this.getParameter(params[1], modes[1], this._memory);
-        const writePointer = params[2];
+        const x = this.getParameter(0);
+        const y = this.getParameter(1);
+        const writePointer = this.getParameter(2, true);
         const result = x + y;
         this._memory[writePointer] = result;
         this.debug('ADD', { x, y, result, writePointer });
@@ -98,9 +131,9 @@ export class Program {
         break;
       }
       case OP.MULTIPLY: {
-        const x = this.getParameter(params[0], modes[0], this._memory);
-        const y = this.getParameter(params[1], modes[1], this._memory);
-        const writePointer = params[2];
+        const x = this.getParameter(0);
+        const y = this.getParameter(1);
+        const writePointer = this.getParameter(2, true);
         const result = x * y;
         this._memory[writePointer] = result;
         this.debug('MULTIPLY', { x, y, result, writePointer });
@@ -115,7 +148,10 @@ export class Program {
         }
 
         const x = this.inputs.shift() as number;
-        const [writePointer] = params;
+        let writePointer = params[0];
+        const mode = modes[0] || 0;
+        if (mode === MODE.RELATIVE) writePointer += this.relativeBase;
+        // console.log(writePointer);
         this._memory[writePointer] = x;
         this.debug('SAVE_INPUT', { input: x, writePointer });
         this.iPointer += 2;
@@ -126,30 +162,31 @@ export class Program {
           throw Error('output called with no handler');
         }
 
-        const output = this.getParameter(params[0], modes[0], this._memory);
+        const output = this.getParameter(0);
+        // console.log({ output });
         this.outputHandler(output);
         this.debug('OUTPUT_VALUE', { output });
         this.iPointer += 2;
         break;
       }
       case OP.TRUE_JUMP: {
-        const x = this.getParameter(params[0], modes[0], this._memory);
-        const y = this.getParameter(params[1], modes[1], this._memory);
-        this.debug('TRUE_JUMP', { truthy: !!x });
+        const x = this.getParameter(0);
+        const y = this.getParameter(1);
+        this.debug('TRUE_JUMP', { x, y, truthy: !!x });
         this.iPointer = x ? y : this.iPointer + 3;
         break;
       }
       case OP.FALSE_JUMP: {
-        const x = this.getParameter(params[0], modes[0], this._memory);
-        const y = this.getParameter(params[1], modes[1], this._memory);
-        this.debug('FALSE_JUMP', { falsy: !x });
+        const x = this.getParameter(0);
+        const y = this.getParameter(1);
+        this.debug('FALSE_JUMP', { x, y, falsy: !x });
         this.iPointer = !x ? y : this.iPointer + 3;
         break;
       }
       case OP.LESS_THAN: {
-        const x = this.getParameter(params[0], modes[0], this._memory);
-        const y = this.getParameter(params[1], modes[1], this._memory);
-        const writePointer = params[2];
+        const x = this.getParameter(0);
+        const y = this.getParameter(1);
+        const writePointer = this.getParameter(2, true);
         const result = Number(x < y);
         this._memory[writePointer] = result;
         this.debug('LESS_THAN', { x, y, result, writePointer });
@@ -157,9 +194,9 @@ export class Program {
         break;
       }
       case OP.EQUALS: {
-        const x = this.getParameter(params[0], modes[0], this._memory);
-        const y = this.getParameter(params[1], modes[1], this._memory);
-        const writePointer = params[2];
+        const x = this.getParameter(0);
+        const y = this.getParameter(1);
+        const writePointer = this.getParameter(2, true);
         const result = Number(x === y);
         this._memory[writePointer] = result;
         this.debug('LESS_THAN', { x, y, result, writePointer });
@@ -167,8 +204,9 @@ export class Program {
         break;
       }
       case OP.ADJUST_BASE: {
-        const x = this.getParameter(params[0], modes[0], this._memory);
+        const x = this.getParameter(0);
         this.relativeBase += x;
+        this.debug('ADJUST_BASE', { x });
         this.iPointer += 2;
         break;
       }
@@ -204,7 +242,7 @@ export const runProgram = (
   overrides?: { [key: number]: number },
   initalInputs?: number[],
   outputHandler?: Function,
-  debugging = false
+  debugging?: boolean
 ) => {
   return new Program(
     initialMemory,

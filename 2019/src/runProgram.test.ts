@@ -151,13 +151,25 @@ describe('runProgram()', () => {
 
   test('Handles large numbers', () => {
     const mockFn = jest.fn();
-    runProgram([104,1125899906842624,99], undefined, undefined, mockFn);
+    runProgram([104, 1125899906842624, 99], undefined, undefined, mockFn);
     expect(mockFn).toHaveBeenCalledWith(1125899906842624);
   });
 
   test('Should output 16-digit number', () => {
     const mockFn = jest.fn(n => n);
-    runProgram([1102,34915192,34915192,7,4,7,99,0], undefined, undefined, mockFn);
+    runProgram(
+      [1102, 34915192, 34915192, 7, 4, 7, 99, 0],
+      undefined,
+      undefined,
+      mockFn
+    );
     expect(`${mockFn.mock.results[0].value}`.length).toEqual(16);
+  });
+
+  test('should be a quine', () => {
+    const input = [109,1,204,-1,1001,100,1,100,1008,100,16,101,1006,101,0,99]; // prettier-ignore
+    const output: number[] = [];
+    runProgram(input, undefined, undefined, (o: number) => { output.push(o); }); // prettier-ignore
+    expect(input).toEqual(output);
   });
 });
