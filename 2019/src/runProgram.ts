@@ -9,7 +9,14 @@ export enum OP {
   FALSE_JUMP = 6,
   LESS_THAN = 7,
   EQUALS = 8,
+  ADJUST_BASE = 9,
   EXT = 99,
+}
+
+export enum MODE {
+  REFERENCE,
+  IMMEDIATE,
+  RELATIVE,
 }
 
 export const getOpcode = (value: number): [number, number[]] => {
@@ -26,15 +33,11 @@ export const getOpcode = (value: number): [number, number[]] => {
   return [opcode, args];
 };
 
-const getParameter = (value: number, mode: number, memory: number[]) => {
-  if (mode === 1) return value;
-  return memory[value];
-};
-
 export class Program {
   private _memory: number[];
   private inputs: number[];
   private iPointer = 0;
+  private relativeBase = 0;
 
   waiting = false;
   exited = false;
@@ -59,6 +62,19 @@ export class Program {
     }
   }
 
+  getParameter(value: number, mode: number, memory: number[]) {
+    switch (mode || 0) {
+      case MODE.REFERENCE:
+        return memory[value];
+      case MODE.IMMEDIATE:
+        return value;
+      case MODE.RELATIVE:
+        return memory[this.relativeBase + value];
+      default:
+        throw Error('invalid mode');
+    }
+  }
+
   private nextInstruction() {
     const opVal = this._memory[this.iPointer];
     const [opcode, modes] = getOpcode(opVal);
@@ -72,8 +88,8 @@ export class Program {
         break;
       }
       case OP.ADD: {
-        const x = getParameter(params[0], modes[0], this._memory);
-        const y = getParameter(params[1], modes[1], this._memory);
+        const x = this.getParameter(params[0], modes[0], this._memory);
+        const y = this.getParameter(params[1], modes[1], this._memory);
         const writePointer = params[2];
         const result = x + y;
         this._memory[writePointer] = result;
@@ -82,8 +98,8 @@ export class Program {
         break;
       }
       case OP.MULTIPLY: {
-        const x = getParameter(params[0], modes[0], this._memory);
-        const y = getParameter(params[1], modes[1], this._memory);
+        const x = this.getParameter(params[0], modes[0], this._memory);
+        const y = this.getParameter(params[1], modes[1], this._memory);
         const writePointer = params[2];
         const result = x * y;
         this._memory[writePointer] = result;
@@ -110,29 +126,29 @@ export class Program {
           throw Error('output called with no handler');
         }
 
-        const output = getParameter(params[0], modes[0], this._memory);
+        const output = this.getParameter(params[0], modes[0], this._memory);
         this.outputHandler(output);
         this.debug('OUTPUT_VALUE', { output });
         this.iPointer += 2;
         break;
       }
       case OP.TRUE_JUMP: {
-        const x = getParameter(params[0], modes[0], this._memory);
-        const y = getParameter(params[1], modes[1], this._memory);
+        const x = this.getParameter(params[0], modes[0], this._memory);
+        const y = this.getParameter(params[1], modes[1], this._memory);
         this.debug('TRUE_JUMP', { truthy: !!x });
         this.iPointer = x ? y : this.iPointer + 3;
         break;
       }
       case OP.FALSE_JUMP: {
-        const x = getParameter(params[0], modes[0], this._memory);
-        const y = getParameter(params[1], modes[1], this._memory);
+        const x = this.getParameter(params[0], modes[0], this._memory);
+        const y = this.getParameter(params[1], modes[1], this._memory);
         this.debug('FALSE_JUMP', { falsy: !x });
         this.iPointer = !x ? y : this.iPointer + 3;
         break;
       }
       case OP.LESS_THAN: {
-        const x = getParameter(params[0], modes[0], this._memory);
-        const y = getParameter(params[1], modes[1], this._memory);
+        const x = this.getParameter(params[0], modes[0], this._memory);
+        const y = this.getParameter(params[1], modes[1], this._memory);
         const writePointer = params[2];
         const result = Number(x < y);
         this._memory[writePointer] = result;
@@ -141,13 +157,19 @@ export class Program {
         break;
       }
       case OP.EQUALS: {
-        const x = getParameter(params[0], modes[0], this._memory);
-        const y = getParameter(params[1], modes[1], this._memory);
+        const x = this.getParameter(params[0], modes[0], this._memory);
+        const y = this.getParameter(params[1], modes[1], this._memory);
         const writePointer = params[2];
         const result = Number(x === y);
         this._memory[writePointer] = result;
         this.debug('LESS_THAN', { x, y, result, writePointer });
         this.iPointer += 4;
+        break;
+      }
+      case OP.ADJUST_BASE: {
+        const x = this.getParameter(params[0], modes[0], this._memory);
+        this.relativeBase += x;
+        this.iPointer += 2;
         break;
       }
       default:

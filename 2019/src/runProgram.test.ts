@@ -148,4 +148,16 @@ describe('runProgram()', () => {
     runProgram(input, undefined, [10], mockFn);
     expect(mockFn).toHaveBeenCalledWith(1001);
   });
+
+  test('Handles large numbers', () => {
+    const mockFn = jest.fn();
+    runProgram([104,1125899906842624,99], undefined, undefined, mockFn);
+    expect(mockFn).toHaveBeenCalledWith(1125899906842624);
+  });
+
+  test('Should output 16-digit number', () => {
+    const mockFn = jest.fn(n => n);
+    runProgram([1102,34915192,34915192,7,4,7,99,0], undefined, undefined, mockFn);
+    expect(`${mockFn.mock.results[0].value}`.length).toEqual(16);
+  });
 });
