@@ -71,7 +71,6 @@ export class Program {
 
   readMemory(pointer: number) {
     let value = this.memory[pointer];
-    // console.log('read', { pointer, value });
     if (!value) {
       value = this.memory[pointer] = 0;
     }
@@ -106,14 +105,6 @@ export class Program {
     const params = this._memory.slice(this.iPointer + 1, this.iPointer + 4);
     this.currentInstruction = { opcode, modes, params };
 
-    // console.log({
-    //   opcode: OP[opcode],
-    //   modes,
-    //   params,
-    //   inputs: this.inputs,
-    //   relativeBase: this.relativeBase,
-    // });
-
     switch (opcode) {
       case OP.EXT: {
         this.debug('EXIT');
@@ -141,17 +132,13 @@ export class Program {
         break;
       }
       case OP.SAVE_INPUT: {
-        // wait for the input to exist
         if (!this.inputs.length) {
           this.waiting = true;
           break;
         }
 
         const x = this.inputs.shift() as number;
-        let writePointer = params[0];
-        const mode = modes[0] || 0;
-        if (mode === MODE.RELATIVE) writePointer += this.relativeBase;
-        // console.log(writePointer);
+        const writePointer = this.getParameter(0, true);
         this._memory[writePointer] = x;
         this.debug('SAVE_INPUT', { input: x, writePointer });
         this.iPointer += 2;
@@ -163,7 +150,6 @@ export class Program {
         }
 
         const output = this.getParameter(0);
-        // console.log({ output });
         this.outputHandler(output);
         this.debug('OUTPUT_VALUE', { output });
         this.iPointer += 2;
