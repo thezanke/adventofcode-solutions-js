@@ -61,7 +61,7 @@ describe('DAY 10', () => {
       expect(bestLocation.coordinates).toEqual('1,2');
     });
 
-    test('Example 4', () => {
+    test.skip('Example 4', () => {
       const input = [
         '.#..#..###',
         '####.###.#',

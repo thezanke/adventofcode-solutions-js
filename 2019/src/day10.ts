@@ -15,8 +15,7 @@ interface Position {
 const isBetween = (a: Position, b: Position, c: Position) => {
   const xProduct = (c.y - a.y) * (b.x - a.x) - (c.x - a.x) * (b.y - a.y);
 
-  // compare versus epsilon for floating point values, or != 0 if using integers
-  if (Math.abs(xProduct) > Number.EPSILON) return false;
+  if (Math.abs(xProduct) !== 0) return false;
 
   const dotProduct = (c.x - a.x) * (b.x - a.x) + (c.y - a.y) * (b.y - a.y);
   if (dotProduct < 0) return false;
