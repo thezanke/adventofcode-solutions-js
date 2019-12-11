@@ -149,7 +149,7 @@ class Station {
   }
 
   findNextTarget(i: number) {
-    const { lastDestroyed } = this;
+    const { lastDestroyedTarget: lastDestroyed } = this;
     let nextTarget = this.targets.find(t => {
       if (i === 0) return t.angle >= 90;
       return t.angle > lastDestroyed.angle;
@@ -171,7 +171,7 @@ class Station {
     }
   }
 
-  get lastDestroyed() {
+  get lastDestroyedTarget() {
     return this.destroyedTargets[this.destroyedTargets.length - 1];
   }
 }
@@ -196,6 +196,6 @@ export const solvePart2 = (input: string[], location?: Position) => {
     return targetCount === 0 || destroyedCount === 200;
   });
 
-  const { x, y } = station.lastDestroyed;
+  const { x, y } = station.lastDestroyedTarget;
   return x * 100 + y;
 };
