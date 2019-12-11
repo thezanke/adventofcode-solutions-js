@@ -142,7 +142,7 @@ describe('DAY 10', () => {
       expect(solvePart2(input, { x: 11, y: 13 })).toEqual(802);
     });
 
-    test.only('Final Input', async () => {
+    test('Final Input', async () => {
       const input = await getInput('day10.txt', '\n');
       expect(solvePart2(input, { x: 17, y: 22 })).toEqual(616);
     });
