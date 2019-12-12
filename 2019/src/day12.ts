@@ -103,7 +103,7 @@ export const solvePart1 = (input: string[], length = 1) => {
   return sim.totalEnergy;
 };
 
-export const solvePart2 = (input: string[], maxIterations = 5e9) => {
+export const solvePart2 = (input: string[]) => {
   const sim = new Simulation(input);
   sim.next();
 
