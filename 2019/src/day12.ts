@@ -73,10 +73,10 @@ export class Simulation {
     }, []);
   }
 
-  next() {
+  next = () => {
     this.applyUpdates();
     this.step += 1;
-  }
+  };
 
   get totalEnergy() {
     return this.moons.reduce((total, moon) => {
@@ -84,3 +84,9 @@ export class Simulation {
     }, 0);
   }
 }
+
+export const solvePart1 = (input: string[], length = 1) => {
+  const sim = new Simulation(input);
+  Array.from({ length }).forEach(sim.next);
+  return sim.totalEnergy;
+};

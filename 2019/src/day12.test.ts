@@ -1,4 +1,5 @@
-import { Simulation } from './day12';
+import { solvePart1 } from './day12';
+
 const EXAMPLE_INPUT = [
   '<x=-1, y=0, z=2>',
   '<x=2, y=-10, z=-7>',
@@ -16,18 +17,10 @@ const FINAL_INPUT = [
 describe('DAY 12', () => {
   describe('Part 1', () => {
     test('Example', () => {
-      const sim = new Simulation(EXAMPLE_INPUT);
-      Array.from({ length: 10 }).forEach(() => {
-        sim.next();
-      });
-      expect(sim.totalEnergy).toEqual(179);
+      expect(solvePart1(EXAMPLE_INPUT, 10)).toEqual(179);
     });
     test('Final', () => {
-      const sim = new Simulation(FINAL_INPUT);
-      Array.from({ length: 1000 }).forEach(() => {
-        sim.next();
-      });
-      expect(sim.totalEnergy).toEqual(8362);
+      expect(solvePart1(FINAL_INPUT, 1000)).toEqual(8362);
     });
   });
 });
