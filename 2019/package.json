@@ -29,6 +29,7 @@
     "@types/lodash": "^4.14.149",
     "bluebird": "^3.7.2",
     "fs-extra": "^8.1.0",
+    "key-events": "^0.1.1",
     "lodash": "^4.17.15"
   }
 }

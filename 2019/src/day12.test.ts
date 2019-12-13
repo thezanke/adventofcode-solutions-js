@@ -33,11 +33,11 @@ describe('DAY 12', () => {
 
   describe('Part 2', () => {
     test('Example 1', () => {
-      expect(solvePart2(EXAMPLE1_INPUT, 2800)).toEqual(2772);
+      expect(solvePart2(EXAMPLE1_INPUT)).toEqual(2772);
     });
 
     test('Example 2', () => {
-      expect(solvePart2(EXAMPLE2_INPUT, 5000000000)).toEqual(4686774924);
+      expect(solvePart2(EXAMPLE2_INPUT)).toEqual(4686774924);
     });
 
     test('Final', () => {

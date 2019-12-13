@@ -99,6 +99,9 @@ export class Program {
     }
   }
 
+  // z = x * 38 + y + 639
+  // pointer = 566
+
   private nextInstruction() {
     const opVal = this._memory[this.iPointer];
     const [opcode, modes] = getOpcode(opVal);
@@ -142,6 +145,7 @@ export class Program {
         this._memory[writePointer] = x;
         this.debug('SAVE_INPUT', { input: x, writePointer });
         this.iPointer += 2;
+        this.run();
         break;
       }
       case OP.OUTPUT_VALUE: {
@@ -208,7 +212,7 @@ export class Program {
 
     this.waiting = false;
 
-    while (true && !this.exited && !this.waiting) {
+    while (!this.exited && !this.waiting) {
       this.nextInstruction();
     }
   }
