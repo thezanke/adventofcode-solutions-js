@@ -33,23 +33,24 @@ const parseInput = (input: string[]) => {
 };
 
 export const solvePart1 = (input: string[]) => {
-  const table = parseInput(input);
+  // const table = parseInput(input);
 
-  let cost = 0;
+  // let cost = 0;
 
-  const extras: { [name: string]: number } = {};
-  const ingredients = [...table.FUEL.ingredients];
+  // const extras: { [name: string]: number } = {};
+  // const ingredients = [...table.FUEL.ingredients];
 
-  while (ingredients.length) {
-    const iName = ingredients.shift();
+  // while (ingredients.length) {
+  //   const iName = ingredients.shift();
 
-    if (!iName) break;
+  //   if (!iName) break;
 
-    if (iName === ORE) {
-      cost += 1;
-    } else {
-      const chem = table[iName];
+  //   if (iName === ORE) {
+  //     cost += 1;
+  //   } else {
+  //     const chem = table[iName];
 
-    }
-  }
+  //   }
+  // }
+  return true;
 };
