@@ -50,6 +50,6 @@ Deno.test("Part 2 - Example 3", () => {
 Deno.test("Part 2 - Answer", () => {
   assertEquals(
     calculateTotalFuelRequired(input, calculateFuelRequiredForMassAndFuel),
-    3210097,
+    4812287,
   );
 });
