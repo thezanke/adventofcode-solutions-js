@@ -10,6 +10,8 @@ import {
   calculateTotalFuelRequired,
 } from "./day-1.ts";
 
+let input = readInputFile("2019-day-1/input.txt").map(Number);
+
 Deno.test("Part 1 - Example 1", () => {
   assertEquals(calculateFuelRequiredForMass(12), 2);
 });
@@ -25,8 +27,6 @@ Deno.test("Part 1 - Example 3", () => {
 Deno.test("Part 1 - Example 3", () => {
   assertEquals(calculateFuelRequiredForMass(100756), 33583);
 });
-
-let input = readInputFile("2019-day-1/input.txt").map(Number);
 
 Deno.test("Part 1 - Answer", () => {
   assertEquals(calculateTotalFuelRequired(input), 3210097);
