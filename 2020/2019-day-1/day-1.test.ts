@@ -24,7 +24,7 @@ Deno.test("Part 1 - Example 3", () => {
   assertEquals(calculateFuelRequiredForMass(1969), 654);
 });
 
-Deno.test("Part 1 - Example 3", () => {
+Deno.test("Part 1 - Example 4", () => {
   assertEquals(calculateFuelRequiredForMass(100756), 33583);
 });
 
