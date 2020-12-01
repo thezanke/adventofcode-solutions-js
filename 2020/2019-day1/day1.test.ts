@@ -8,7 +8,7 @@ import {
   calculateFuelRequiredForMass,
   calculateFuelRequiredForMassAndFuel,
   calculateTotalFuelRequired,
-} from "./day-1.ts";
+} from "./day1.ts";
 
 let input = readInputFile("2019-day-1/input.txt").map(Number);
 
