@@ -23,7 +23,7 @@ export const findThreeEntries = (input: number[], target = 2020) => {
     x = list.pop() as number;
     for (y of list) {
       z = target - x - y;
-      if (input.includes(z)) {
+      if (list.includes(z)) {
         return [x, y, z];
       }
     }
