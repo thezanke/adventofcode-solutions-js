@@ -1,14 +1,12 @@
-export const calculateFuelRequiredForMass = (mass: number) =>
-  Math.floor(mass / 3) - 2;
+export const calculateFuelRequiredForMass = (mass: number) => {
+  return Math.floor(mass / 3) - 2;
+};
 
 export const calculateTotalFuelRequired = (
   massArr: number[],
   calculateFn = calculateFuelRequiredForMass,
 ) => {
-  return massArr.reduce(
-    (total, mass) => total + calculateFn(mass),
-    0,
-  );
+  return massArr.reduce((total, mass) => total + calculateFn(mass), 0);
 };
 
 export const calculateFuelRequiredForMassAndFuel = (mass: number) => {
