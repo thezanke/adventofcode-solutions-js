@@ -7,30 +7,29 @@ export const findTwoEntries = (input: number[], target = 2020) => {
   for (x of input) {
     y = target - x;
     if (input.includes(y)) {
-      break;
+      return [x, y];
     }
   }
-  return [x, y];
+
+  return [];
 };
 
 export const findThreeEntries = (input: number[], target = 2020) => {
   let list = [...input];
 
-  let found = false;
   let x = 0;
   let y = 0;
   let z = 0;
 
-  while (!found && list.length) {
+  while (list.length) {
     x = list.pop() as number;
     for (y of list) {
       z = target - x - y;
       if (input.includes(z)) {
-        found = true;
-        break;
+        return [x, y, z];
       }
     }
   }
 
-  return [x, y, z];
+  return [];
 };
