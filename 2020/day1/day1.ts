@@ -1,5 +1,3 @@
-export const split = (str: string) => [...str];
-
 export const findTwoEntries = (input: number[], target = 2020) => {
   let x = 0;
   let y = 0;
