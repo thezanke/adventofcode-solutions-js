@@ -23,7 +23,6 @@ export const isValidPassword1 = (rawPasswordData: string) => {
 
 export const isValidPassword2 = (rawPasswordData: string) => {
   const passwordData = parsePassword(rawPasswordData);
-  console.log(passwordData);
   if (!passwordData) return false;
   const { min, max, char, password } = passwordData;
   const pos1 = min - 1;

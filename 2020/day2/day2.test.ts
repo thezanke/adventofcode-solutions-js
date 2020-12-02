@@ -13,11 +13,11 @@ let exampleInputs = [
   "2-9 c: ccccccccc",
 ];
 
-// Deno.test("Day 2 - Part 1 - Example 1", () => {
-//   assertEquals(isValidPassword1(exampleInputs[0]), true);
-//   assertEquals(isValidPassword1(exampleInputs[1]), false);
-//   assertEquals(isValidPassword1(exampleInputs[2]), true);
-// });
+Deno.test("Day 2 - Part 1 - Example 1", () => {
+  assertEquals(isValidPassword1(exampleInputs[0]), true);
+  assertEquals(isValidPassword1(exampleInputs[1]), false);
+  assertEquals(isValidPassword1(exampleInputs[2]), true);
+});
 
 Deno.test("Day 2 - Part 1 - Answer", () => {
   const valids = input.map(isValidPassword1).filter(Boolean).length;
