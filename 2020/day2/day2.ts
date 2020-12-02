@@ -22,17 +22,13 @@ interface PasswordPolicy {
 }
 
 export const policy1: PasswordPolicy = ({ min, max, char, password }) => {
-  const pwChars = [...password];
-  const charCount = pwChars.filter((c) => char === c).length;
-  if (charCount < min) return false;
-  if (charCount > max) return false;
+  const charCount = [...password].filter((c) => char === c).length;
+  if (charCount < min || charCount > max) return false;
   return true;
 };
 
 export const policy2: PasswordPolicy = ({ min, max, char, password }) => {
-  const pos1 = min - 1;
-  const pos2 = max - 1;
-  const positions = [password[pos1], password[pos2]];
+  const positions = [password[min - 1], password[max - 1]];
   return positions.filter((c) => c === char).length === 1;
 };
 
