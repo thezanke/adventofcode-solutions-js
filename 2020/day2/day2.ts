@@ -10,7 +10,7 @@ const parsePassword = (
   return { min: Number(min), max: Number(max), char, password };
 };
 
-export const isValidPassword = (rawPasswordData: string) => {
+export const isValidPassword1 = (rawPasswordData: string) => {
   const passwordData = parsePassword(rawPasswordData);
   if (!passwordData) return false;
   const { min, max, char, password } = passwordData;
@@ -19,4 +19,16 @@ export const isValidPassword = (rawPasswordData: string) => {
   if (charCount < min) return false;
   if (charCount > max) return false;
   return true;
+};
+
+export const isValidPassword2 = (rawPasswordData: string) => {
+  const passwordData = parsePassword(rawPasswordData);
+  console.log(passwordData);
+  if (!passwordData) return false;
+  const { min, max, char, password } = passwordData;
+  const pos1 = min - 1;
+  const pos2 = max - 1;
+  const positions = [password[pos1], password[pos2]];
+  console.log(positions);
+  return positions.filter((c) => c === char).length === 1;
 };

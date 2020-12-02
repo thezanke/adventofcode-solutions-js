@@ -4,7 +4,7 @@ import {
 
 import { readInputFile } from "../readInputFile.ts";
 
-import { isValidPassword } from "./day2.ts";
+import { isValidPassword1, isValidPassword2 } from "./day2.ts";
 
 let input = readInputFile("day2/input.txt");
 let exampleInputs = [
@@ -13,23 +13,30 @@ let exampleInputs = [
   "2-9 c: ccccccccc",
 ];
 
-Deno.test("Day 2 - Part 1 - Example 1", () => {
-  assertEquals(isValidPassword(exampleInputs[0]), true);
-  assertEquals(isValidPassword(exampleInputs[1]), false);
-  assertEquals(isValidPassword(exampleInputs[2]), true);
-});
+// Deno.test("Day 2 - Part 1 - Example 1", () => {
+//   assertEquals(isValidPassword1(exampleInputs[0]), true);
+//   assertEquals(isValidPassword1(exampleInputs[1]), false);
+//   assertEquals(isValidPassword1(exampleInputs[2]), true);
+// });
 
 Deno.test("Day 2 - Part 1 - Answer", () => {
-  const valids = input.map(isValidPassword).filter(Boolean).length;
-  assertEquals(valids, 485739);
+  const valids = input.map(isValidPassword1).filter(Boolean).length;
+  assertEquals(valids, 465);
 });
 
-// Deno.test("Day 1 - Part 2 - Example 1", () => {
-//   const [x, y, z] = findThreeEntries(exampleInput);
-//   assertEquals(x * y * z, 241861950);
-// });
+Deno.test("Day 1 - Part 2 - Example 1", () => {
+  assertEquals(isValidPassword2(exampleInputs[0]), true);
+});
 
-// Deno.test("Day 1 - Part 2 - Answer", () => {
-//   const [x, y, z] = findThreeEntries(input);
-//   assertEquals(x * y * z, 161109702);
-// });
+Deno.test("Day 1 - Part 2 - Example 2", () => {
+  assertEquals(isValidPassword2(exampleInputs[1]), false);
+});
+
+Deno.test("Day 1 - Part 2 - Example 3", () => {
+  assertEquals(isValidPassword2(exampleInputs[2]), false);
+});
+
+Deno.test("Day 1 - Part 2 - Answer", () => {
+  const valids = input.map(isValidPassword2).filter(Boolean).length;
+  assertEquals(valids, 465);
+});
