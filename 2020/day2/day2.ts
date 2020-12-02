@@ -1,8 +1,13 @@
 const PASSWORD_MATCHER = /(\d+)-(\d+) (.+): (.+)/;
 
-const parsePassword = (
-  rawPasswordData: string,
-): { min: number; max: number; char: string; password: string } | null => {
+interface ParsedPassword {
+  min: number;
+  max: number;
+  char: string;
+  password: string;
+}
+
+const parsePassword = (rawPasswordData: string): ParsedPassword | null => {
   const match = rawPasswordData.match(PASSWORD_MATCHER);
 
   if (!match) return null;
