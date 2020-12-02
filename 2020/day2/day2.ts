@@ -17,7 +17,11 @@ const parsePassword = (rawPasswordData: string): ParsedPassword | null => {
   return { min: Number(min), max: Number(max), char, password };
 };
 
-export const policy1 = ({ min, max, char, password }: ParsedPassword) => {
+interface PasswordPolicy {
+  (parsedPassword: ParsedPassword): boolean;
+}
+
+export const policy1: PasswordPolicy = ({ min, max, char, password }) => {
   const pwChars = [...password];
   const charCount = pwChars.filter((c) => char === c).length;
   if (charCount < min) return false;
@@ -25,7 +29,7 @@ export const policy1 = ({ min, max, char, password }: ParsedPassword) => {
   return true;
 };
 
-export const policy2 = ({ min, max, char, password }: ParsedPassword) => {
+export const policy2: PasswordPolicy = ({ min, max, char, password }) => {
   const pos1 = min - 1;
   const pos2 = max - 1;
   const positions = [password[pos1], password[pos2]];
