@@ -1,13 +1,11 @@
-import {
-  assertEquals,
-} from "https://deno.land/std@0.79.0/testing/asserts.ts";
+import { assertEquals } from "https://deno.land/std@0.79.0/testing/asserts.ts";
 
 import { readInputFile } from "../readInputFile.ts";
 
-import { findTwoEntries, findThreeEntries } from "./day1.ts";
+import { findThreeEntries, findTwoEntries } from "./day1.ts";
 
-let exampleInput = [1721, 979, 366, 299, 675, 1456];
-let input = readInputFile("day1/input.txt").map(Number);
+const exampleInput = [1721, 979, 366, 299, 675, 1456];
+const input = readInputFile("day1/input.txt").map(Number);
 
 Deno.test("Day 1 - Part 1 - Example 1", () => {
   const [x, y] = findTwoEntries(exampleInput);

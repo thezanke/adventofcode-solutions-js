@@ -1,13 +1,11 @@
-import {
-  assertEquals,
-} from "https://deno.land/std@0.79.0/testing/asserts.ts";
+import { assertEquals } from "https://deno.land/std@0.79.0/testing/asserts.ts";
 
 import { readInputFile } from "../readInputFile.ts";
 
 import { isValidPassword, policy2 } from "./day2.ts";
 
-let input = readInputFile("day2/input.txt");
-let exampleInputs = [
+const input = readInputFile("day2/input.txt");
+const exampleInputs = [
   "1-3 a: abcde",
   "1-3 b: cdefg",
   "2-9 c: ccccccccc",

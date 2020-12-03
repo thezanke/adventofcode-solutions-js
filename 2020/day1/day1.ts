@@ -13,7 +13,7 @@ export const findTwoEntries = (input: number[], target = 2020) => {
 };
 
 export const findThreeEntries = (input: number[], target = 2020) => {
-  let list = [...input];
+  const list = [...input];
 
   let x = 0;
   let y = 0;
