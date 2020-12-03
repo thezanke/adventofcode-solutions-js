@@ -1,4 +1,4 @@
-import { Vect } from "../lib/Vect.ts";
+import { Vect } from "../common/Vect.ts";
 
 const TREE = "#";
 
