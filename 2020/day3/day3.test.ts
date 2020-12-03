@@ -23,29 +23,9 @@ Deno.test("Day 3 - Part 1 - Example 1", () => {
   assertEquals(countTrees(exampleInput, new Vect(3, 1)), 7);
 });
 
-// Deno.test("Day 3 - Part 1 - Example 2", () => {
-//   assertEquals(isValidPassword(exampleInputs[1]), false);
-// });
-
-// Deno.test("Day 3 - Part 1 - Example 3", () => {
-//   assertEquals(isValidPassword(exampleInputs[2]), true);
-// });
-
 Deno.test("Day 3 - Part 1 - Answer", () => {
   assertEquals(countTrees(input, new Vect(3, 1)), 250);
 });
-
-// Deno.test("Day 3 - Part 2 - Example 1", () => {
-//   assertEquals(isValidPassword(exampleInputs[0], policy2), true);
-// });
-
-// Deno.test("Day 3 - Part 2 - Example 2", () => {
-//   assertEquals(isValidPassword(exampleInputs[1], policy2), false);
-// });
-
-// Deno.test("Day 3 - Part 2 - Example 3", () => {
-//   assertEquals(isValidPassword(exampleInputs[2], policy2), false);
-// });
 
 Deno.test("Day 3 - Part 2 - Answer", () => {
   const counts = [
