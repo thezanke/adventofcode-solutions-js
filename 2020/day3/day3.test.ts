@@ -38,5 +38,5 @@ Deno.test("Day 3 - Part 2 - Answer", () => {
 
   const total = counts.reduce((t, n) => t * n);
 
-  assertEquals(total, 7);
+  assertEquals(total, 1592662500);
 });

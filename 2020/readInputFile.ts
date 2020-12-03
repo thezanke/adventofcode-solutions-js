@@ -1,6 +1,6 @@
 export const readInputFile = (
   path: string,
-  splitter = "\n",
+  splitter = /\r?\n/,
 ) => {
   const text = Deno.readTextFileSync(path);
   return text.split(splitter).filter((line) => line.length);
