@@ -27,15 +27,11 @@ Deno.test("Day 3 - Part 1 - Answer", () => {
 });
 
 Deno.test("Day 3 - Part 2 - Answer", () => {
-  const counts = [
-    countTrees(input, new Vect(1, 1)),
-    countTrees(input, new Vect(3, 1)),
-    countTrees(input, new Vect(5, 1)),
-    countTrees(input, new Vect(7, 1)),
-    countTrees(input, new Vect(1, 2)),
-  ];
-
-  const total = counts.reduce((t, n) => t * n);
+  let total = countTrees(input, new Vect(1, 1));
+  total *= countTrees(input, new Vect(3, 1));
+  total *= countTrees(input, new Vect(5, 1));
+  total *= countTrees(input, new Vect(7, 1));
+  total *= countTrees(input, new Vect(1, 2));
 
   assertEquals(total, 1592662500);
 });
