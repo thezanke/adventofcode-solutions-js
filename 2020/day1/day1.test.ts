@@ -1,5 +1,5 @@
 import { assertEquals } from "https://deno.land/std@0.79.0/testing/asserts.ts";
-import { readInputFile } from "../lib/readInputFile.ts";
+import { readInputFile } from "../common/readInputFile.ts";
 import { findThreeEntries, findTwoEntries } from "./day1.ts";
 
 const exampleInput = [1721, 979, 366, 299, 675, 1456];

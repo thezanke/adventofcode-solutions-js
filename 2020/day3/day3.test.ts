@@ -1,6 +1,6 @@
 import { assertEquals } from "https://deno.land/std@0.79.0/testing/asserts.ts";
-import { readInputFile } from "../lib/readInputFile.ts";
-import { Vect } from "../lib/Vect.ts";
+import { readInputFile } from "../common/readInputFile.ts";
+import { Vect } from "../common/Vect.ts";
 import { countTrees } from "./day3.ts";
 
 const input = readInputFile("day3/input.txt");
