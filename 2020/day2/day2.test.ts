@@ -1,7 +1,5 @@
 import { assertEquals } from "https://deno.land/std@0.79.0/testing/asserts.ts";
-
-import { readInputFile } from "../readInputFile.ts";
-
+import { readInputFile } from "../lib/readInputFile.ts";
 import { isValidPassword, policy2 } from "./day2.ts";
 
 const input = readInputFile("day2/input.txt");
