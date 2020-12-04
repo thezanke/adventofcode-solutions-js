@@ -11,5 +11,6 @@
   "[typescriptreact]": {
     "editor.defaultFormatter": "denoland.vscode-deno",
   },
-  "editor.formatOnSave": true
+  "editor.formatOnSave": true,
+  "debug.javascript.unmapMissingSources": true
 }
