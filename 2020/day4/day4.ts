@@ -7,7 +7,7 @@ export interface Passport {
 export const parsePassport = (str: string) => {
   const passport: Passport = {};
 
-  str.split(/\r?\n/).forEach((line) => {
+  str.split(/\n/).forEach((line) => {
     line.split(" ").forEach((field) => {
       const [fieldName, value] = field.split(":");
       passport[fieldName] = value;
