@@ -2,6 +2,17 @@
 /**
  * Credit to https://xaviergeerinck.com/solve-permutation-heaps.
  * All I did was add types and a calling function with a result array.
+ *
+ * Heaps algorithm is an algorithm that computes every single permutation of a given set of elements.
+ * The algorithm is basically going to swap elements based on the iteration k we are in for the current size n.
+ * If this iteration k is even then we will swap the kth element with the last element,and else we will
+ * swap the last element with the first element.
+ *
+ * Example input: [1, 2, 3]
+ * Output: [
+ *   [2, 3, 1], [3, 2, 1], [1, 2, 3], [2, 1, 3],
+ *   [3, 1, 2], [1, 3, 2], [2, 3, 1], [3, 2, 1]
+ * ]
  */
 export const permute = (input: any[]) => {
   const result: any[][] = [];
