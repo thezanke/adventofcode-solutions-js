@@ -5,15 +5,16 @@ const TREE = "#";
 export const countTrees = (lines: string[], trajectory: Vect) => {
   const lineLength = lines[0].length;
   const position = new Vect();
-  const locationsVisited = [];
+
+  let treeCount = 0;
 
   while (position.y < lines.length) {
     const { x, y } = position;
     const linePos = x % lineLength;
     const posChar = lines[y][linePos];
-    locationsVisited.push(posChar);
+    if (posChar === TREE) treeCount += 1;
     position.add(trajectory);
   }
 
-  return locationsVisited.filter((c) => c === TREE).length;
+  return treeCount;
 };
