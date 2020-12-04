@@ -62,5 +62,3 @@ Deno.test("Day 4 - Part 2 - Answer", () => {
 
   assertEquals(checks.filter(Boolean).length, 150);
 });
-
-// NOT CORRECT: 32
