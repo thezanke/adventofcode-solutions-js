@@ -23,7 +23,7 @@ const findPosition = (
 
 export const getSeatId = (boardingPass: string) => {
   const match = boardingPass.match(PASS_MATCHER);
-  if (!match) return 0;
+  if (!match) return -1;
   const [, rowInput, colInput] = match;
   const row = findPosition(rowInput, 0, 127, "F");
   const col = findPosition(colInput, 0, 7, "L");
