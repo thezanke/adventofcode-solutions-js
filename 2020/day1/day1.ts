@@ -4,9 +4,7 @@ export const findTwoEntries = (input: number[], target = 2020) => {
 
   for (x of input) {
     y = target - x;
-    if (input.includes(y)) {
-      return [x, y];
-    }
+    if (input.includes(y)) return [x, y];
   }
 
   return [];
@@ -23,9 +21,7 @@ export const findThreeEntries = (input: number[], target = 2020) => {
     x = list.pop() as number;
     for (y of list) {
       z = target - x - y;
-      if (list.includes(z)) {
-        return [x, y, z];
-      }
+      if (list.includes(z)) return [x, y, z];
     }
   }
 

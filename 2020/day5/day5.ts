@@ -19,7 +19,6 @@ const findPosition = (
   });
 
   if (min !== max) return -1;
-
   return max;
 };
 
