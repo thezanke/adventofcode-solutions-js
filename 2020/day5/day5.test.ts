@@ -8,12 +8,24 @@ Deno.test("Day 5 - Part 1 - Example 1", () => {
   assertEquals(getSeatId("FBFBBFFRLR"), 357);
 });
 
+Deno.test("Day 5 - Part 1 - Example 2", () => {
+  assertEquals(getSeatId("BFFFBBFRRR"), 567);
+});
+
+Deno.test("Day 5 - Part 1 - Example 3", () => {
+  assertEquals(getSeatId("FFFBBBFRRR"), 119);
+});
+
+Deno.test("Day 5 - Part 1 - Example 4", () => {
+  assertEquals(getSeatId("BBFFBBFRLL"), 820);
+});
+
+const ids = input.map((r) => getSeatId(r));
+
 Deno.test("Day 5 - Part 1 - Answer", () => {
-  const ids = input.map((r) => getSeatId(r));
   assertEquals(Math.max(...ids), 896);
 });
 
 Deno.test("Day 5 - Part 2 - Answer", () => {
-  const ids = input.map((r) => getSeatId(r));
   assertEquals(findSeat(ids), 659);
 });
