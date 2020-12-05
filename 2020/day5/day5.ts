@@ -2,27 +2,17 @@ const MAX_ROWS = 128;
 
 const PASS_MATCHER = /(.{7})(.{3})/;
 
-export const determineRow = (part: string) => {
-  let min = 0;
-  let max = 127;
+const findPosition = (
+  part: string,
+  _min: number,
+  _max: number,
+  shrink: string,
+) => {
+  let min = _min;
+  let max = _max;
 
   part.split("").forEach((c) => {
-    if (c === "F") {
-      max -= Math.ceil((max - min) / 2);
-    } else {
-      min += Math.ceil((max - min) / 2);
-    }
-  });
-
-  return max;
-};
-
-export const determineCol = (part: string) => {
-  let min = 0;
-  let max = 7;
-
-  part.split("").forEach((c) => {
-    if (c === "L") {
+    if (c === shrink) {
       max -= Math.ceil((max - min) / 2);
     } else {
       min += Math.ceil((max - min) / 2);
@@ -36,8 +26,8 @@ export const getSeatId = (boardingPass: string) => {
   const match = boardingPass.match(PASS_MATCHER);
   if (!match) return 0;
   const [, rowInput, colInput] = match;
-  const row = determineRow(rowInput);
-  const col = determineCol(colInput);
+  const row = findPosition(rowInput, 0, 127, "F");
+  const col = findPosition(colInput, 0, 7, "L");
   return row * 8 + col;
 };
 
