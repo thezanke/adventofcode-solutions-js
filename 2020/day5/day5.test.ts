@@ -15,5 +15,5 @@ Deno.test("Day 5 - Part 1 - Answer", () => {
 
 Deno.test("Day 5 - Part 2 - Answer", () => {
   const ids = input.map((r) => getSeatId(r));
-  assertEquals(findSeat(ids), 1);
+  assertEquals(findSeat(ids), 659);
 });
