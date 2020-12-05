@@ -18,8 +18,9 @@ const findPosition = (
     }
   });
 
-  if (min !== max) return -1;
-  return max;
+  if (min === max) return max;
+
+  return -1;
 };
 
 export const getSeatId = (boardingPass: string) => {
