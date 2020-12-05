@@ -1,5 +1,3 @@
-const MAX_ROWS = 128;
-
 const PASS_MATCHER = /(.{7})(.{3})/;
 
 const findPosition = (
@@ -12,10 +10,11 @@ const findPosition = (
   let max = _max;
 
   part.split("").forEach((c) => {
+    const adjustAmount = Math.ceil((max - min) / 2);
     if (c === shrink) {
-      max -= Math.ceil((max - min) / 2);
+      max -= adjustAmount;
     } else {
-      min += Math.ceil((max - min) / 2);
+      min += adjustAmount;
     }
   });
 
