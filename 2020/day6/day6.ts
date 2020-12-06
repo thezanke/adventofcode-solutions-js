@@ -1,3 +1,5 @@
+import { intersection } from "../common/arrays.ts";
+
 export const countUniqueAnswers = (groupAnswers: string[][]) => {
   let total = 0;
   groupAnswers.forEach((ga) => {
@@ -24,4 +26,15 @@ export const countGroupedAnswers = (groupAnswers: string[][]) => {
     });
   });
   return total;
+};
+
+export const countGroupedAnswersWIntersection = (groups: string[][]) => {
+  return groups.reduce((total, groupForms) => {
+    const allAnswered = groupForms
+      .map((form) => form.split(""))
+      .reduce((acc, form) => intersection(acc, form))
+      .length;
+
+    return total + allAnswered;
+  }, 0);
 };

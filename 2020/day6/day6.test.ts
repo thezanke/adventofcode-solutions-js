@@ -1,6 +1,10 @@
 import { assertEquals } from "https://deno.land/std@0.79.0/testing/asserts.ts";
 import { readInputFile } from "../common/readInputFile.ts";
-import { countGroupedAnswers, countUniqueAnswers } from "./day6.ts";
+import {
+  countGroupedAnswers,
+  countGroupedAnswersWIntersection,
+  countUniqueAnswers,
+} from "./day6.ts";
 
 const exampleInput = readInputFile("day6/exampleInput.txt", /\n\n/).map((g) =>
   g.split("\n")
@@ -21,5 +25,5 @@ Deno.test("Day 6 - Part 2 - Example 1", () => {
 });
 
 Deno.test("Day 6 - Part 2 - Answer", () => {
-  assertEquals(countGroupedAnswers(input), 3229);
+  assertEquals(countGroupedAnswersWIntersection(input), 3229);
 });
