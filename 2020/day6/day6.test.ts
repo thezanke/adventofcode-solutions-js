@@ -16,10 +16,10 @@ Deno.test("Day 6 - Part 1 - Answer", () => {
   assertEquals(getAnswerCounts(input), 6437);
 });
 
-Deno.test("Day 6 - Part 1 - Example 1", () => {
+Deno.test("Day 6 - Part 2 - Example 1", () => {
   assertEquals(countGroupedAnswers(exampleInput), 6);
 });
 
-Deno.test("Day 6 - Part 1 - Answer", () => {
+Deno.test("Day 6 - Part 2 - Answer", () => {
   assertEquals(countGroupedAnswers(input), 3229);
 });
