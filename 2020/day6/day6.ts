@@ -13,6 +13,7 @@ interface AnswerMap {
   [key: string]: number;
 }
 
+/* my original naive solution */
 export const countGroupedAnswers = (groupAnswers: string[][]) => {
   let total = 0;
   groupAnswers.forEach((ga) => {
@@ -28,6 +29,7 @@ export const countGroupedAnswers = (groupAnswers: string[][]) => {
   return total;
 };
 
+/* better solution based on discussion with others after the fact */
 export const countGroupedAnswersWIntersection = (groups: string[][]) => {
   return groups.reduce((total, groupForms) => {
     const allAnswered = groupForms
