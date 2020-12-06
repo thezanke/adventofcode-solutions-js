@@ -1,4 +1,4 @@
-export const getAnswerCounts = (groupAnswers: string[][]) => {
+export const countUniqueAnswers = (groupAnswers: string[][]) => {
   let total = 0;
   groupAnswers.forEach((ga) => {
     const set = new Set([...ga.join("")]);
