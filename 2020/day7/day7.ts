@@ -9,9 +9,9 @@ interface RuleDetails {
   };
 }
 
-export const buildDetails = (rules: string[]) => {
+export const buildRuleDetails = (ruleStrings: string[]) => {
   const details: RuleDetails = {};
-  rules.forEach((ruleRow) => {
+  ruleStrings.forEach((ruleRow) => {
     const match = ruleRow.match(RULE_ROW_PARSER);
     if (!match) return;
     const [, type, suffix] = match;
@@ -26,17 +26,12 @@ export const buildDetails = (rules: string[]) => {
   return details;
 };
 
-export const determinePossibleContainers = (
-  rules: string[],
-  needle: string,
-) => {
-  const ruleDetails = buildDetails(rules);
-
+export const countContainers = (ruleDetails: RuleDetails, needle: string) => {
   const findContainers = (type: string): string[] => {
     const containers = Object.keys(ruleDetails)
       .filter((key) => {
         const children = ruleDetails[key];
-        return Object.keys(children).includes(type);
+        return children && Object.keys(children).includes(type);
       });
 
     containers.forEach((container) => {
@@ -50,4 +45,18 @@ export const determinePossibleContainers = (
   };
 
   return findContainers(needle).length;
+};
+
+export const countInnerBags = (ruleDetails: RuleDetails, needle: string) => {
+  const countChildren = (type: string) => {
+    const children = ruleDetails[type];
+    if (!children) return 0;
+    let count = Object.values(children).reduce((a, b) => a + b);
+    Object.entries(children).forEach(([childType, childCount]) => {
+      count += childCount * countChildren(childType);
+    });
+    return count;
+  };
+
+  return countChildren(needle);
 };
