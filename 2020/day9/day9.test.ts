@@ -19,5 +19,5 @@ Deno.test("Day 9 - Part 2 - Example 1", () => {
 
 Deno.test("Day 9 - Part 2 - Answer", () => {
   // wrong answer, too low
-  assertEquals(findEncryptionWeakness(input, 1930745883), 200682420);
+  assertEquals(findEncryptionWeakness(input, 1930745883), 268878261);
 });

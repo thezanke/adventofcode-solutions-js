@@ -26,7 +26,7 @@ export const findXmasError = (numbers: number[], groupSize: number) => {
 };
 
 const sumRange = (range: number[]) => {
-  return range.reduce((a, b) => a + b);
+  return range.reduce((a: number, b: number) => a + b);
 };
 
 export const findEncryptionWeakness = (numbers: number[], vuln: number) => {
@@ -37,12 +37,15 @@ export const findEncryptionWeakness = (numbers: number[], vuln: number) => {
 
     if (!a) continue;
 
-    for (let ii = i + 1; ii < maskedNumbers.length; ii += 1) {
-      const b = maskedNumbers[ii];
+    for (let j = i + 1; j < maskedNumbers.length; j += 1) {
+      const b = maskedNumbers[j];
       if (!b) break;
-      let range = maskedNumbers.slice(i, ii + 1).sort() as number[];
-      if (sumRange(range) === vuln) {
-        return range[0] + range[range.length - 1];
+      let range = maskedNumbers.slice(i, j + 1);
+      if (range.includes(null)) throw new Error("null in range");
+      if (sumRange(range as number[]) === vuln) {
+        const min = Math.min(...range as number[]);
+        const max = Math.max(...range as number[]);
+        return min + max;
       }
     }
   }
