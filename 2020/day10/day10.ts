@@ -35,8 +35,14 @@ export const createArrangementTree = (inputs: number[]) => {
   return tree;
 };
 
+/*
+* Thanks to a friend of mine, Anna (https://github.com/annapoulakos), for
+* giving me a nudge in the right direction when this wasn't clicking for me.
+*/
 export const countTotalArrangements = (inputs: number[]) => {
   const tree = createArrangementTree(inputs);
+
+  console.log(tree);
 
   const countPaths = memoize((curr: number, dest: number) => {
     let currentNodeValues = tree[curr];
@@ -54,4 +60,20 @@ export const countTotalArrangements = (inputs: number[]) => {
   });
 
   return countPaths(0, Math.max(...inputs) + 3);
+};
+
+/*
+* This version is essentially my implementation of what I learned after reading
+* Anna's solution (after I wrote mine above).
+*/
+export const countTotalArrangements2 = (input: number[]) => {
+  const dest = Math.max(...input) + 3;
+
+  const countPaths = memoize((x: number) => {
+    if (x === dest) return 1;
+    if (x && !input.includes(x)) return 0;
+    return [1, 2, 3].reduce((t, n) => t + countPaths(x + n), 0);
+  });
+
+  return countPaths(0);
 };

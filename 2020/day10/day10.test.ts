@@ -1,6 +1,6 @@
 import { assertEquals } from "https://deno.land/std@0.79.0/testing/asserts.ts";
 import { readInputFile } from "../common/readInputFile.ts";
-import { countDifferences, countTotalArrangements } from "./day10.ts";
+import { countDifferences, countTotalArrangements2 } from "./day10.ts";
 
 const smallExample = readInputFile("day10/smallExample.txt").map(Number);
 const exampleInput = readInputFile("day10/exampleInput.txt").map(Number);
@@ -16,16 +16,13 @@ Deno.test("Day 10 - Part 1 - Answer", () => {
 });
 
 Deno.test("Day 10 - Part 2 - Example 1", () => {
-  // 2147483648 is too low
-  assertEquals(countTotalArrangements(smallExample), 8);
+  assertEquals(countTotalArrangements2(smallExample), 8);
 });
 
 Deno.test("Day 10 - Part 2 - Example 2", () => {
-  // 2147483648 is too low
-  assertEquals(countTotalArrangements(exampleInput), 19208);
+  assertEquals(countTotalArrangements2(exampleInput), 19208);
 });
 
 Deno.test("Day 10 - Part 2 - Answer", () => {
-  // 2147483648 is too low
-  assertEquals(countTotalArrangements(input), 42313823813632);
+  assertEquals(countTotalArrangements2(input), 42313823813632);
 });
