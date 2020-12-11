@@ -8,44 +8,35 @@ export const printChart = (chart: string[][]) => {
   console.log(chart.map((r) => r.join("")).join("\n"));
 };
 
-export const findStableSeating1 = (initial: string[][]) => {
+export const findStableSeating = (
+  initial: string[][],
+  overpop: number,
+  countFn: CountFunc,
+) => {
   let state = [...initial.map((r) => [...r])];
 
-  const countAdjacent = (x: number, y: number, type: Seat) => {
-    return [
-      state[y - 1]?.[x - 1],
-      state[y - 1]?.[x],
-      state[y - 1]?.[x + 1],
-      state[y]?.[x + 1],
-      state[y + 1]?.[x + 1],
-      state[y + 1]?.[x],
-      state[y + 1]?.[x - 1],
-      state[y]?.[x - 1],
-    ].filter((p) => p === type);
-  };
+  let updated = true;
 
-  let unstable = true;
-
-  while (unstable) {
-    unstable = false;
+  while (updated) {
+    updated = false;
     state = state.map((positions, y) => {
       return positions.map((pos, x) => {
         if (pos !== Seat.empty && pos !== Seat.occupied) {
           return pos;
         }
 
-        const adjacentOccupied = countAdjacent(x, y, Seat.occupied);
+        const visibleOccupiedCount = countFn(x, y, Seat.occupied, state);
 
         if (pos === Seat.empty) {
-          if (!adjacentOccupied.length) {
-            unstable = true;
+          if (!visibleOccupiedCount) {
+            updated = true;
             return Seat.occupied;
           }
         }
 
         if (pos === Seat.occupied) {
-          if (adjacentOccupied.length >= 4) {
-            unstable = true;
+          if (visibleOccupiedCount >= overpop) {
+            updated = true;
             return Seat.empty;
           }
         }
@@ -67,162 +58,67 @@ export const countType = (chart: string[][], type: string) => {
   }, 0);
 };
 
-export const findStableSeating2 = (initial: string[][]) => {
-  let state = [...initial.map((r) => [...r])];
+interface CountFunc {
+  (x: number, y: number, type: Seat, state: string[][]): number;
+}
 
-  const countAdjacent = (x: number, y: number, type: Seat) => {
-    const maxY = state.length - 1;
-    const maxX = state[0]?.length ?? 1 - 1;
+export const countAdjacent: CountFunc = (x, y, type, state) => {
+  return [
+    state[y - 1]?.[x - 1],
+    state[y - 1]?.[x],
+    state[y - 1]?.[x + 1],
+    state[y]?.[x + 1],
+    state[y + 1]?.[x + 1],
+    state[y + 1]?.[x],
+    state[y + 1]?.[x - 1],
+    state[y]?.[x - 1],
+  ].filter((p) => p === type).length;
+};
 
-    if (!(maxY && maxX)) return 0;
+export const countVisibles: CountFunc = (x, y, type, state) => {
+  const maxY = state.length - 1;
+  const maxX = state[0]?.length ?? 1 - 1;
 
-    const visible: string[] = [];
+  if (!(maxY && maxX)) return 0;
 
-    // up-left
-    if (y !== 0 && x !== 0) {
-      let diff = 1;
-      while (true) {
-        let pos = state[y + diff * -1]?.[x + diff * -1];
-        if (!pos) break;
-        if (pos !== Seat.missing) {
-          visible.push(pos);
-          break;
-        }
-        diff += 1;
+  const visible: string[] = [];
+
+  const findVisibleByVector = (vx: number, vy: number) => {
+    let diff = 1;
+    while (true) {
+      let pos = state[y + diff * vy]?.[x + diff * vx];
+      if (!pos) return;
+      if (pos !== Seat.missing) {
+        visible.push(pos);
+        return;
       }
+      diff += 1;
     }
-
-    // up
-    if (y !== 0) {
-      let diff = 1;
-      while (true) {
-        let pos = state[y + diff * -1]?.[x];
-        if (!pos) break;
-        if (pos !== Seat.missing) {
-          visible.push(pos);
-          break;
-        }
-        diff += 1;
-      }
-    }
-
-    // up-right
-    if (y !== 0) {
-      let diff = 1;
-      while (true) {
-        let pos = state[y + diff * -1]?.[x + diff];
-        if (!pos) break;
-        if (pos !== Seat.missing) {
-          visible.push(pos);
-          break;
-        }
-        diff += 1;
-      }
-    }
-
-    // right
-    if (x !== maxX) {
-      let diff = 1;
-      while (true) {
-        let pos = state[y]?.[x + diff];
-        if (!pos) break;
-        if (pos !== Seat.missing) {
-          visible.push(pos);
-          break;
-        }
-        diff += 1;
-      }
-    }
-
-    // down-right
-    if (y !== maxY && x !== maxX) {
-      let diff = 1;
-      while (true) {
-        let pos = state[y + diff]?.[x + diff];
-        if (!pos) break;
-        if (pos !== Seat.missing) {
-          visible.push(pos);
-          break;
-        }
-        diff += 1;
-      }
-    }
-
-    // down
-    if (y !== maxY) {
-      let diff = 1;
-      while (true) {
-        let pos = state[y + diff]?.[x];
-        if (!pos) break;
-        if (pos !== Seat.missing) {
-          visible.push(pos);
-          break;
-        }
-        diff += 1;
-      }
-    }
-
-    // down-left
-    if (y !== maxY && x !== 0) {
-      let diff = 1;
-      while (true) {
-        let pos = state[y + diff]?.[x + diff * -1];
-        if (!pos) break;
-        if (pos !== Seat.missing) {
-          visible.push(pos);
-          break;
-        }
-        diff += 1;
-      }
-    }
-
-    // left
-    if (x !== 0) {
-      let diff = 1;
-      while (true) {
-        let pos = state[y]?.[x + diff * -1];
-        if (!pos) break;
-        if (pos !== Seat.missing) {
-          visible.push(pos);
-          break;
-        }
-        diff += 1;
-      }
-    }
-
-    return visible.filter((p) => p === type).length;
   };
 
-  let updated = true;
+  // up-left
+  if (y !== 0 && x !== 0) findVisibleByVector(-1, -1);
 
-  while (updated) {
-    updated = false;
-    state = state.map((positions, y) => {
-      return positions.map((pos, x) => {
-        if (pos !== Seat.empty && pos !== Seat.occupied) {
-          return pos;
-        }
+  // up
+  if (y !== 0) findVisibleByVector(0, -1);
 
-        const visibleOccupiedCount = countAdjacent(x, y, Seat.occupied);
+  // up-right
+  if (y !== 0 && x !== maxX) findVisibleByVector(1, -1);
 
-        if (pos === Seat.empty) {
-          if (!visibleOccupiedCount) {
-            updated = true;
-            return Seat.occupied;
-          }
-        }
+  // right
+  if (x !== maxX) findVisibleByVector(1, 0);
 
-        if (pos === Seat.occupied) {
-          if (visibleOccupiedCount >= 5) {
-            updated = true;
-            return Seat.empty;
-          }
-        }
+  // down-right
+  if (y !== maxY && x !== maxX) findVisibleByVector(1, 1);
 
-        return pos;
-      });
-    });
-  }
+  // down
+  if (y !== maxY) findVisibleByVector(0, 1);
 
-  return state;
+  // down-left
+  if (y !== maxY && x !== 0) findVisibleByVector(-1, 1);
+
+  // left
+  if (x !== 0) findVisibleByVector(-1, 0);
+
+  return visible.filter((p) => p === type).length;
 };
