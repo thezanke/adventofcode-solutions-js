@@ -24,33 +24,33 @@ export const findStableSeating1 = (initial: string[][]) => {
     ].filter((p) => p === type);
   };
 
-  let updated = true;
+  let unstable = true;
 
-  while (updated) {
-    updated = false;
-    state = state.map((marks, y) => {
-      return marks.map((mark, x) => {
-        if (mark !== Seat.empty && mark !== Seat.occupied) {
-          return mark;
+  while (unstable) {
+    unstable = false;
+    state = state.map((positions, y) => {
+      return positions.map((pos, x) => {
+        if (pos !== Seat.empty && pos !== Seat.occupied) {
+          return pos;
         }
 
         const adjacentOccupied = countAdjacent(x, y, Seat.occupied);
 
-        if (mark === Seat.empty) {
+        if (pos === Seat.empty) {
           if (!adjacentOccupied.length) {
-            updated = true;
+            unstable = true;
             return Seat.occupied;
           }
         }
 
-        if (mark === Seat.occupied) {
+        if (pos === Seat.occupied) {
           if (adjacentOccupied.length >= 4) {
-            updated = true;
+            unstable = true;
             return Seat.empty;
           }
         }
 
-        return mark;
+        return pos;
       });
     });
   }
@@ -197,29 +197,29 @@ export const findStableSeating2 = (initial: string[][]) => {
 
   while (updated) {
     updated = false;
-    state = state.map((marks, y) => {
-      return marks.map((mark, x) => {
-        if (mark !== Seat.empty && mark !== Seat.occupied) {
-          return mark;
+    state = state.map((positions, y) => {
+      return positions.map((pos, x) => {
+        if (pos !== Seat.empty && pos !== Seat.occupied) {
+          return pos;
         }
 
         const visibleOccupiedCount = countAdjacent(x, y, Seat.occupied);
 
-        if (mark === Seat.empty) {
+        if (pos === Seat.empty) {
           if (!visibleOccupiedCount) {
             updated = true;
             return Seat.occupied;
           }
         }
 
-        if (mark === Seat.occupied) {
+        if (pos === Seat.occupied) {
           if (visibleOccupiedCount >= 5) {
             updated = true;
             return Seat.empty;
           }
         }
 
-        return mark;
+        return pos;
       });
     });
   }
