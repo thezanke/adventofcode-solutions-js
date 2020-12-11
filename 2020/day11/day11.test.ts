@@ -2,14 +2,15 @@ import { assertEquals } from "https://deno.land/std@0.79.0/testing/asserts.ts";
 import { readInputFile } from "../common/readInputFile.ts";
 import {
   countType,
+  textToGrid,
   findStableSeating,
   countAdjacent,
   countVisibles,
   Seat,
 } from "./day11.ts";
 
-const example = readInputFile("day11/exampleInput.txt").map((l) => l.split(""));
-const input = readInputFile("day11/input.txt").map((l) => l.split(""));
+const example = readInputFile("day11/exampleInput.txt", textToGrid);
+const input = readInputFile("day11/input.txt", textToGrid);
 
 Deno.test("Day 11 - Part 1 - Example", () => {
   const stableSeating = findStableSeating(example, 4, countAdjacent);

@@ -4,8 +4,12 @@ export enum Seat {
   missing = ".",
 }
 
+export const textToGrid = (text: string) => {
+  return text.split("\n").map((l) => l.split(""));
+};
+
 export const printChart = (chart: string[][]) => {
-  console.log(chart.map((r) => r.join("")).join("\n"));
+  console.log("\n" + chart.map((r) => r.join("")).join("\n"));
 };
 
 export const findStableSeating = (
