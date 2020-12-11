@@ -96,28 +96,13 @@ export const countVisibles: CountFunc = (x, y, type, state) => {
     }
   };
 
-  // up-left
   if (y !== 0 && x !== 0) findVisibleByVector(-1, -1);
-
-  // up
   if (y !== 0) findVisibleByVector(0, -1);
-
-  // up-right
   if (y !== 0 && x !== maxX) findVisibleByVector(1, -1);
-
-  // right
   if (x !== maxX) findVisibleByVector(1, 0);
-
-  // down-right
   if (y !== maxY && x !== maxX) findVisibleByVector(1, 1);
-
-  // down
   if (y !== maxY) findVisibleByVector(0, 1);
-
-  // down-left
   if (y !== maxY && x !== 0) findVisibleByVector(-1, 1);
-
-  // left
   if (x !== 0) findVisibleByVector(-1, 0);
 
   return visible.filter((p) => p === type).length;
