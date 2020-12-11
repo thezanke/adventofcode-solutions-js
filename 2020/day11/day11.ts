@@ -15,10 +15,9 @@ export const findStableSeating = (
 ) => {
   let state = [...initial.map((r) => [...r])];
 
-  let updated = true;
-
-  while (updated) {
-    updated = false;
+  let unstable = true;
+  while (unstable) {
+    unstable = false;
     state = state.map((positions, y) => {
       return positions.map((pos, x) => {
         if (pos !== Seat.empty && pos !== Seat.occupied) {
@@ -29,14 +28,14 @@ export const findStableSeating = (
 
         if (pos === Seat.empty) {
           if (!visibleOccupiedCount) {
-            updated = true;
+            unstable = true;
             return Seat.occupied;
           }
         }
 
         if (pos === Seat.occupied) {
           if (visibleOccupiedCount >= overpop) {
-            updated = true;
+            unstable = true;
             return Seat.empty;
           }
         }
