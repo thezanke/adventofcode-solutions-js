@@ -14,10 +14,11 @@ export const findStableSeating = (
   countFn: CountFunc,
 ) => {
   let state = [...initial.map((r) => [...r])];
-
   let unstable = true;
+
   while (unstable) {
     unstable = false;
+
     state = state.map((positions, y) => {
       return positions.map((pos, x) => {
         if (pos !== Seat.empty && pos !== Seat.occupied) {
