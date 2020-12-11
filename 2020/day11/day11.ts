@@ -80,97 +80,113 @@ export const findStableSeating2 = (initial: string[][]) => {
 
     // up-left
     if (y !== 0 && x !== 0) {
-      for (let cy = y - 1; cy >= 0; cy -= 1) {
-        for (let cx = x - 1; cx >= 0; cx -= 1) {
-          let pos = state[cy]?.[cx];
-          if (pos && pos !== Seat.missing) {
-            visible.push(pos);
-            break;
-          }
+      let diff = 1;
+      while (true) {
+        let pos = state[y + diff * -1]?.[x + diff * -1];
+        if (!pos) break;
+        if (pos !== Seat.missing) {
+          visible.push(pos);
+          break;
         }
+        diff += 1;
       }
     }
 
     // up
     if (y !== 0) {
-      for (let cy = y - 1; cy >= 0; cy -= 1) {
-        let pos = state[cy]?.[x];
-        if (pos && pos !== Seat.missing) {
+      let diff = 1;
+      while (true) {
+        let pos = state[y + diff * -1]?.[x];
+        if (!pos) break;
+        if (pos !== Seat.missing) {
           visible.push(pos);
           break;
         }
+        diff += 1;
       }
     }
 
     // up-right
-    if (y !== 0 && x !== maxX) {
-      for (let cy = y - 1; cy >= 0; cy -= 1) {
-        for (let cx = x + 1; cx <= maxX; cx += 1) {
-          let pos = state[cy]?.[cx];
-          if (pos && pos !== Seat.missing) {
-            visible.push(pos);
-            break;
-          }
+    if (y !== 0) {
+      let diff = 1;
+      while (true) {
+        let pos = state[y + diff * -1]?.[x + diff];
+        if (!pos) break;
+        if (pos !== Seat.missing) {
+          visible.push(pos);
+          break;
         }
+        diff += 1;
       }
     }
 
     // right
     if (x !== maxX) {
-      for (let cx = x + 1; cx <= maxX; cx += 1) {
-        let pos = state[y]?.[cx];
-        if (pos && pos !== Seat.missing) {
+      let diff = 1;
+      while (true) {
+        let pos = state[y]?.[x + diff];
+        if (!pos) break;
+        if (pos !== Seat.missing) {
           visible.push(pos);
           break;
         }
+        diff += 1;
       }
     }
 
     // down-right
     if (y !== maxY && x !== maxX) {
-      for (let cy = y + 1; cy <= maxY; cy += 1) {
-        for (let cx = x + 1; cx <= maxX; cx += 1) {
-          let pos = state[cy]?.[cx];
-          if (pos && pos !== Seat.missing) {
-            visible.push(pos);
-            break;
-          }
+      let diff = 1;
+      while (true) {
+        let pos = state[y + diff]?.[x + diff];
+        if (!pos) break;
+        if (pos !== Seat.missing) {
+          visible.push(pos);
+          break;
         }
+        diff += 1;
       }
     }
 
     // down
     if (y !== maxY) {
-      for (let cy = y + 1; cy <= maxY; cy += 1) {
-        let pos = state[cy]?.[x];
-        if (pos && pos !== Seat.missing) {
+      let diff = 1;
+      while (true) {
+        let pos = state[y + diff]?.[x];
+        if (!pos) break;
+        if (pos !== Seat.missing) {
           visible.push(pos);
           break;
         }
+        diff += 1;
       }
     }
 
     // down-left
     if (y !== maxY && x !== 0) {
-      for (let cy = y + 1; cy <= maxY; cy += 1) {
-        for (let cx = x - 1; cx >= 0; cx -= 1) {
-          let pos = state[cy]?.[cx];
-          if (pos && pos !== Seat.missing) {
-            visible.push(pos);
-            break;
-          }
+      let diff = 1;
+      while (true) {
+        let pos = state[y + diff]?.[x + diff * -1];
+        if (!pos) break;
+        if (pos !== Seat.missing) {
+          visible.push(pos);
+          break;
         }
+        diff += 1;
       }
     }
 
     // left
     if (x !== 0) {
-      for (let cx = x - 1; cx >= 0; cx -= 1) {
-        let pos = state[y]?.[cx];
-        if (pos && pos !== Seat.missing) {
+      let diff = 1;
+      while (true) {
+        let pos = state[y]?.[x + diff * -1];
+        if (!pos) break;
+        if (pos !== Seat.missing) {
           visible.push(pos);
           break;
         }
+        diff += 1;
       }
     }
 

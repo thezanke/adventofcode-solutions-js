@@ -20,7 +20,12 @@ Deno.test("Day 11 - Part 1 - Answer", () => {
   assertEquals(countType(stableSeating, Seat.occupied), 2361);
 });
 
-// Deno.test("Day 11 - Part 2 - Example", () => {
-//   const stableSeating = findStableSeating2(example);
-//   assertEquals(countType(stableSeating, Seat.occupied), 37);
-// });
+Deno.test("Day 11 - Part 2 - Example", () => {
+  const stableSeating = findStableSeating2(example);
+  assertEquals(countType(stableSeating, Seat.occupied), 26);
+});
+
+Deno.test("Day 11 - Part 2 - Example", () => {
+  const stableSeating = findStableSeating2(input);
+  assertEquals(countType(stableSeating, Seat.occupied), 26);
+});
