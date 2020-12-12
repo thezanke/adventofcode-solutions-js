@@ -19,23 +19,8 @@ enum Action {
 
 class MovingObject {
   public pos = new Vect();
-  public heading = Heading.east;
 
-  turn(degrees: number) {
-    const turns = degrees / 90;
-    this.heading += turns;
-
-    if (this.heading < 0) {
-      this.heading = Heading.north + 1 -
-        Math.abs(this.heading % (Heading.north + 1));
-    }
-
-    if (this.heading > Heading.north) {
-      this.heading = this.heading % (Heading.north + 1);
-    }
-  }
-
-  performAction(action: Action, amount: number) {
+  public performAction(action: Action, amount: number) {
     switch (action) {
       case Action.north: {
         this.pos.y += amount;
@@ -58,7 +43,23 @@ class MovingObject {
 }
 
 class Ship1 extends MovingObject {
-  performAction(action: Action, amount: number) {
+  private heading = Heading.east;
+
+  private turn(degrees: number) {
+    const turns = degrees / 90;
+    this.heading += turns;
+
+    if (this.heading < 0) {
+      this.heading = Heading.north + 1 -
+        Math.abs(this.heading % (Heading.north + 1));
+    }
+
+    if (this.heading > Heading.north) {
+      this.heading = this.heading % (Heading.north + 1);
+    }
+  }
+
+  public performAction(action: Action, amount: number) {
     switch (action) {
       case Action.left: {
         this.turn(-1 * amount);
@@ -83,13 +84,13 @@ class Ship1 extends MovingObject {
 }
 
 class Waypoint extends MovingObject {
-  constructor() {
+  public constructor() {
     super();
     this.pos.x = 10;
     this.pos.y = 1;
   }
 
-  performAction(action: Action, amount: number) {
+  public performAction(action: Action, amount: number) {
     switch (action) {
       case Action.left: {
         this.pos.rotate(amount);
@@ -109,7 +110,7 @@ class Waypoint extends MovingObject {
 export class Ship2 extends MovingObject {
   private waypoint = new Waypoint();
 
-  performAction(action: Action, amount: number) {
+  public performAction(action: Action, amount: number) {
     if (action === Action.forward) {
       this.pos.add(this.waypoint.pos.copy().multiply(amount));
     } else {
