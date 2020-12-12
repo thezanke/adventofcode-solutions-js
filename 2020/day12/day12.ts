@@ -111,9 +111,7 @@ export class Ship2 extends MovingObject {
 
   performAction(action: Action, amount: number) {
     if (action === Action.forward) {
-      const traj = new Vect(this.waypoint.pos.x, this.waypoint.pos.y);
-      traj.multiply(amount);
-      this.pos.add(traj);
+      this.pos.add(this.waypoint.pos.copy().multiply(amount));
     } else {
       this.waypoint.performAction(action, amount);
     }

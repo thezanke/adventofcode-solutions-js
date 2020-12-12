@@ -9,6 +9,8 @@ export class Vect {
   add(vect: Vect) {
     this.x += vect.x;
     this.y += vect.y;
+
+    return this;
   }
 
   multiply(amount: number | Vect) {
@@ -19,6 +21,8 @@ export class Vect {
       this.x *= amount;
       this.y *= amount;
     }
+
+    return this;
   }
 
   rotate(deg: number, around = new Vect(0, 0)) {
@@ -29,11 +33,17 @@ export class Vect {
     const newY = this.y * Math.cos(angle) + this.x * Math.sin(angle);
     this.x = newX;
     this.y = newY;
+
+    return this;
   }
 
   mDistance(from = new Vect(0, 0)) {
     const x = this.x - from.x;
     const y = this.y - from.y;
     return Math.abs(x) + Math.abs(y);
+  }
+
+  copy() {
+    return new Vect(this.x, this.y);
   }
 }
