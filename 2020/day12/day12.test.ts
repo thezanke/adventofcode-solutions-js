@@ -28,9 +28,3 @@ Deno.test("Day 12 - Part 2 - Answer", () => {
   const answer = Math.ceil(Math.abs(pos.x) + Math.abs(pos.y));
   assertEquals(answer, 138669);
 });
-
-// Deno.test("Day 12 - Part 1 - Answer", () => {
-//   const pos = followInstructions(input);
-//   const answer = Math.abs(pos.x) + Math.abs(pos.y);
-//   assertEquals(answer, 2270);
-// });
