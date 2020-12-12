@@ -121,7 +121,7 @@ export class Ship2 extends MovingObject {
 
 export const followInstructions = (
   instructions: string[],
-  ship = new Ship1(),
+  ship: MovingObject = new Ship1(),
 ) => {
   instructions.forEach((inst) => {
     const action = inst[0] as Action;
