@@ -53,6 +53,13 @@ class MovingObject {
         this.pos.x -= amount;
         break;
       }
+    }
+  }
+}
+
+class Ship1 extends MovingObject {
+  performAction(action: Action, amount: number) {
+    switch (action) {
       case Action.left: {
         this.turn(-1 * amount);
         break;
@@ -68,13 +75,54 @@ class MovingObject {
         if (this.heading === Heading.west) this.pos.x -= amount;
         break;
       }
+      default: {
+        super.performAction(action, amount);
+      }
     }
   }
 }
 
-export const followInstructions1 = (instructions: string[]) => {
-  const ship = new MovingObject();
+class Waypoint extends MovingObject {
+  constructor() {
+    super();
+    this.pos.x = 10;
+    this.pos.y = 1;
+  }
+  performAction(action: Action, amount: number) {
+    switch (action) {
+      case Action.left: {
+        this.pos.rotate(amount);
+        break;
+      }
+      case Action.right: {
+        this.pos.rotate(amount * -1);
+        break;
+      }
+      default: {
+        super.performAction(action, amount);
+      }
+    }
+  }
+}
 
+export class Ship2 extends MovingObject {
+  private waypoint = new Waypoint();
+
+  performAction(action: Action, amount: number) {
+    if (action === Action.forward) {
+      const traj = new Vect(this.waypoint.pos.x, this.waypoint.pos.y);
+      traj.multiply(amount);
+      this.pos.add(traj);
+    } else {
+      this.waypoint.performAction(action, amount);
+    }
+  }
+}
+
+export const followInstructions = (
+  instructions: string[],
+  ship = new Ship1(),
+) => {
   instructions.forEach((inst) => {
     const action = inst[0] as Action;
     const amount = Number(inst.slice(1));
