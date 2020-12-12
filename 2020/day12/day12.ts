@@ -63,8 +63,8 @@ class Ship1 extends MovingObject {
       }
       case Action.forward: {
         if (this.heading === Heading.north) this.pos.y += amount;
-        if (this.heading === Heading.east) this.pos.x += amount;
         if (this.heading === Heading.south) this.pos.y -= amount;
+        if (this.heading === Heading.east) this.pos.x += amount;
         if (this.heading === Heading.west) this.pos.x -= amount;
         break;
       }
