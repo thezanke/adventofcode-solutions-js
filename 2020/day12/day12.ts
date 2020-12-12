@@ -34,6 +34,42 @@ class MovingObject {
       this.heading = this.heading % (Heading.north + 1);
     }
   }
+
+  performAction(action: Action, amount: number) {
+    switch (action) {
+      case Action.north: {
+        this.pos.y += amount;
+        break;
+      }
+      case Action.south: {
+        this.pos.y -= amount;
+        break;
+      }
+      case Action.east: {
+        this.pos.x += amount;
+        break;
+      }
+      case Action.west: {
+        this.pos.x -= amount;
+        break;
+      }
+      case Action.left: {
+        this.turn(-1 * amount);
+        break;
+      }
+      case Action.right: {
+        this.turn(amount);
+        break;
+      }
+      case Action.forward: {
+        if (this.heading === Heading.north) this.pos.y += amount;
+        if (this.heading === Heading.south) this.pos.y -= amount;
+        if (this.heading === Heading.east) this.pos.x += amount;
+        if (this.heading === Heading.west) this.pos.x -= amount;
+        break;
+      }
+    }
+  }
 }
 
 export const followInstructions1 = (instructions: string[]) => {
@@ -41,41 +77,8 @@ export const followInstructions1 = (instructions: string[]) => {
 
   instructions.forEach((inst) => {
     const action = inst[0] as Action;
-    const dist = Number(inst.slice(1));
-
-    switch (action) {
-      case Action.north: {
-        ship.pos.y += dist;
-        break;
-      }
-      case Action.south: {
-        ship.pos.y -= dist;
-        break;
-      }
-      case Action.east: {
-        ship.pos.x += dist;
-        break;
-      }
-      case Action.west: {
-        ship.pos.x -= dist;
-        break;
-      }
-      case Action.left: {
-        ship.turn(-1 * dist);
-        break;
-      }
-      case Action.right: {
-        ship.turn(dist);
-        break;
-      }
-      case Action.forward: {
-        if (ship.heading === Heading.north) ship.pos.y += dist;
-        if (ship.heading === Heading.south) ship.pos.y -= dist;
-        if (ship.heading === Heading.east) ship.pos.x += dist;
-        if (ship.heading === Heading.west) ship.pos.x -= dist;
-        break;
-      }
-    }
+    const amount = Number(inst.slice(1));
+    ship.performAction(action, amount);
   });
 
   return ship.pos;
