@@ -1,10 +1,10 @@
 import { Vect } from "../common/Vect.ts";
 
 enum Heading {
+  north,
   east,
   south,
   west,
-  north,
 }
 
 enum Action {
@@ -47,16 +47,8 @@ class Ship1 extends MovingObject {
 
   private turn(degrees: number) {
     const turns = degrees / 90;
-    this.heading += turns;
-
-    if (this.heading < 0) {
-      this.heading = Heading.north + 1 -
-        Math.abs(this.heading % (Heading.north + 1));
-    }
-
-    if (this.heading > Heading.north) {
-      this.heading = this.heading % (Heading.north + 1);
-    }
+    this.heading = (this.heading + turns) % 4;
+    if (this.heading < 0) this.heading = 4 - Math.abs(this.heading);
   }
 
   public performAction(action: Action, amount: number) {
