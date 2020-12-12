@@ -88,6 +88,7 @@ class Waypoint extends MovingObject {
     this.pos.x = 10;
     this.pos.y = 1;
   }
+
   performAction(action: Action, amount: number) {
     switch (action) {
       case Action.left: {
@@ -129,5 +130,5 @@ export const followInstructions = (
     ship.performAction(action, amount);
   });
 
-  return ship.pos;
+  return Math.ceil(ship.pos.mDistance());
 };

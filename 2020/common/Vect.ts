@@ -30,4 +30,10 @@ export class Vect {
     this.x = newX;
     this.y = newY;
   }
+
+  mDistance(from = new Vect(0, 0)) {
+    const x = this.x - from.x;
+    const y = this.y - from.y;
+    return Math.abs(x) + Math.abs(y);
+  }
 }
