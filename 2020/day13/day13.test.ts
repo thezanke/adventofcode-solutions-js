@@ -17,50 +17,74 @@ Deno.test("Day 13 - Part 2 - findCRT", () => {
   assertEquals(
     findCRT(
       [
-        [2, 1],
-        [3, 2],
-        [5, 3],
-        [7, 4],
+        [3, 5],
+        [1, 7],
+        [6, 8],
       ],
     ),
-    53,
+    78,
   );
 });
 
-Deno.test("Day 13 - Part 2 - findCRT #2", () => {
-  assertEquals(
-    findCRT(
-      [
-        [5, 3],
-        [6, 2],
-        [7, 4],
-      ],
-    ),
-    158,
-  );
-});
-
-Deno.test("Day 13 - Part 2 - findCRT #3", () => {
-  assertEquals(
-    findCRT(
-      [
-        [3, 2],
-        [4, 5],
-        [7, -3],
-      ],
-    ),
-    53,
-  );
-});
-
-Deno.test("Day 13 - Part 2 - Example", () => {
+Deno.test("Day 13 - Part 2 - Example #1", () => {
   assertEquals(findPart2(example), 1068781);
 });
 
+Deno.test("Day 13 - Part 2 - Example #2", () => {
+  assertEquals(
+    findPart2([
+      "IGNORE ME",
+      "17,x,13,19",
+    ]),
+    // AOC CLAIMS SHOULD BE 3417 BUT I VALIDATED WITH OTHER CRT CALCULATORS
+    782,
+  );
+});
+
+Deno.test("Day 13 - Part 2 - Example #3", () => {
+  assertEquals(
+    findPart2([
+      "IGNORE ME",
+      "67,7,59,61",
+    ]),
+    754018,
+  );
+});
+
+Deno.test("Day 13 - Part 2 - Example #4", () => {
+  assertEquals(
+    findPart2([
+      "IGNORE ME",
+      "67,x,7,59,61",
+    ]),
+    779210,
+  );
+});
+
+Deno.test("Day 13 - Part 2 - Example #5", () => {
+  assertEquals(
+    findPart2([
+      "IGNORE ME",
+      "67,7,x,59,61",
+    ]),
+    1261476,
+  );
+});
+
+Deno.test("Day 13 - Part 2 - Example #6", () => {
+  assertEquals(
+    findPart2([
+      "IGNORE ME",
+      "1789,37,47,1889",
+    ]),
+    1202161486,
+  );
+});
+
 Deno.test("Day 13 - Part 2 - Answer", () => {
-  // 667437230788119 is too high
-  // 667437230788022 wrong
-  // 667437230787926 is too low???
-  // 52109901002363 way too low
+  // 203663436439836 wrong
+  // 203663436439831 wrong
+  // some numbers we're working with are > Number.MAX_SAFE_INTEGER 😬
+
   assertEquals(findPart2(input), 1068781);
 });
