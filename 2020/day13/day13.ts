@@ -26,22 +26,27 @@ export const findPart1 = (input: string[]) => {
   return best.id * best.wait;
 };
 
+const findY = (x: number, mod: number) => {
+  let y = 1;
+  while (x * y % mod !== 1) y += 1;
+  return y;
+};
+
 export const findPart2 = (input: string[]) => {
   const ids = input[1]
     .split(",")
     .map((n) => n === "x" ? null : Number(n));
 
-  let mult = 1;
-  while (true) {
-    let curr = ids[0] as number * mult;
-    let erry = ids.every((id, i) => {
-      if (!(id && i)) return true;
-      return id - curr % id === i;
-    });
+  let N = (ids.filter(Boolean) as number[]).reduce((t, id) => t * id) as number;
 
-    if (erry) break;
-    mult += 1;
-  }
+  console.log(N);
 
-  return ids[0] as number * mult;
+  let total = ids.reduce((t: number, id, i) => {
+    if (!id) return t;
+    const x = N / id;
+    const y = findY(x, id);
+    return t + i * x * y;
+  }, 0);
+
+  return total;
 };

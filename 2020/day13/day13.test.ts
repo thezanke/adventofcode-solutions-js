@@ -13,6 +13,15 @@ Deno.test("Day 13 - Part 1 - Answer", () => {
   assertEquals(findPart1(input), 3789);
 });
 
+Deno.test("Day 13 - Part 2 - Example", () => {
+  assertEquals(
+    findPart2(
+      ["", "x,2,3,5,7"],
+    ),
+    1103,
+  );
+});
+
 // Deno.test("Day 13 - Part 2 - Example", () => {
 //   assertEquals(findPart2(example), 1068781);
 // });
