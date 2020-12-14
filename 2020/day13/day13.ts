@@ -1,5 +1,3 @@
-import { lcm } from "../common/lcm.ts";
-
 export const findPart1 = (input: string[]) => {
   const target = Number(input[0]);
   const ids = input[1]
