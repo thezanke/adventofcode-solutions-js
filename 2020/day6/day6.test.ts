@@ -6,11 +6,13 @@ import {
   countUniqueAnswers,
 } from "./day6.ts";
 
-const exampleInput = readInputFile("day6/exampleInput.txt", /\n\n/).map((g) =>
+const exampleInput = readInputFile("day6/exampleInput.txt", /\n\n/).map((
+  g: string,
+) => g.split("\n"));
+
+const input = readInputFile("day6/input.txt", /\n\n/).map((g: string) =>
   g.split("\n")
 );
-
-const input = readInputFile("day6/input.txt", /\n\n/).map((g) => g.split("\n"));
 
 Deno.test("Day 6 - Part 1 - Example 1", () => {
   assertEquals(countUniqueAnswers(exampleInput), 11);

@@ -13,10 +13,10 @@ Deno.test("Day 13 - Part 1 - Answer", () => {
   assertEquals(findPart1(input), 3789);
 });
 
-Deno.test("Day 13 - Part 2 - Example", () => {
-  assertEquals(findPart2(example), 1068781);
-});
+// Deno.test("Day 13 - Part 2 - Example", () => {
+//   assertEquals(findPart2(example), 1068781);
+// });
 
-Deno.test("Day 13 - Part 2 - Answer", () => {
-  assertEquals(findPart2(input), 1068781);
-});
+// Deno.test("Day 13 - Part 2 - Answer", () => {
+//   assertEquals(findPart2(input), 1068781);
+// });

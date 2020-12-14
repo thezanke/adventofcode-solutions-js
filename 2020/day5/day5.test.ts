@@ -20,7 +20,7 @@ Deno.test("Day 5 - Part 1 - Example 4", () => {
   assertEquals(getSeatId("BBFFBBFRLL"), 820);
 });
 
-const ids = input.map((r) => getSeatId(r));
+const ids = input.map((r: string) => getSeatId(r));
 
 Deno.test("Day 5 - Part 1 - Answer", () => {
   assertEquals(Math.max(...ids), 896);

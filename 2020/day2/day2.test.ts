@@ -22,7 +22,7 @@ Deno.test("Day 2 - Part 1 - Example 3", () => {
 });
 
 Deno.test("Day 2 - Part 1 - Answer", () => {
-  const valids = input.map((i) => isValidPassword(i)).filter(Boolean);
+  const valids = input.map((i: string) => isValidPassword(i)).filter(Boolean);
   assertEquals(valids.length, 465);
 });
 
@@ -39,6 +39,8 @@ Deno.test("Day 2 - Part 2 - Example 3", () => {
 });
 
 Deno.test("Day 2 - Part 2 - Answer", () => {
-  const valids = input.map((i) => isValidPassword(i, policy2)).filter(Boolean);
+  const valids = input.map((i: string) => isValidPassword(i, policy2)).filter(
+    Boolean,
+  );
   assertEquals(valids.length, 294);
 });

@@ -26,7 +26,7 @@ Deno.test("Day 4 - Part 1 - Example 3", () => {
 });
 
 Deno.test("Day 4 - Part 1 - Answer", () => {
-  const checks = input.map((raw) => {
+  const checks = input.map((raw: string) => {
     const passport = parsePassport(raw);
     return hasAllRequiredFields(passport);
   });
@@ -55,7 +55,7 @@ Deno.test("Day 4 - Part 2 - Example 4", () => {
 });
 
 Deno.test("Day 4 - Part 2 - Answer", () => {
-  const checks = input.map((raw) => {
+  const checks = input.map((raw: string) => {
     const passport = parsePassport(raw);
     return isPassportValid(passport);
   });
