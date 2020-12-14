@@ -39,7 +39,9 @@ export const findCRT = (input: [number, number][]) => {
     return t + remainder * x * y;
   }, 0);
 
-  while (A % N !== A) A %= N;
+  while (A - N > 0) {
+    A -= N;
+  }
 
   return A;
 };

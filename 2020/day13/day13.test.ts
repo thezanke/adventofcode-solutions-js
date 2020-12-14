@@ -59,5 +59,8 @@ Deno.test("Day 13 - Part 2 - Example", () => {
 
 Deno.test("Day 13 - Part 2 - Answer", () => {
   // 667437230788119 is too high
+  // 667437230788022 wrong
+  // 667437230787926 is too low???
+  // 52109901002363 way too low
   assertEquals(findPart2(input), 1068781);
 });
