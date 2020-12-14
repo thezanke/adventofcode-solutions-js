@@ -33,20 +33,32 @@ const findY = (x: number, mod: number) => {
 export const findCRT = (input: [number, number][]) => {
   let N = input.reduce((t, [mod]) => t * mod, 1) as number;
 
-  return input.reduce((t: number, [mod, remainder]) => {
+  let A = input.reduce((t: number, [mod, remainder]) => {
     const x = N / mod;
     const y = findY(x, mod);
     return t + remainder * x * y;
   }, 0);
+
+  while (A % N !== A) {
+    console.log(A, N);
+    A %= N;
+  }
+
+  return A;
 };
 
 export const findPart2 = (input: string[]) => {
   const inputChars = input[1].split(",");
 
   const crtInput = inputChars
-    .map((n, i) => n === "x" ? null : [Number(n), i])
+    .map((n, i) => {
+      if (n === "x") return null;
+      const mod = Number(n);
+      const remainder = i ? mod - i : 0;
+      return [mod, remainder];
+    })
     .filter(Boolean) as [number, number][];
 
   const total = findCRT(crtInput);
-  return total - (inputChars.length - 1);
+  return total;
 };
