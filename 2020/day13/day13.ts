@@ -27,26 +27,29 @@ export const findPart1 = (input: string[]) => {
 };
 
 const findY = (x: number, mod: number) => {
-  let y = 1;
+  let y = 0;
   while (x * y % mod !== 1) y += 1;
   return y;
 };
 
-export const findPart2 = (input: string[]) => {
-  const ids = input[1]
-    .split(",")
-    .map((n) => n === "x" ? null : Number(n));
+export const findCRT = (input: [number, number][]) => {
+  let N = input.reduce((t, [mod]) => t * mod, 1) as number;
 
-  let N = (ids.filter(Boolean) as number[]).reduce((t, id) => t * id) as number;
-
-  console.log(N);
-
-  let total = ids.reduce((t: number, id, i) => {
-    if (!id) return t;
-    const x = N / id;
-    const y = findY(x, id);
-    return t + i * x * y;
+  return input.reduce((t: number, [mod, remainder]) => {
+    const x = N / mod;
+    const y = findY(x, mod);
+    return t + remainder * x * y;
   }, 0);
+};
 
-  return total;
+export const findPart2 = (input: string[]) => {
+  const inputChars = input[1].split(",");
+
+  const crtInput = inputChars
+    .map((n, i) => n === "x" ? null : [Number(n), i])
+    .filter(Boolean) as [number, number][];
+
+  const total = findCRT(crtInput);
+
+  return total - (inputChars.length - 1);
 };
