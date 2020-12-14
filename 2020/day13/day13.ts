@@ -46,10 +46,10 @@ export const findCRT = (input: [number, number][]) => {
   return T % N;
 };
 
-export const findPart2 = (input: string[]) => {
-  const inputChars = input[1].split(",");
+export const findPart2 = (_input: string[]) => {
+  const inputChars = _input[1].split(",");
 
-  const crtInput = inputChars
+  const input = inputChars
     .map((n, r) => {
       if (n === "x") return null;
       const m = Number(n);
@@ -57,6 +57,32 @@ export const findPart2 = (input: string[]) => {
     })
     .filter(Boolean) as [number, number][];
 
-  const total = findCRT(crtInput);
+  const total = findCRT(input);
   return total;
+};
+
+// Literally cheated. stolen/rewritten from reddit because I was done toiling
+// with the true CRT way of doing things.
+export const cheatPart2 = (_input: string[]) => {
+  const inputChars = _input[1].split(",");
+
+  const input = inputChars
+    .map((n, r) => {
+      if (n === "x") return null;
+      const m = Number(n);
+      return [r, m];
+    })
+    .filter(Boolean) as [number, number][];
+
+  let lcm = 1;
+  let t = 0;
+
+  for (let i = 0; i < input.length - 1; i += 1) {
+    const [rn, mn] = input[i + 1];
+    const [, m] = input[i];
+    lcm *= m;
+    while ((t + rn) % mn != 0) t += lcm;
+  }
+
+  return t;
 };

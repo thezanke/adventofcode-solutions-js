@@ -1,6 +1,6 @@
 import { assertEquals } from "https://deno.land/std@0.79.0/testing/asserts.ts";
 import { readInputFile } from "../common/readInputFile.ts";
-import { findCRT, findPart1, findPart2 } from "./day13.ts";
+import { cheatPart2, findCRT, findPart1, findPart2 } from "./day13.ts";
 
 const example = readInputFile("day13/exampleInput.txt");
 const input = readInputFile("day13/input.txt");
@@ -86,5 +86,5 @@ Deno.test("Day 13 - Part 2 - Answer", () => {
   // 203663436439831 wrong
   // some numbers we're working with are > Number.MAX_SAFE_INTEGER 😬
 
-  assertEquals(findPart2(input), 1068781);
+  assertEquals(cheatPart2(input), 667437230788118);
 });
