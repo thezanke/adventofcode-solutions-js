@@ -58,9 +58,6 @@ Deno.test("Day 13 - Part 2 - Example", () => {
 });
 
 Deno.test("Day 13 - Part 2 - Answer", () => {
+  // 667437230788119 is too high
   assertEquals(findPart2(input), 1068781);
 });
-
-// Deno.test("Day 13 - Part 2 - Answer", () => {
-//   assertEquals(findPart2(input), 1068781);
-// });
