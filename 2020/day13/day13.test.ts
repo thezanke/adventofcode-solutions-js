@@ -27,9 +27,22 @@ Deno.test("Day 13 - Part 2 - findCRT", () => {
   );
 });
 
-Deno.test("Day 13 - Part 2 - Example", () => {
-  assertEquals(findPart2(example), 1068781);
+Deno.test("Day 13 - Part 2 - findCRT #2", () => {
+  assertEquals(
+    findCRT(
+      [
+        [3, 2],
+        [4, 5],
+        [7, -3],
+      ],
+    ),
+    53,
+  );
 });
+
+// Deno.test("Day 13 - Part 2 - Example", () => {
+//   assertEquals(findPart2(example), 1068781);
+// });
 
 // Deno.test("Day 13 - Part 2 - Answer", () => {
 //   assertEquals(findPart2(input), 1068781);

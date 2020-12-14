@@ -48,6 +48,5 @@ export const findPart2 = (input: string[]) => {
     .filter(Boolean) as [number, number][];
 
   const total = findCRT(crtInput);
-
   return total - (inputChars.length - 1);
 };
