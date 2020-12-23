@@ -2,7 +2,6 @@ import { assertEquals } from "https://deno.land/std@0.79.0/testing/asserts.ts";
 import { readInputFile } from "../common/readInputFile.ts";
 import { Program, Program2 } from "./day14.ts";
 
-const example = readInputFile("day14/exampleInput.txt");
 const input = readInputFile("day14/input.txt");
 
 Deno.test("Day 14 - Part 1 - Example", () => {
