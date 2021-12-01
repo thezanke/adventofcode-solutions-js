@@ -6,6 +6,6 @@
     "lodash": "^4.17.21"
   },
   "scripts": {
-    "test": "NODE_OPTIONS='--experimental-vm-modules --no-warnings' jest --watch"
+    "test": "NODE_OPTIONS='--experimental-vm-modules --experimental-json-modules --no-warnings' jest --watch"
   }
 }
