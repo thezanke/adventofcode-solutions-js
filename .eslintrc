@@ -1,6 +1,0 @@
-{
-  "extends": ["airbnb-base", "plugin:prettier/recommended"],
-  "rules": {
-    "arrow-parens": [2, "always", { "requireForBlockBody": true }]
-  }
-}
