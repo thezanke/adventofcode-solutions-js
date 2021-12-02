@@ -10,15 +10,15 @@ export const part1 = (arr) => {
 };
 
 export const part2 = (arr) => {
-  let b = [];
+  let totals = [];
 
   arr.forEach((curr, index) => {
     let [prev, last] = [arr[index - 1], arr[index + 1]];
 
     if (!prev || !last) return;
 
-    b.push(prev + curr + last);
+    totals.push(prev + curr + last);
   });
 
-  return part1(b);
+  return part1(totals);
 };

@@ -2,6 +2,7 @@
   "name": "adventofcode-solutions-js",
   "type": "module",
   "dependencies": {
+    "csv-parse": "^5.0.3",
     "jest": "^27.4.2",
     "lodash": "^4.17.21"
   },
