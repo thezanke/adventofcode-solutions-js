@@ -1,10 +1,10 @@
-import { parseFileInput } from "../helpers/parseFileInput";
+import { readInput } from "../helpers/readInput";
 import { part1, part2 } from "./day2";
 import { transformInput } from "./transformInput";
 
 const parseOpts = { delimiter: " ", transform: transformInput };
-const exampleInput = parseFileInput("./2021/day2/example-input.csv", parseOpts);
-const input = parseFileInput("./2021/day2/input.csv", parseOpts);
+const exampleInput = readInput("./2021/day2/example-input.csv", parseOpts);
+const input = readInput("./2021/day2/input.csv", parseOpts);
 
 describe("2021 - Day 1", () => {
   describe("Part 1", () => {
