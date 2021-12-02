@@ -1,7 +1,8 @@
-import { parseDirections, part1, part2 } from "./day2";
 import { parseFileInput } from "../helpers/parseFileInput";
+import { part1, part2 } from "./day2";
+import { transformInput } from "./transformInput";
 
-const parseOpts = { delimiter: " ", transform: parseDirections };
+const parseOpts = { delimiter: " ", transform: transformInput };
 const exampleInput = parseFileInput("./2021/day2/example-input.csv", parseOpts);
 const input = parseFileInput("./2021/day2/input.csv", parseOpts);
 

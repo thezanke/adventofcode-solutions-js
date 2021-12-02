@@ -1,10 +1,3 @@
-export const parseDirections = (directions) => {
-  return directions.map((d) => {
-    const [direction, distance] = d;
-    return [direction, parseInt(distance, 10)];
-  });
-};
-
 export const part1 = (directions) => {
   let pos = { x: 0, y: 0 };
 
