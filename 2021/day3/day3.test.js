@@ -22,7 +22,7 @@ describe("2021 - Day 3", () => {
     });
 
     it("returns the expected result", () => {
-      expect(part2(input)).toEqual(230);
+      expect(part2(input)).toEqual(4636702);
     });
   });
 });
