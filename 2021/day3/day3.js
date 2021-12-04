@@ -37,8 +37,8 @@ export const part1 = (input) => {
 export const part2 = (input) => {
   const bitLen = input[0].length;
 
-  let oxy = [...input];
-  let co2 = [...input];
+  let oxy = input;
+  let co2 = input;
 
   for (let i = 0; i < bitLen; i += 1) {
     if (oxy.length > 1) {
@@ -54,3 +54,4 @@ export const part2 = (input) => {
     }
   }
 };
+ 
