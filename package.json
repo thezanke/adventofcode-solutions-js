@@ -2,11 +2,13 @@
   "name": "adventofcode-solutions-js",
   "type": "module",
   "dependencies": {
+    "axios": "^0.24.0",
     "csv-parse": "^5.0.3",
+    "env-cmd": "^10.1.0",
     "jest": "^27.4.2",
     "lodash": "^4.17.21"
   },
   "scripts": {
-    "test": "NODE_OPTIONS='--experimental-vm-modules --experimental-json-modules --no-warnings' jest --watch"
+    "test": "NODE_OPTIONS='--experimental-vm-modules --experimental-json-modules --no-warnings' env-cmd jest --watch"
   }
 }
