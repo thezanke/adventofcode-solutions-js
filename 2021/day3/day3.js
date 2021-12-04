@@ -54,4 +54,3 @@ export const part2 = (input) => {
     }
   }
 };
- 
