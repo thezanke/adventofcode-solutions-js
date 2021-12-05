@@ -1,4 +1,4 @@
-import { part1, part2 } from "./day1";
+import { part1, part2 } from "./day1.js";
 import input from "./input.json";
 
 describe("2021 - Day 1", () => {

@@ -1,5 +1,5 @@
-import { readInput } from "../helpers/readInput";
-import { part1, part2 } from "./day3";
+import { readInput } from "../../helpers/readInput.js";
+import { part1, part2 } from "./day3.js";
 
 const parseOpts = { delimiter: ',', transform: (o) => o.map(([l]) => l) };
 

@@ -7,7 +7,7 @@ import * as csv from "csv-parse/lib/sync";
  * @param {sync.Options & { transform?: (input: any[]) => any }} options
  * @returns
  */
-export const readInput = (fileInputPath, options) => {
+export const readInput = (fileInputPath, options = {}) => {
   const { transform, ...parseOptions } = options;
   const resolvedPath = path.resolve(fileInputPath);
   let contents = fs.readFileSync(resolvedPath, { encoding: "utf-8" });

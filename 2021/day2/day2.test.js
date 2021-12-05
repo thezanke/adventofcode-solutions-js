@@ -1,6 +1,6 @@
-import { readInput } from "../helpers/readInput";
-import { part1, part2 } from "./day2";
-import { transformInput } from "./transformInput";
+import { readInput } from "../../helpers/readInput.js";
+import { part1, part2 } from "./day2.js";
+import { transformInput } from "./transformInput.js";
 
 const parseOpts = { delimiter: " ", transform: transformInput };
 
