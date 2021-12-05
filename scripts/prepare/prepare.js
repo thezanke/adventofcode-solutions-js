@@ -42,16 +42,21 @@ const createMissingFiles = async (workdir, day, year) => {
   }
 
   for (const file of files) {
-    if (!fs.existsSync(file.fileName)) {
+    const filePath = path.join(workdir, file.fileName);
+
+    if (!fs.existsSync(filePath)) {
       try {
         const contents = await file.createFileContents();
-        fs.writeFileSync(file.fileName, contents, writeOptions);
+        fs.writeFileSync(filePath, contents, writeOptions);
+        console.log(`❗ File "${file.fileName}" created successfully.`);
       } catch (e) {
-        console.error(e);
-        console.log(`Could not create "${file.fileName}", skipping...`);
+        let message = `❗ Could not create file "${file.fileName}", `;
+        if (e.message) message += `reason="${e.message}", `;
+        message += "skipping.";
+        console.log(message);
       }
     } else {
-      console.log(`${file.fileName} already exists, skipping...`);
+      console.log(`❗ File "${file.fileName}" already exists, skipping.`);
     }
   }
 };
@@ -61,8 +66,10 @@ export const prepare = async () => {
   const [year, day] = determineDay(...args);
   const workdir = path.resolve(".", year, `day${day}`);
 
+  console.log(
+    `❗ Preparing ${year} day ${day} in working directory "${workdir}".`
+  );
+
   ensureDirectory(workdir);
   await createMissingFiles(workdir, day, year);
-
-  console.log(workdir);
 };

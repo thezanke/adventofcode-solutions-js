@@ -1,12 +1,8 @@
-import * as path from "path";
+import { File } from "./file.js";
 
-export class CodeFile {
-  constructor(workdir, dayOfMonth) {
-    this.fileName = path.join(workdir, this.createFileName(dayOfMonth));
-  }
-
-  createFileName(dayOfMonth) {
-    return `day${dayOfMonth}.js`;
+export class CodeFile extends File {
+  get fileName() {
+    return `day${this.day}.js`;
   }
 
   createFileContents() {

@@ -1,4 +1,3 @@
-import { fetchInput } from "../../scripts/aoc/prepare/fetchInput";
 import { readInput } from "../helpers/readInput";
 import { part1, part2 } from "./day2";
 import { transformInput } from "./transformInput";

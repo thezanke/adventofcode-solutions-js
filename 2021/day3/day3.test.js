@@ -1,7 +1,7 @@
 import { readInput } from "../helpers/readInput";
 import { part1, part2 } from "./day3";
 
-const parseOpts = { transform: (o) => o.map(([l]) => l) };
+const parseOpts = { delimiter: ',', transform: (o) => o.map(([l]) => l) };
 
 describe("2021 - Day 3", () => {
   describe("Part 1", () => {

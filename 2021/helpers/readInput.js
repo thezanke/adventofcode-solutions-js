@@ -10,13 +10,15 @@ import * as csv from "csv-parse/lib/sync";
 export const readInput = (fileInputPath, options) => {
   const { transform, ...parseOptions } = options;
   const resolvedPath = path.resolve(fileInputPath);
-  const contents = fs.readFileSync(resolvedPath);
+  let contents = fs.readFileSync(resolvedPath, { encoding: "utf-8" });
 
-  const parsed = csv.parse(contents, {
-    skipEmptyLines: true,
-    columns: false,
-    ...parseOptions,
-  });
+  if (parseOptions.delimiter) {
+    contents = csv.parse(contents, {
+      skipEmptyLines: true,
+      columns: false,
+      ...parseOptions,
+    });
+  }
 
-  return transform?.(parsed) ?? parsed;
+  return transform?.(contents) ?? contents;
 };

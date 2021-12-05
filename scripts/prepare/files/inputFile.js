@@ -1,14 +1,8 @@
-import * as path from "path";
 import { fetchInput } from "../fetchInput.js";
+import { File } from "./file.js";
 
-export class InputFile {
-  constructor(day, year) {
-    this.fileName = this.createFileName(day);
-    this.day = day;
-    this.year = year;
-  }
-
-  createFileName(dayOfMonth) {
+export class InputFile extends File {
+  get fileName() {
     return `input`;
   }
 
