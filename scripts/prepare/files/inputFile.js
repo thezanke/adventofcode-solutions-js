@@ -7,6 +7,6 @@ export class InputFile extends File {
   }
 
   createFileContents() {
-    return fetchInput(this.year, this.day);
+    return fetchInput(this.day, this.year);
   }
 }

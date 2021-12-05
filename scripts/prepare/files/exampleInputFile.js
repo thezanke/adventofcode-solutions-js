@@ -1,3 +1,4 @@
+import { fetchExampleInput } from "../fetchInput.js";
 import { File } from "./file.js";
 
 export class ExampleInputFile extends File {
@@ -5,7 +6,9 @@ export class ExampleInputFile extends File {
     return `example-input`;
   }
 
-  createFileContents() {
-    return "";
+  async createFileContents() {
+    const exampleInput = await fetchExampleInput(this.day, this.year);
+
+    return exampleInput;
   }
 }
