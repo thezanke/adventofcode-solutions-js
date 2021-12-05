@@ -10,10 +10,13 @@ export class ExampleInputFile extends File {
     try {
       const input = await fetchExampleInput(this.day, this.year);
       return input;
-    } catch {
-      console.log('❗ Could not fetch example input, stubbing blank file instead.')
+    } catch (e) {
+      let message = "❗ Could not fetch example input, ";
+      if (e.message) message += `reason="${e.message}", `;
+      message += "stubbing blank file instead.";
+      console.log(message);
 
-      return '';
+      return "";
     }
   }
 }
