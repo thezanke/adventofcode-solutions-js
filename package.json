@@ -11,6 +11,6 @@
   },
   "scripts": {
     "test": "NODE_OPTIONS='--experimental-vm-modules --experimental-json-modules --no-warnings' env-cmd jest --watch",
-    "aoc:prepare": "env-cmd node ./scripts/prepare"
+    "prepare": "env-cmd node ./scripts/prepare"
   }
 }
