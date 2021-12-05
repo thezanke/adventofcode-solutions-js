@@ -2,9 +2,7 @@ import { fetchExampleInput } from "../fetchInput.js";
 import { File } from "./file.js";
 
 export class ExampleInputFile extends File {
-  get fileName() {
-    return `example-input`;
-  }
+  fileName = `example-input`;
 
   async createFileContents() {
     try {

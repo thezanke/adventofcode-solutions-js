@@ -9,7 +9,7 @@ export class File {
   }
 
   get fileName() {
-    throw Error("Missing custom fileName getter");
+    throw Error("Missing custom fileName");
   }
 
   get filePath() {
