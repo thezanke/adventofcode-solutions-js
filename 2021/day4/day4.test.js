@@ -3,7 +3,7 @@ import * as fs from "fs";
 
 const readOpts = { encoding: "utf-8" };
 
-describe.skip("2021 - Day 3", () => {
+describe("2021 - Day 3", () => {
   describe("Part 1", () => {
     it("returns the expected result for example", () => {
       const exampleInput = fs.readFileSync("./2021/day4/example-input", readOpts);
