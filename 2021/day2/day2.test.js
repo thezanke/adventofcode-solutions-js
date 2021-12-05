@@ -1,8 +1,15 @@
 import { readInput } from "../../helpers/readInput.js";
 import { part1, part2 } from "./day2.js";
-import { transformInput } from "./transformInput.js";
 
-const parseOpts = { delimiter: " ", transform: transformInput };
+const parseOpts = {
+  delimiter: " ",
+  transform: (directions) => {
+    return directions.map((d) => {
+      const [direction, distance] = d;
+      return [direction, parseInt(distance, 10)];
+    });
+  },
+};
 
 describe("2021 - Day 1", () => {
   describe("Part 1", () => {
