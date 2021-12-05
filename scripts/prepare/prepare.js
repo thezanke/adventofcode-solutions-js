@@ -5,26 +5,12 @@ import { ExampleInputFile } from "./files/exampleInputFile.js";
 import { InputFile } from "./files/inputFile.js";
 import { TestFile } from "./files/testFile.js";
 
-const determineDay = (yearOrDay, suppliedDay) => {
-  let year;
-  let day;
+const today = new Date();
 
-  if (suppliedDay) {
-    day = suppliedDay;
-    year = yearOrDay;
-  } else {
-    const today = new Date();
-    year = `${today.getFullYear()}`;
-
-    if (yearOrDay) {
-      day = yearOrDay;
-    } else {
-      day = `${today.getDate()}`;
-    }
-  }
-
-  return [year, day];
-};
+const determineDay = (
+  day = `${today.getDate()}`,
+  year = `${today.getFullYear()}`
+) => [day, year];
 
 const ensureDirectory = (path) => {
   if (!fs.existsSync(path)) fs.mkdirSync(path);
@@ -64,13 +50,15 @@ const createMissingFiles = async (workdir, day, year) => {
 
 export const prepare = async () => {
   const [, , ...args] = process.argv;
-  const [year, day] = determineDay(...args);
-  const workdir = path.resolve(".", year, `day${day}`);
+  const [day, year] = determineDay(...args);
+  const yeardir = path.resolve(".", year);
+  const workdir = path.join(yeardir, `day${day}`);
 
   console.log(
     `❗ Preparing ${year} day ${day} in working directory "${workdir}".`
   );
 
+  ensureDirectory(yeardir);
   ensureDirectory(workdir);
   await createMissingFiles(workdir, day, year);
 };
