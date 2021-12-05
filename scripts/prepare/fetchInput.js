@@ -1,5 +1,5 @@
-import { JSDOM } from "jsdom";
 import axios from "axios";
+import { JSDOM } from "jsdom";
 
 const { AOC_COOKIE_SESSION: cookieSession } = process.env;
 

@@ -1,6 +1,5 @@
-import { part1, part2 } from "./day4.js";
-import * as fs from "fs";
 import { readInput } from "../../helpers/readInput.js";
+import { part1, part2 } from "./day4.js";
 
 describe("2021 - Day 3", () => {
   describe("Part 1", () => {
