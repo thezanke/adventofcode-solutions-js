@@ -1,6 +1,7 @@
 import * as fs from "fs";
 import * as path from "path";
 import { CodeFile } from "./files/codeFile.js";
+import { ExampleInputFile } from "./files/exampleInputFile.js";
 import { InputFile } from "./files/inputFile.js";
 import { TestFile } from "./files/testFile.js";
 
@@ -29,7 +30,7 @@ const ensureDirectory = (path) => {
   if (!fs.existsSync(path)) fs.mkdirSync(path);
 };
 
-const filesToGenerate = [CodeFile, InputFile, TestFile];
+const filesToGenerate = [CodeFile, InputFile, ExampleInputFile, TestFile];
 
 const writeOptions = { encoding: "utf-8" };
 
