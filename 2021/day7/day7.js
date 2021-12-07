@@ -28,9 +28,9 @@ export const part2 = (arr) => {
     let t = 0;
 
     for (const b of arr) {
-      const diff = Math.abs(b - a);
+      const dist = Math.abs(b - a);
       let gas = 1;
-      for (let i = 0; i < diff; i += 1) t += gas++;
+      for (let i = 0; i < dist; i += 1) t += gas++;
     }
 
     if (t < winner) winner = t;
