@@ -4,11 +4,11 @@ export const part1 = (arr) => {
   const min = Math.floor(avg / 2);
   const max = Math.ceil(avg * 2);
 
-  let winner;
+  let winner = Infinity;
 
   for (let a = min; a <= max; a += 1) {
     let t = arr.reduce((t, b) => t + Math.abs(b - a), 0);
-    if (!winner || t < winner) winner = t;
+    if (t < winner) winner = t;
   }
 
   return winner;
@@ -19,7 +19,7 @@ export const part2 = (arr) => {
   const min = Math.floor(avg / 2);
   const max = Math.ceil(avg * 2);
 
-  let winner;
+  let winner = Infinity;
 
   for (let a = min; a <= max; a += 1) {
     let t = 0;
@@ -31,7 +31,7 @@ export const part2 = (arr) => {
       for (let i = 0; i < diff; i += 1) t += gas++;
     });
 
-    if (!winner || t < winner) winner = t;
+    if (t < winner) winner = t;
   }
 
   return winner;
