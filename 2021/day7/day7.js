@@ -29,9 +29,10 @@ export const part2 = (arr) => {
 
     for (const b of arr) {
       const dist = Math.abs(b - a);
+
       let gas = 1;
       for (let i = 0; i < dist; i += 1) total += gas++;
-      // ^ this line can be replaced with `total += dist * (dist + 1) / 2` because math... Thanks, Dewey.
+      // ^ These 2 lines can be replaced with `total += dist * (dist + 1) / 2` because math... Thanks, Dewey.
     }
 
     if (total < winner) winner = total;
