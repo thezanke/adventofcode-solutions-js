@@ -28,9 +28,8 @@ export const part2 = (arr) => {
     let t = 0;
 
     arr.forEach((b) => {
-      let diff = Math.abs(b - a);
+      const diff = Math.abs(b - a);
       let gas = 1;
-
       for (let i = 0; i < diff; i += 1) t += gas++;
     });
 
