@@ -22,15 +22,14 @@ export const part2 = (arr) => {
   let winner;
 
   for (let a = min; a <= max; a += 1) {
-    let t = arr.reduce((_t, b) => {
-      let t = _t;
+    let t = 0;
+
+    arr.forEach((b) => {
       let diff = Math.abs(b - a);
       let gas = 1;
 
       for (let i = 0; i < diff; i += 1) t += gas++;
-
-      return t;
-    }, 0);
+    });
 
     if (!winner || t < winner) winner = t;
   }
