@@ -10,8 +10,8 @@ export const part1 = (arr) => {
   let winner = Infinity;
 
   for (let a = min; a <= max; a += 1) {
-    let t = arr.reduce((t, b) => t + Math.abs(b - a), 0);
-    if (t < winner) winner = t;
+    let total = arr.reduce((t, b) => t + Math.abs(b - a), 0);
+    if (total < winner) winner = total;
   }
 
   return winner;
@@ -25,15 +25,15 @@ export const part2 = (arr) => {
   let winner = Infinity;
 
   for (let a = min; a <= max; a += 1) {
-    let t = 0;
+    let total = 0;
 
     for (const b of arr) {
       const dist = Math.abs(b - a);
       let gas = 1;
-      for (let i = 0; i < dist; i += 1) t += gas++;
+      for (let i = 0; i < dist; i += 1) total += gas++;
     }
 
-    if (t < winner) winner = t;
+    if (total < winner) winner = total;
   }
 
   return winner;
