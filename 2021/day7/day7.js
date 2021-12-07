@@ -5,7 +5,7 @@ const calculateCma = (nums) =>
 export const part1 = (arr) => {
   const avg = calculateCma(arr);
   const min = Math.floor(avg / 2);
-  const max = Math.ceil(avg * 2);
+  const max = Math.ceil(avg * 1.5);
 
   let winner = Infinity;
 
@@ -20,7 +20,7 @@ export const part1 = (arr) => {
 export const part2 = (arr) => {
   const avg = calculateCma(arr);
   const min = Math.floor(avg / 2);
-  const max = Math.ceil(avg * 2);
+  const max = Math.ceil(avg * 1.5);
 
   let winner = Infinity;
 
