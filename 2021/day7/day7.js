@@ -4,19 +4,14 @@ export const part1 = (arr) => {
   const min = Math.floor(avg / 2);
   const max = Math.ceil(avg * 2);
 
-  const possibles = [];
+  let winner;
 
   for (let a = min; a <= max; a += 1) {
-    let t = 0;
-
-    arr.forEach((b) => {
-      t += a > b ? a - b : b - a;
-    });
-
-    possibles.push(t);
+    let t = arr.reduce((t, b) => t + Math.abs(b - a), 0);
+    if (!winner || t < winner) winner = t;
   }
 
-  return Math.min(...possibles);
+  return winner;
 };
 
 export const part2 = (arr) => {
@@ -24,23 +19,21 @@ export const part2 = (arr) => {
   const min = Math.floor(avg / 2);
   const max = Math.ceil(avg * 2);
 
-  const possibles = [];
+  let winner;
 
   for (let a = min; a <= max; a += 1) {
-    let t = 0;
-
-    arr.forEach((b) => {
-      let minPos = a > b ? b : a;
-      let maxPos = a > b ? a : b;
+    let t = arr.reduce((_t, b) => {
+      let t = _t;
+      let diff = Math.abs(b - a);
       let gas = 1;
-      for (let i = minPos; i < maxPos; i += 1) {
-        t += gas;
-        gas += 1;
-      }
-    });
 
-    possibles.push(t);
+      for (let i = 0; i < diff; i += 1) t += gas++;
+
+      return t;
+    }, 0);
+
+    if (!winner || t < winner) winner = t;
   }
 
-  return Math.min(...possibles);
+  return winner;
 };
