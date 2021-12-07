@@ -27,11 +27,11 @@ export const part2 = (arr) => {
   for (let a = min; a <= max; a += 1) {
     let t = 0;
 
-    arr.forEach((b) => {
+    for (const b of arr) {
       const diff = Math.abs(b - a);
       let gas = 1;
       for (let i = 0; i < diff; i += 1) t += gas++;
-    });
+    }
 
     if (t < winner) winner = t;
   }
