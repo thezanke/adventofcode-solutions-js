@@ -52,10 +52,10 @@ const determineDigits = (signalPatterns) => {
 
   digits[0] = digits[8].replace(segments.m, "");
   digits[6] = digits[8].replace(segments.tr, "");
+  digits[5] = digits[6].replace(segments.bl, "");
   digits[9] = digits[8].replace(segments.bl, "");
   digits[3] = digits[9].replace(segments.tl, "");
   digits[2] = digits[8].replace(segments.tl, "").replace(segments.br, "");
-  digits[5] = digits[8].replace(segments.tr, "").replace(segments.bl, "");
 
   return digits.reduce((o, d, i) => {
     o[d] = `${i}`;
