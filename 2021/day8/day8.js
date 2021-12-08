@@ -13,17 +13,17 @@ export const part1 = (arr) => {
     .filter((s) => uniqueSignalCounts.includes(s)).length;
 };
 
-const determineDigits = (signalPatterns) => {
+const determineDigits = (signals) => {
   const digits = [
     null,
-    signalPatterns.find((s) => s.length === 2),
+    signals.find((s) => s.length === 2),
     null,
     null,
-    signalPatterns.find((s) => s.length === 4),
+    signals.find((s) => s.length === 4),
     null,
     null,
-    signalPatterns.find((s) => s.length === 3),
-    signalPatterns.find((s) => s.length === 7),
+    signals.find((s) => s.length === 3),
+    signals.find((s) => s.length === 7),
     null,
   ];
 
@@ -33,21 +33,11 @@ const determineDigits = (signalPatterns) => {
   const pbl = digits[8].split("").filter((d) => !nbl.has(d));
 
   const segments = {
-    tl: ptl.find(
-      (d) => signalPatterns.filter((sp) => sp.includes(d)).length === 6
-    ),
-    tr: ptrbr.find(
-      (d) => signalPatterns.filter((sp) => sp.includes(d)).length === 8
-    ),
-    m: ptl.find(
-      (d) => signalPatterns.filter((sp) => sp.includes(d)).length === 7
-    ),
-    bl: pbl.find(
-      (d) => signalPatterns.filter((sp) => sp.includes(d)).length === 4
-    ),
-    br: ptrbr.find(
-      (d) => signalPatterns.filter((sp) => sp.includes(d)).length === 9
-    ),
+    tl: ptl.find((d) => signals.filter((sp) => sp.includes(d)).length === 6),
+    tr: ptrbr.find((d) => signals.filter((sp) => sp.includes(d)).length === 8),
+    m: ptl.find((d) => signals.filter((sp) => sp.includes(d)).length === 7),
+    bl: pbl.find((d) => signals.filter((sp) => sp.includes(d)).length === 4),
+    br: ptrbr.find((d) => signals.filter((sp) => sp.includes(d)).length === 9),
   };
 
   digits[0] = digits[8].replace(segments.m, "");
