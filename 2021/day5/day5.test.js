@@ -12,7 +12,7 @@ describe("2021 - Day 5", () => {
     describe("Example Input", () => {
       const exampleInput = readInput("./2021/day5/example-input", parseOpts);
 
-      it("returns the expected result for example", () => {
+      it("returns the expected result", () => {
         expect(part1(exampleInput)).toEqual(5);
       });
     });
@@ -30,7 +30,7 @@ describe("2021 - Day 5", () => {
     describe("Example Input", () => {
       const exampleInput = readInput("./2021/day5/example-input", parseOpts);
 
-      it("returns the expected result for example", () => {
+      it("returns the expected result", () => {
         expect(part2(exampleInput)).toEqual(12);
       });
     });

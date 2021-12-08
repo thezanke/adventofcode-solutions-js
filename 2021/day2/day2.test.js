@@ -16,7 +16,7 @@ describe("2021 - Day 1", () => {
     describe("Example Input", () => {
       const exampleInput = readInput("./2021/day2/example-input", parseOpts);
 
-      it("returns the expected result for the example", () => {
+      it("returns the expected result", () => {
         const pos = part1(exampleInput);
         expect(pos.x * pos.y).toEqual(150);
       });
@@ -25,7 +25,7 @@ describe("2021 - Day 1", () => {
     describe("Final Input", () => {
       const input = readInput("./2021/day2/input", parseOpts);
 
-      it("returns the expected result for input", () => {
+      it("returns the expected result", () => {
         const pos = part1(input);
         expect(pos.x * pos.y).toEqual(1383564);
       });

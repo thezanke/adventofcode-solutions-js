@@ -6,7 +6,7 @@ describe("2021 - Day 3", () => {
     describe("Example Input", () => {
       const exampleInput = readInput("./2021/day4/example-input");
 
-      it("returns the expected result for example", () => {
+      it("returns the expected result", () => {
         expect(part1(exampleInput)).toEqual(4512);
       });
     });
@@ -24,7 +24,7 @@ describe("2021 - Day 3", () => {
     describe("Example Input", () => {
       const exampleInput = readInput("./2021/day4/example-input");
 
-      it("returns the expected result for example", () => {
+      it("returns the expected result", () => {
         expect(part2(exampleInput)).toEqual(1924);
       });
     });
