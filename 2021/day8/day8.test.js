@@ -12,26 +12,50 @@ const parseOpts = {
 
 describe("2021 - Day 8", () => {
   describe("Part 1", () => {
-    it("returns the expected result for example", () => {
-      const exampleInput = readInput("./2021/day8/example-input", parseOpts);
-      expect(part1(exampleInput)).toEqual(26);
+    describe("Example Input", () => {
+      let exampleInput;
+      beforeEach(() => {
+        exampleInput = readInput("./2021/day8/example-input", parseOpts);
+      });
+
+      it("returns the expected result for example", () => {
+        expect(part1(exampleInput)).toEqual(26);
+      });
     });
 
-    it("returns the expected result", () => {
-      const input = readInput("./2021/day8/input", parseOpts);
-      expect(part1(input)).toEqual(476);
+    describe("Final Input", () => {
+      let input;
+      beforeEach(() => {
+        input = readInput("./2021/day8/input", parseOpts);
+      });
+
+      it("returns the expected result", () => {
+        expect(part1(input)).toEqual(476);
+      });
     });
   });
 
   describe("Part 2", () => {
-    it("returns the expected result for example", () => {
-      const exampleInput = readInput("./2021/day8/example-input", parseOpts);
-      expect(part2(exampleInput)).toEqual(61229);
+    describe("Example Input", () => {
+      let exampleInput;
+      beforeEach(() => {
+        exampleInput = readInput("./2021/day8/example-input", parseOpts);
+      });
+
+      it("returns the expected result for example", () => {
+        expect(part2(exampleInput)).toEqual(61229);
+      });
     });
 
-    it("returns the expected result", () => {
-      const input = readInput("./2021/day8/input", parseOpts);
-      expect(part2(input)).toEqual(61229);
+    describe("Final Input", () => {
+      let input;
+      beforeEach(() => {
+        input = readInput("./2021/day8/input", parseOpts);
+      });
+
+      it("returns the expected result", () => {
+        expect(part2(input)).toEqual(1011823);
+      });
     });
   });
 });
