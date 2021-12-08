@@ -48,7 +48,7 @@ const determineDigits = (signals) => {
   digits[2] = digits[8].replace(segments.tl, "").replace(segments.br, "");
 
   return digits.reduce((o, d, i) => {
-    o[d] = `${i}`;
+    o[d] = i;
     return o;
   }, {});
 };
