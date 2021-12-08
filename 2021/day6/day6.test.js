@@ -21,33 +21,46 @@ describe("2021 - Day 6", () => {
     it("returns the expected result for 1,2", () => {
       expect(determineEffectOfFish(1, 9)).toEqual(3);
     });
+
     it("returns the expected result for 1,2", () => {
       expect(determineEffectOfFish(1, 10)).toEqual(3);
     });
   });
 
   describe("Part 1", () => {
-    it("returns the expected result for example", () => {
+    describe("Example Input", () => {
       const exampleInput = readInput("./2021/day6/example-input", parseOpts);
-      expect(solve(exampleInput, 18)).toEqual(26);
-      expect(solve(exampleInput, 80)).toEqual(5934);
+
+      it("returns the expected result for example", () => {
+        expect(solve(exampleInput, 18)).toEqual(26);
+        expect(solve(exampleInput, 80)).toEqual(5934);
+      });
     });
 
-    it("returns the expected result", () => {
+    describe("Final Input", () => {
       const input = readInput("./2021/day6/input", parseOpts);
-      expect(solve(input, 80)).toEqual(380612);
+
+      it("returns the expected result", () => {
+        expect(solve(input, 80)).toEqual(380612);
+      });
     });
   });
 
   describe("Part 2", () => {
-    it("returns the expected result for example", () => {
+    describe("Example Input", () => {
       const exampleInput = readInput("./2021/day6/example-input", parseOpts);
-      expect(solve(exampleInput, 256)).toEqual(26984457539);
+
+      it("returns the expected result for example", () => {
+        expect(solve(exampleInput, 256)).toEqual(26984457539);
+      });
     });
 
-    it("returns the expected result", () => {
+    describe("Final Input", () => {
       const input = readInput("./2021/day6/input", parseOpts);
-      expect(solve(input, 256)).toEqual(1710166656900);
+
+      it("returns the expected result", () => {
+        expect(solve(input, 256)).toEqual(1710166656900);
+      });
     });
   });
 });

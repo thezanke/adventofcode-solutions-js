@@ -31,26 +31,38 @@ const parseOpts = { delimiter: ',', transform: o => o };
 
 describe("${this.year} - Day ${this.day}", () => {
   describe("Part 1", () => {
-    it("returns the expected result for example", () => {
+    describe("Example Input", () => {
       const exampleInput = readInput("./${this.exampleInputFilePath}", parseOpts);
-      expect(part1(exampleInput)).toEqual(true);
+
+      it("returns the expected result for example", () => {
+        expect(part1(exampleInput)).toEqual(true);
+      });
     });
 
-    it.skip("returns the expected result", () => {
+    describe.skip("Final Input", () => {
       const input = readInput("./${this.inputFilePath}", parseOpts);
-      expect(part1(input)).toEqual(true);
+
+      it("returns the expected result", () => {
+        expect(part1(input)).toEqual(true);
+      });
     });
   });
 
   describe("Part 2", () => {
-    it.skip("returns the expected result for example", () => {
+    describe.skip("Example Input", () => {
       const exampleInput = readInput("./${this.exampleInputFilePath}", parseOpts);
-      expect(part2(exampleInput)).toEqual(true);
-    });
 
-    it.skip("returns the expected result", () => {
+      it("returns the expected result for example", () => {
+        expect(part2(exampleInput)).toEqual(true);
+      });
+    })
+
+    describe.skip("Final Input", () => ({
       const input = readInput("./${this.inputFilePath}", parseOpts);
-      expect(part2(input)).toEqual(true);
+
+      it("returns the expected result", () => {
+        expect(part2(input)).toEqual(true);
+      });
     });
   });
 });\n`;

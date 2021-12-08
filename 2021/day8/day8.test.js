@@ -13,21 +13,15 @@ const parseOpts = {
 describe("2021 - Day 8", () => {
   describe("Part 1", () => {
     describe("Example Input", () => {
-      let exampleInput;
-      beforeEach(() => {
-        exampleInput = readInput("./2021/day8/example-input", parseOpts);
-      });
+      const exampleInput = readInput("./2021/day8/example-input", parseOpts);
 
-      it("returns the expected result for example", () => {
+      it("returns the expected result", () => {
         expect(part1(exampleInput)).toEqual(26);
       });
     });
 
     describe("Final Input", () => {
-      let input;
-      beforeEach(() => {
-        input = readInput("./2021/day8/input", parseOpts);
-      });
+      const input = readInput("./2021/day8/input", parseOpts);
 
       it("returns the expected result", () => {
         expect(part1(input)).toEqual(476);
@@ -37,21 +31,15 @@ describe("2021 - Day 8", () => {
 
   describe("Part 2", () => {
     describe("Example Input", () => {
-      let exampleInput;
-      beforeEach(() => {
-        exampleInput = readInput("./2021/day8/example-input", parseOpts);
-      });
+      const exampleInput = readInput("./2021/day8/example-input", parseOpts);
 
-      it("returns the expected result for example", () => {
+      it("returns the expected result", () => {
         expect(part2(exampleInput)).toEqual(61229);
       });
     });
 
     describe("Final Input", () => {
-      let input;
-      beforeEach(() => {
-        input = readInput("./2021/day8/input", parseOpts);
-      });
+      const input = readInput("./2021/day8/input", parseOpts);
 
       it("returns the expected result", () => {
         expect(part2(input)).toEqual(1011823);

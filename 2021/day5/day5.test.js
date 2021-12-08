@@ -9,26 +9,38 @@ const parseOpts = {
 
 describe("2021 - Day 5", () => {
   describe("Part 1", () => {
-    it("returns the expected result for example", () => {
+    describe("Example Input", () => {
       const exampleInput = readInput("./2021/day5/example-input", parseOpts);
-      expect(part1(exampleInput)).toEqual(5);
+
+      it("returns the expected result for example", () => {
+        expect(part1(exampleInput)).toEqual(5);
+      });
     });
 
-    it("returns the expected result", () => {
+    describe("Final Input", () => {
       const input = readInput("./2021/day5/input", parseOpts);
-      expect(part1(input)).toEqual(6283);
+
+      it("returns the expected result", () => {
+        expect(part1(input)).toEqual(6283);
+      });
     });
   });
 
   describe("Part 2", () => {
-    it("returns the expected result for example", () => {
+    describe("Example Input", () => {
       const exampleInput = readInput("./2021/day5/example-input", parseOpts);
-      expect(part2(exampleInput)).toEqual(12);
+
+      it("returns the expected result for example", () => {
+        expect(part2(exampleInput)).toEqual(12);
+      });
     });
 
-    it("returns the expected result", () => {
+    describe("Final Input", () => {
       const input = readInput("./2021/day5/input", parseOpts);
-      expect(part2(input)).toEqual(18864);
+
+      it("returns the expected result", () => {
+        expect(part2(input)).toEqual(18864);
+      });
     });
   });
 });
