@@ -34,7 +34,7 @@ describe("${this.year} - Day ${this.day}", () => {
     describe("Example Input", () => {
       const exampleInput = readInput("./${this.exampleInputFilePath}", parseOpts);
 
-      it("returns the expected result for example", () => {
+      it("returns the expected result", () => {
         expect(part1(exampleInput)).toEqual(true);
       });
     });
@@ -52,7 +52,7 @@ describe("${this.year} - Day ${this.day}", () => {
     describe.skip("Example Input", () => {
       const exampleInput = readInput("./${this.exampleInputFilePath}", parseOpts);
 
-      it("returns the expected result for example", () => {
+      it("returns the expected result", () => {
         expect(part2(exampleInput)).toEqual(true);
       });
     });
