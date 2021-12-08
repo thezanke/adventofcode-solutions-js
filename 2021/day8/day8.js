@@ -13,7 +13,7 @@ export const part1 = (arr) => {
     .filter((s) => uniqueSignalCounts.includes(s)).length;
 };
 
-const determineDigits = (signals) => {
+const createSignalDigitMap = (signals) => {
   const digits = [
     null,
     signals.find((s) => s.length === 2),
@@ -57,8 +57,8 @@ export const part2 = (arr) => {
   let total = 0;
 
   for (const [signals, output] of arr) {
-    let digits = determineDigits(signals);
-    total += parseInt(output.map((o) => digits[o]).join(""), 10);
+    let signalDigitMap = createSignalDigitMap(signals);
+    total += parseInt(output.map((o) => signalDigitMap[o]).join(""), 10);
   }
 
   return total;
