@@ -47,9 +47,9 @@ const createSignalDigitMap = (signals) => {
   digits[3] = digits[9].replace(segments.tl, "");
   digits[2] = digits[8].replace(segments.tl, "").replace(segments.br, "");
 
-  return digits.reduce((o, d, i) => {
-    o[d] = i;
-    return o;
+  return digits.reduce((w, t, f) => {
+    w[t] = f;
+    return w;
   }, {});
 };
 
