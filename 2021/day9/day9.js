@@ -28,6 +28,7 @@ export const part2 = (input) => {
   );
 
   const lowPoints = [];
+  const positionsToAssign = [];
 
   mappedInput.forEach((row, y) => {
     row.forEach((pos, x) => {
@@ -46,23 +47,22 @@ export const part2 = (input) => {
         lowPoints.push(pos);
       } else {
         pos.lowNeighbors = neighbors.filter((n) => n.val < pos.val);
+        positionsToAssign.push(pos);
       }
     });
   });
 
   const basins = lowPoints.map((lp) => new Set([lp]));
 
-  const remainingPositions = _.flatten(mappedInput)
-    .filter((p) => p.val !== 9 && !lowPoints.includes(p))
-    .sort((a, b) => a.val - b.val);
-
-  remainingPositions.forEach((fmp) => {
-    basins.some((b) => {
-      const isInBasin = fmp.lowNeighbors.some((lp) => b.has(lp));
-      if (isInBasin) b.add(fmp);
-      return isInBasin;
+  positionsToAssign
+    .sort((a, b) => a.val - b.val)
+    .forEach((fmp) => {
+      basins.some((b) => {
+        const isInBasin = fmp.lowNeighbors.some((lp) => b.has(lp));
+        if (isInBasin) b.add(fmp);
+        return isInBasin;
+      });
     });
-  });
 
   return basins
     .sort((a, b) => b.size - a.size)
