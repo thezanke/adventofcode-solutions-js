@@ -55,9 +55,10 @@ export const part2 = (input) => {
     .sort((a, b) => a.val - b.val);
 
   remainingPositions.forEach((fmp) => {
-    basins.forEach((b) => {
+    basins.some((b) => {
       const isInBasin = fmp.lowNeighbors.some((lp) => b.has(lp));
       if (isInBasin) b.add(fmp);
+      return isInBasin;
     });
   });
 
