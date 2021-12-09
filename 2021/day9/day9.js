@@ -43,20 +43,20 @@ export const part2 = (input) => {
       if (isLowPoint) {
         lowPoints.push(pos);
       } else if (pos.val < 9) {
-        pos.lowers = neighbors.filter((n) => n.val < pos.val);
+        pos.lowNeighbors = neighbors.filter((n) => n.val < pos.val);
       }
     });
   });
 
-  const nonLowPoints = _.flatten(mappedInput)
-    .sort((a, b) => a.val - b.val)
-    .filter((p) => p.val !== 9 && !lowPoints.includes(p));
-
   const basins = lowPoints.map((lp) => new Set([lp]));
 
-  nonLowPoints.forEach((fmp) => {
+  const remainingPositions = _.flatten(mappedInput)
+    .filter((p) => p.val !== 9 && !lowPoints.includes(p))
+    .sort((a, b) => a.val - b.val);
+
+  remainingPositions.forEach((fmp) => {
     basins.forEach((b) => {
-      const isInBasin = fmp.lowers.some((lp) => b.has(lp));
+      const isInBasin = fmp.lowNeighbors.some((lp) => b.has(lp));
       if (isInBasin) b.add(fmp);
     });
   });
