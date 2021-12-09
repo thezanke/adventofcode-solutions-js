@@ -52,19 +52,17 @@ export const part2 = (input) => {
     .sort((a, b) => a.val - b.val)
     .filter((p) => p.val !== 9 && !lowPoints.includes(p));
 
-  const basins = lowPoints.map((lp) => {
-    let positions = new Set([lp]);
+  const basins = lowPoints.map((lp) => new Set([lp]));
 
-    nonLowPoints.forEach((fmp) => {
-      const isInBasin = fmp.lowers.some((lp) => positions.has(lp));
-      if (isInBasin) positions.add(fmp);
+  nonLowPoints.forEach((fmp) => {
+    basins.forEach((b) => {
+      const isInBasin = fmp.lowers.some((lp) => b.has(lp));
+      if (isInBasin) b.add(fmp);
     });
-
-    return positions.size;
   });
 
   return basins
-    .sort((a, b) => b - a)
+    .sort((a, b) => b.size - a.size)
     .slice(0, 3)
-    .reduce((t, v) => t * v);
+    .reduce((t, v) => t * v.size, 1);
 };
