@@ -31,6 +31,8 @@ export const part2 = (input) => {
 
   mappedInput.forEach((row, y) => {
     row.forEach((pos, x) => {
+      if (pos.val === 9) return;
+
       const neighbors = [
         mappedInput[y - 1]?.[x],
         mappedInput[y + 1]?.[x],
@@ -42,7 +44,7 @@ export const part2 = (input) => {
 
       if (isLowPoint) {
         lowPoints.push(pos);
-      } else if (pos.val < 9) {
+      } else {
         pos.lowNeighbors = neighbors.filter((n) => n.val < pos.val);
       }
     });
