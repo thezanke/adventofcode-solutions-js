@@ -22,38 +22,40 @@ export const part1 = (arr) => {
   return lows;
 };
 
-export const part2 = (arr) => {
-  const lows = [];
-  const m = arr.map((l, y) => l.map((val, x) => ({ x, y, val })));
+export const part2 = (input) => {
+  const mappedInput = input.map((row, y) =>
+    row.map((val, x) => ({ x, y, val }))
+  );
 
-  m.forEach((l, y) => {
-    l.forEach((p, x) => {
+  const lowPoints = [];
+
+  mappedInput.forEach((row, y) => {
+    row.forEach((pos, x) => {
       const neighbors = [
-        m[y - 1]?.[x],
-        m[y + 1]?.[x],
-        m[y]?.[x - 1],
-        m[y]?.[x + 1],
+        mappedInput[y - 1]?.[x],
+        mappedInput[y + 1]?.[x],
+        mappedInput[y]?.[x - 1],
+        mappedInput[y]?.[x + 1],
       ].filter((n) => n !== undefined);
 
-      const isLow = neighbors.every((n) => p.val < n.val);
+      const isLowPoint = neighbors.every((n) => pos.val < n.val);
 
-      if (isLow) lows.push(p);
-
-      if (p.val < 9 && !isLow) {
-        const lowers = neighbors.filter((n) => n.val < p.val);
-        p.lowers = lowers;
+      if (isLowPoint) {
+        lowPoints.push(pos);
+      } else if (pos.val < 9) {
+        pos.lowers = neighbors.filter((n) => n.val < pos.val);
       }
     });
   });
 
-  const fm = _.flatten(m)
+  const nonLowPoints = _.flatten(mappedInput)
     .sort((a, b) => a.val - b.val)
-    .filter((p) => p.val !== 9 && !lows.includes(p));
+    .filter((p) => p.val !== 9 && !lowPoints.includes(p));
 
-  const basins = lows.map((lp) => {
+  const basins = lowPoints.map((lp) => {
     let positions = new Set([lp]);
 
-    fm.forEach((fmp) => {
+    nonLowPoints.forEach((fmp) => {
       const isInBasin = fmp.lowers.some((lp) => positions.has(lp));
       if (isInBasin) positions.add(fmp);
     });
