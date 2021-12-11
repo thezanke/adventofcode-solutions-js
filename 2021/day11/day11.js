@@ -55,6 +55,7 @@ export const part1 = (input) => {
 
   for (let step = 0; step < 100; step += 1) {
     all.forEach(flashRecursively);
+
     flashes += all.reduce((t, o) => {
       if (o.flash) {
         o.flash = false;
@@ -92,6 +93,7 @@ export const part2 = (input) => {
 
   for (let step = 0; true; step += 1) {
     all.forEach(flashRecursively);
+
     const totalPower = all.reduce((t, o) => {
       if (o.flash) {
         o.flash = false;
