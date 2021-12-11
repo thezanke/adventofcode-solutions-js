@@ -76,6 +76,7 @@ export const part2 = (input) => {
     l.map((n, x) => {
       let o = new Octo(n, x, y);
       all.push(o);
+
       return o;
     })
   );
