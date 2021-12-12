@@ -50,20 +50,20 @@ export const part2 = (input) => {
       return;
     }
 
-    map[label].forEach((l) => {
-      if (l === START) return;
+    map[label].forEach((nextLabel) => {
+      if (nextLabel === START) return;
 
       let nextFlag = flag;
 
-      const charCode = l.charCodeAt(0);
+      const charCode = nextLabel.charCodeAt(0);
       if (charCode >= 97) {
-        if (path.includes(l)) {
+        if (path.includes(nextLabel)) {
           if (nextFlag) return;
           nextFlag = true;
         }
       }
 
-      findPaths(l, nextPath, nextFlag);
+      findPaths(nextLabel, nextPath, nextFlag);
     });
   };
 
