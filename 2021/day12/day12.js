@@ -26,9 +26,10 @@ export const part1 = (input) => {
       return;
     }
 
-    map[label]
-      .filter((n) => !(n.charCodeAt(0) > 90 && path.includes(n)))
-      .forEach((l) => findPaths(l, nextPath));
+    map[label].forEach((l) => {
+      if (l.charCodeAt(0) >= 97 && path.includes(l)) return;
+      findPaths(l, nextPath);
+    });
   };
 
   findPaths(START);
