@@ -42,7 +42,7 @@ export const part2 = (input) => {
 
   let paths = [];
 
-  const findPaths = (label, path = [], _extraTimeSpent = false) => {
+  const findPaths = (label, path = [], flag = false) => {
     const nextPath = [...path, label];
 
     if (label === END) {
@@ -53,17 +53,17 @@ export const part2 = (input) => {
     map[label].forEach((l) => {
       if (l === START) return;
 
-      let extraTimeSpent = _extraTimeSpent;
+      let nextFlag = flag;
 
       const charCode = l.charCodeAt(0);
       if (charCode >= 97) {
         if (path.includes(l)) {
-          if (extraTimeSpent) return;
-          extraTimeSpent = true;
+          if (nextFlag) return;
+          nextFlag = true;
         }
       }
 
-      findPaths(l, nextPath, extraTimeSpent);
+      findPaths(l, nextPath, nextFlag);
     });
   };
 
