@@ -27,7 +27,7 @@ export class TestFile extends File {
 import { readInput } from "../../helpers/readInput.js";
 import { part1, part2 } from "./${this.codeFilePath}";
 
-const parseOpts = { delimiter: ',', transform: o => o };
+const parseOpts = { transform: o => o };
 
 describe("${this.year} - Day ${this.day}", () => {
   describe("Part 1", () => {
