@@ -63,7 +63,7 @@ const parseInput = (input) => {
   const directions = parseDirections(directionsString);
 
   return [locations, directions];
-}
+};
 
 export const part1 = (input) => {
   const [locations, directions] = parseInput(input);
