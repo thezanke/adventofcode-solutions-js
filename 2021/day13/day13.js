@@ -30,9 +30,13 @@ class GridPaper {
   };
 
   toString() {
-    let values = Object.values(this.data);
-    let maxX = Math.max(...values.map((p) => p.x));
-    let maxY = Math.max(...values.map((p) => p.y));
+    let maxX = 0;
+    let maxY = 0;
+
+    Object.values(this.data).forEach(({ x, y }) => {
+      if (x > maxX) maxX = x;
+      if (y > maxY) maxY = y;
+    });
 
     return Array.from({ length: maxY + 1 }, (_v, y) => {
       return Array.from({ length: maxX + 1 }, (_v, x) => {
