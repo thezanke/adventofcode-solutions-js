@@ -67,6 +67,7 @@ class GridPaper {
 
 export const part1 = (input) => {
   const [locations, directions] = parseInput(input);
+
   const gridPaper = new GridPaper(locations);
   gridPaper.fold(directions[0]);
 
@@ -75,6 +76,7 @@ export const part1 = (input) => {
 
 export const part2 = (input) => {
   const [locations, directions] = parseInput(input);
+
   const gridPaper = new GridPaper(locations);
   directions.forEach(gridPaper.fold);
 
