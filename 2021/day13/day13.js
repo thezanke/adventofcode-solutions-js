@@ -31,7 +31,7 @@ class GridPaper {
     const newData = {};
 
     Object.values(this.data).forEach((pos) => {
-      const posFoldAxisCoord = foldAxis === "x" ? pos.x : pos.y;
+      const posFoldAxisCoord = pos[foldAxis];
 
       if (posFoldAxisCoord < foldCoord) {
         newData[`${pos.x},${pos.y}`] = pos;
