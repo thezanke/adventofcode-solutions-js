@@ -28,13 +28,13 @@ class GridPaper {
   }
 
   fold = ([foldAxis, foldCoord]) => {
-    const newData = {};
+    const data = {};
 
     Object.values(this.data).forEach((pos) => {
       const posFoldAxisCoord = pos[foldAxis];
 
       if (posFoldAxisCoord < foldCoord) {
-        newData[`${pos.x},${pos.y}`] = pos;
+        data[`${pos.x},${pos.y}`] = pos;
         return;
       }
 
@@ -42,10 +42,10 @@ class GridPaper {
       newPos[foldAxis] = foldCoord - (posFoldAxisCoord - foldCoord);
 
       const key = `${newPos.x},${newPos.y}`;
-      if (!newData[key]) newData[key] = newPos;
+      if (!data[key]) data[key] = newPos;
     });
 
-    this.data = newData;
+    this.data = data;
   };
 
   toString() {
