@@ -36,7 +36,7 @@ class GridPaper {
 
     return Array.from({ length: maxY + 1 }, (_v, y) => {
       return Array.from({ length: maxX + 1 }, (_v, x) => {
-        return this.data[`${x},${y}`] ? "#" : ".";
+        return this.data[`${x},${y}`] ? "#" : " ";
       }).join(" ");
     }).join("\n");
   }
