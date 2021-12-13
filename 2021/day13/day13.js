@@ -8,7 +8,7 @@ class GridPaper {
     });
   }
 
-  fold(foldAxis, foldCoord) {
+  fold = ([foldAxis, foldCoord]) => {
     const newData = {};
 
     Object.values(this.data).forEach((pos) => {
@@ -27,7 +27,7 @@ class GridPaper {
     });
 
     this.data = newData;
-  }
+  };
 
   toString() {
     let values = Object.values(this.data);
@@ -57,7 +57,7 @@ export const part1 = (input) => {
   const gridPaper = new GridPaper(dotLocations);
   const directions = parseDirections(directionsString);
 
-  gridPaper.fold(...directions[0]);
+  gridPaper.fold(directions[0]);
 
   return Object.values(gridPaper.data).length;
 };
@@ -70,9 +70,7 @@ export const part2 = (input) => {
   const gridPaper = new GridPaper(dotLocations);
   const directions = parseDirections(directionsString);
 
-  directions.forEach((dir) => {
-    gridPaper.fold(...dir);
-  });
+  directions.forEach(gridPaper.fold);
 
   return gridPaper.toString();
 };
