@@ -53,28 +53,30 @@ const parseDirections = (directionsString) => {
   );
 };
 
-export const part1 = (input) => {
-  const [dotLocationString, directionsString] = input;
-  const dotLocations = dotLocationString
-    .split(/\r?\n/)
-    .map((l) => l.split(",").map(Number));
-  const gridPaper = new GridPaper(dotLocations);
+const parseLocations = (locationString) => {
+  return locationString.split(/\r?\n/).map((l) => l.split(",").map(Number));
+};
+
+const parseInput = (input) => {
+  const [locationString, directionsString] = input;
+  const locations = parseLocations(locationString);
   const directions = parseDirections(directionsString);
 
+  return [locations, directions];
+}
+
+export const part1 = (input) => {
+  const [locations, directions] = parseInput(input);
+  const gridPaper = new GridPaper(locations);
   gridPaper.fold(directions[0]);
 
   return Object.values(gridPaper.data).length;
 };
 
 export const part2 = (input) => {
-  const [dotLocationString, directionsString] = input;
-  const dotLocations = dotLocationString
-    .split(/\r?\n/)
-    .map((l) => l.split(",").map(Number));
-  const gridPaper = new GridPaper(dotLocations);
-  const directions = parseDirections(directionsString);
-
+  const [locations, directions] = parseInput(input);
+  const gridPaper = new GridPaper(locations);
   directions.forEach(gridPaper.fold);
 
-  return gridPaper.toString();
+  return String(gridPaper);
 };
