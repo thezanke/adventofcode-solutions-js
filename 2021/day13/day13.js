@@ -8,20 +8,19 @@ class GridPaper {
     });
   }
 
-  fold(axis, foldCoord) {
+  fold(foldAxis, foldCoord) {
     const newData = {};
 
-    Object.values(this.data).forEach(({ x, y }) => {
-      let foldAxisCoord = axis === "x" ? x : y;
+    Object.values(this.data).forEach((pos) => {
+      const posFoldAxisCoord = foldAxis === "x" ? pos.x : pos.y;
 
-      if (foldAxisCoord < foldCoord) {
-        newData[`${x},${y}`] = { x, y };
+      if (posFoldAxisCoord < foldCoord) {
+        newData[`${pos.x},${pos.y}`] = pos;
         return;
       }
 
-      foldAxisCoord = foldCoord - (foldAxisCoord - foldCoord);
-      const newPos = { x, y };
-      newPos[axis] = foldAxisCoord;
+      const newPos = { ...pos };
+      newPos[foldAxis] = foldCoord - (posFoldAxisCoord - foldCoord);
 
       const key = `${newPos.x},${newPos.y}`;
       if (!newData[key]) newData[key] = newPos;
@@ -35,15 +34,11 @@ class GridPaper {
     let maxX = Math.max(...values.map((p) => p.x));
     let maxY = Math.max(...values.map((p) => p.y));
 
-    // console.log(values, maxX, maxY);
-
-    let grid = Array.from({ length: maxY + 1 }, (_v, y) => {
+    return Array.from({ length: maxY + 1 }, (_v, y) => {
       return Array.from({ length: maxX + 1 }, (_v, x) => {
         return this.data[`${x},${y}`] ? "#" : ".";
       }).join(" ");
     }).join("\n");
-
-    return grid;
   }
 }
 
