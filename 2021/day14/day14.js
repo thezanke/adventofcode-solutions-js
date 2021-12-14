@@ -19,7 +19,7 @@ const enhanceRules = (rules) => {
   });
 };
 
-export const part2 = (input, steps = 10) => {
+export const solve = (input, steps = 10) => {
   const [poly, rules] = input;
   enhanceRules(rules);
 
