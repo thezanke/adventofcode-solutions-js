@@ -36,7 +36,7 @@ describe("2021 - Day 14", () => {
   });
 
   describe("Part 2", () => {
-    describe("10 steps", () => {
+    describe("Example Input", () => {
       const exampleInput = readInput("./2021/day14/example-input", parseOpts);
 
       it("returns the expected result", () => {
@@ -44,7 +44,7 @@ describe("2021 - Day 14", () => {
       });
     });
 
-    describe("40 steps", () => {
+    describe("Final Input", () => {
       const input = readInput("./2021/day14/input", parseOpts);
 
       it("returns the expected result", () => {
