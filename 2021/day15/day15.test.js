@@ -28,7 +28,7 @@ describe("2021 - Day 15", () => {
   describe("Part 2", () => {
     describe("enlargeInput()", () => {
       const exampleInput = readInput("./2021/day15/example-input", parseOpts);
-  
+
       it("returns the expected result", () => {
         expect(enlargeInput(exampleInput)).toEqual([
           [
