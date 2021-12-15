@@ -71,20 +71,18 @@ const spliceLowest = (arr) => {
 
   let lowest = 0;
   for (let i = 1; i < arr.length; i += 1) {
-    if (arr[i].f < arr[lowest].f) lowest = i;
+    if (arr[i].g < arr[lowest].g) lowest = i;
   }
 
   return arr.splice(lowest, 1)[0];
 };
 
-const aStar = (grid) => {
+const dijkstra = (grid) => {
   const start = grid.getPosition(0, 0);
   const end = grid.getPosition(grid.maxX, grid.maxY);
 
   for (const pos of grid) {
     pos.g = pos === start ? 0 : Infinity;
-    pos.h = manhattan(pos.x, pos.y, grid.maxX, grid.maxY);
-    pos.f = pos.g + pos.h;
   }
 
   const open = [start];
@@ -131,5 +129,5 @@ export const enlargeInput = (input) => {
   return output;
 };
 
-export const part1 = (input) => aStar(new Grid(input));
+export const part1 = (input) => dijkstra(new Grid(input));
 export const part2 = (input) => part1(enlargeInput(input));
