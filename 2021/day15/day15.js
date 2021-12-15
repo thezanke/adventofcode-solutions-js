@@ -44,6 +44,25 @@ class Grid {
       }
     }
   }
+
+  [Symbol.iterator]() {
+    let [x, y] = [0, 0];
+    return {
+      next: () => {
+        if (y === this.data.length) return { done: true };
+
+        const value = this.data[y][x];
+        if (x === this.data[y].length - 1) {
+          y += 1;
+          x = 0;
+        } else {
+          x += 1;
+        }
+
+        return { value, done: false };
+      },
+    };
+  }
 }
 
 const spliceLowest = (arr) => {
@@ -62,11 +81,11 @@ const aStar = (grid) => {
   const start = grid.getPosition(0, 0);
   const end = grid.getPosition(grid.maxX, grid.maxY);
 
-  grid.forEach((pos) => {
+  for (const pos of grid) {
     pos.g = pos === start ? 0 : Infinity;
     pos.h = manhattan(pos.x, pos.y, grid.maxX, grid.maxY);
     pos.f = pos.g + pos.h;
-  });
+  }
 
   const open = [start];
 
