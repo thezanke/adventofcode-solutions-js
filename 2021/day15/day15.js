@@ -84,21 +84,13 @@ const aStar = (grid) => {
         pos.f = g + pos.h;
       }
 
-      if (!open.includes(pos)) {
-        open.push(pos);
-      }
+      if (!open.includes(pos)) open.push(pos);
     }
 
     next.visited = true;
   }
 
   return null;
-};
-
-export const part1 = (input) => {
-  const grid = new Grid(input);
-
-  return aStar(grid);
 };
 
 const addToValue = (a, b) => ((a + b - 1) % 9) + 1;
@@ -120,8 +112,5 @@ export const enlargeInput = (input) => {
   return output;
 };
 
-export const part2 = (input) => {
-  const grid = new Grid(enlargeInput(input));
-
-  return aStar(grid);
-};
+export const part1 = (input) => aStar(new Grid(input));
+export const part2 = (input) => part1(enlargeInput(input));
