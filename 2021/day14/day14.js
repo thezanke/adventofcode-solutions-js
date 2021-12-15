@@ -13,26 +13,18 @@ const createBits = (poly) => {
   return bits;
 };
 
-const enhanceRules = (rules) => {
-  Object.entries(rules).forEach(([key, add]) => {
-    rules[key] = [`${key[0]}${add}`, `${add}${key[1]}`];
-  });
-};
-
 export const solve = (input, steps = 10) => {
   const [poly, rules] = input;
-  enhanceRules(rules);
 
   let bits = createBits(poly);
 
   for (let i = 0; i < steps; i += 1) {
-    const newBits = { ...bits };
+    const newBits = {};
 
     for (let bit in rules) {
       const count = bits[bit];
 
       if (count) {
-        newBits[bit] -= count;
         rules[bit].forEach((newBit) => {
           addToObjectKey(newBits, newBit, count);
         });

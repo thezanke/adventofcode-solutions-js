@@ -9,7 +9,7 @@ const parseOpts = {
     const rules = {};
     rulesString.split(/\n/).forEach((r) => {
       const [match, add] = r.split(" -> ");
-      rules[match] = add;
+      rules[match] = [`${match[0]}${add}`, `${add}${match[1]}`];
     });
 
     return [poly, rules];
