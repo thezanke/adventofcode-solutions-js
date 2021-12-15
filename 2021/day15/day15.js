@@ -90,14 +90,14 @@ const aStar = (grid) => {
   const open = [start];
 
   while (open.length) {
-    const next = spliceLowest(open);
+    const curr = spliceLowest(open);
 
-    if (next === end) return next.g;
+    if (curr === end) return curr.g;
 
-    for (const pos of next.neighbors) {
+    for (const pos of curr.neighbors) {
       if (pos.visited) continue;
 
-      const g = next.g + pos.value;
+      const g = curr.g + pos.value;
       if (g < pos.g) {
         pos.g = g;
         pos.f = g + pos.h;
@@ -106,7 +106,7 @@ const aStar = (grid) => {
       if (!open.includes(pos)) open.push(pos);
     }
 
-    next.visited = true;
+    curr.visited = true;
   }
 
   return null;
