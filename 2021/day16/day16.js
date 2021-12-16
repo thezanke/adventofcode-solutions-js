@@ -18,14 +18,6 @@ const key = {
   F: 1111,
 };
 
-export const hexToBin = (hex) => {
-  let bin = "";
-  for (const char of hex) {
-    bin += key[char];
-  }
-  return bin;
-};
-
 const spliceBits = (bits, n) => {
   return bits.splice(0, n);
 };
@@ -129,6 +121,14 @@ const processPacket = (packet) => {
       return Number(a === b);
     }
   }
+};
+
+export const hexToBin = (hex) => {
+  let bin = "";
+  for (const char of hex) {
+    bin += key[char];
+  }
+  return bin;
 };
 
 export const part1 = (input) => {
