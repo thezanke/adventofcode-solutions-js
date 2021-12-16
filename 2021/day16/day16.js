@@ -18,10 +18,6 @@ const key = {
   F: "1111",
 };
 
-const spliceBits = (bits, n) => {
-  return bits.splice(0, n);
-};
-
 const PacketTypes = {
   Sum: 0,
   Product: 1,
@@ -31,6 +27,10 @@ const PacketTypes = {
   GreaterThan: 5,
   LessThan: 6,
   EqualTo: 7,
+};
+
+const spliceBits = (bits, n) => {
+  return bits.splice(0, n);
 };
 
 class Packet {
