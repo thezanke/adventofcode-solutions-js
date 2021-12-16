@@ -82,43 +82,37 @@ class Packet {
 }
 
 const processPacket = (packet) => {
-  switch (packet.typeId) {
-    case PacketTypes.Literal: {
-      return packet.value;
-    }
+  if (packet.typeId === PacketTypes.Literal) return packet.value;
 
+  const values = packet.subpackets.map(processPacket);
+
+  switch (packet.typeId) {
     case PacketTypes.Sum: {
-      return packet.subpackets.map(processPacket).reduce((t, v) => t + v, 0);
+      return values.reduce((t, v) => t + v, 0);
     }
 
     case PacketTypes.Product: {
-      return packet.subpackets.map(processPacket).reduce((t, v) => t * v, 1);
+      return values.reduce((t, v) => t * v, 1);
     }
 
     case PacketTypes.Min: {
-      return Math.min(...packet.subpackets.map(processPacket));
+      return Math.min(...values);
     }
 
     case PacketTypes.Max: {
-      return Math.max(...packet.subpackets.map(processPacket));
+      return Math.max(...values);
     }
 
     case PacketTypes.GreaterThan: {
-      const [a, b] = packet.subpackets.map(processPacket);
-
-      return Number(a > b);
+      return Number(values[0] > values[1]);
     }
 
     case PacketTypes.LessThan: {
-      const [a, b] = packet.subpackets.map(processPacket);
-
-      return Number(a < b);
+      return Number(values[0] < values[1]);
     }
 
     case PacketTypes.EqualTo: {
-      const [a, b] = packet.subpackets.map(processPacket);
-
-      return Number(a === b);
+      return Number(values[0] === values[1]);
     }
   }
 };
