@@ -122,7 +122,7 @@ const processPacket = (packet) => {
   }
 };
 
-export const hexToBin = (hex) => {
+export const hexToBinaryString = (hex) => {
   let bin = "";
   for (const char of hex) {
     bin += key[char];
@@ -132,7 +132,7 @@ export const hexToBin = (hex) => {
 
 export const part1 = (input) => {
   let vTotal = 0;
-  let inputPacket = hexToBin(input).split("");
+  let inputPacket = hexToBinaryString(input).split("");
   let packets = [new Packet(inputPacket)];
 
   while (packets.length) {
@@ -145,6 +145,6 @@ export const part1 = (input) => {
 };
 
 export const part2 = (input) => {
-  let inputPacket = new Packet(hexToBin(input).split(""));
+  let inputPacket = new Packet(hexToBinaryString(input).split(""));
   return processPacket(inputPacket);
 };
