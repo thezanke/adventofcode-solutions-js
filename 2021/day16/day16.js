@@ -87,33 +87,20 @@ const processPacket = (packet) => {
   const values = packet.subpackets.map(processPacket);
 
   switch (packet.typeId) {
-    case PacketTypes.Sum: {
+    case PacketTypes.Sum:
       return values.reduce((t, v) => t + v, 0);
-    }
-
-    case PacketTypes.Product: {
+    case PacketTypes.Product:
       return values.reduce((t, v) => t * v, 1);
-    }
-
-    case PacketTypes.Min: {
+    case PacketTypes.Min:
       return Math.min(...values);
-    }
-
-    case PacketTypes.Max: {
+    case PacketTypes.Max:
       return Math.max(...values);
-    }
-
-    case PacketTypes.GreaterThan: {
+    case PacketTypes.GreaterThan:
       return Number(values[0] > values[1]);
-    }
-
-    case PacketTypes.LessThan: {
+    case PacketTypes.LessThan:
       return Number(values[0] < values[1]);
-    }
-
-    case PacketTypes.EqualTo: {
+    case PacketTypes.EqualTo:
       return Number(values[0] === values[1]);
-    }
   }
 };
 
