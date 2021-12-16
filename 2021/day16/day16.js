@@ -43,13 +43,27 @@ class Packet {
     this.typeId = parseInt(spliceBits(bits, 3).join(""), 2);
 
     if (this.typeId === PacketTypes.Literal) {
-      this.handleLiteralConstruction(bits);
+      this.constructLiteralPacket(bits);
     } else {
-      this.handleOperatorConstruction(bits);
+      this.constructOperatorPacket(bits);
     }
   }
 
-  handleOperatorConstruction(bits) {
+  constructLiteralPacket(packetBits) {
+    this.type = "LITERAL";
+
+    const valueBits = [];
+
+    while (true) {
+      let [leading, ...bits] = spliceBits(packetBits, 5);
+      valueBits.push(...bits);
+      if (!parseInt(leading, 10)) break;
+    }
+
+    this.value = parseInt(valueBits.join(""), 2);
+  }
+
+  constructOperatorPacket(bits) {
     this.type = "OPERATOR";
     this.lengthTypeId = parseInt(spliceBits(bits, 1), 10);
     this.subpackets = [];
@@ -66,20 +80,6 @@ class Packet {
         this.subpackets.push(new Packet(subpacketBits));
       }
     }
-  }
-
-  handleLiteralConstruction(packetBits) {
-    this.type = "LITERAL";
-
-    const valueBits = [];
-
-    while (true) {
-      let [leading, ...bits] = spliceBits(packetBits, 5);
-      valueBits.push(...bits);
-      if (!parseInt(leading, 10)) break;
-    }
-
-    this.value = parseInt(valueBits.join(""), 2);
   }
 }
 
