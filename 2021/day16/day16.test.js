@@ -66,31 +66,31 @@ describe("2021 - Day 16", () => {
   describe("Part 2", () => {
     describe("Example Input", () => {
       it("returns the expected result", () => {
-        expect(part2('C200B40A82')).toEqual(3);
+        expect(part2("C200B40A82")).toEqual(3);
       });
 
       it("returns the expected result", () => {
-        expect(part2('04005AC33890')).toEqual(54);
+        expect(part2("04005AC33890")).toEqual(54);
       });
 
       it("returns the expected result", () => {
-        expect(part2('880086C3E88112')).toEqual(7);
+        expect(part2("880086C3E88112")).toEqual(7);
       });
 
       it("returns the expected result", () => {
-        expect(part2('CE00C43D881120')).toEqual(9);
+        expect(part2("CE00C43D881120")).toEqual(9);
       });
 
       it("returns the expected result", () => {
-        expect(part2('D8005AC2A8F0')).toEqual(1);
+        expect(part2("D8005AC2A8F0")).toEqual(1);
       });
 
       it("returns the expected result", () => {
-        expect(part2('F600BC2D8F')).toEqual(0);
+        expect(part2("F600BC2D8F")).toEqual(0);
       });
 
       it("returns the expected result", () => {
-        expect(part2('9C005AC2F8F0')).toEqual(0);
+        expect(part2("9C005AC2F8F0")).toEqual(0);
       });
     });
 
