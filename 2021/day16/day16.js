@@ -66,12 +66,14 @@ class Packet {
 
     if (this.lengthTypeId) {
       const count = parseInt(spliceBits(bits, 11).join(""), 2);
+
       for (let i = 0; i < count; i += 1) {
         this.subpackets.push(new Packet(bits));
       }
     } else {
       const size = parseInt(spliceBits(bits, 15).join(""), 2);
       const subpacketBits = spliceBits(bits, size);
+
       while (subpacketBits.length) {
         this.subpackets.push(new Packet(subpacketBits));
       }
@@ -103,16 +105,19 @@ const processPacket = (packet) => {
 
     case PacketTypes.GreaterThan: {
       const [a, b] = packet.subpackets.map(processPacket);
+
       return Number(a > b);
     }
 
     case PacketTypes.LessThan: {
       const [a, b] = packet.subpackets.map(processPacket);
+
       return Number(a < b);
     }
 
     case PacketTypes.EqualTo: {
       const [a, b] = packet.subpackets.map(processPacket);
+
       return Number(a === b);
     }
   }
@@ -120,9 +125,11 @@ const processPacket = (packet) => {
 
 export const hexToBinaryString = (hex) => {
   let bin = "";
+
   for (const char of hex) {
     bin += key[char];
   }
+
   return bin;
 };
 
@@ -143,5 +150,6 @@ export const part1 = (input) => {
 
 export const part2 = (input) => {
   const inputPacket = new Packet(hexToBinaryString(input).split(""));
+
   return processPacket(inputPacket);
 };
