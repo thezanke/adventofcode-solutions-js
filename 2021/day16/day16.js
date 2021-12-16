@@ -36,7 +36,6 @@ const PacketTypes = {
 class Packet {
   version = null;
   typeId = null;
-  type = "UNKNOWN";
 
   constructor(bits) {
     this.version = parseInt(spliceBits(bits, 3).join(""), 2);
@@ -50,12 +49,10 @@ class Packet {
   }
 
   constructLiteralPacket(packetBits) {
-    this.type = "LITERAL";
-
     const valueBits = [];
 
     while (true) {
-      let [leading, ...bits] = spliceBits(packetBits, 5);
+      const [leading, ...bits] = spliceBits(packetBits, 5);
       valueBits.push(...bits);
       if (!parseInt(leading, 10)) break;
     }
@@ -64,7 +61,6 @@ class Packet {
   }
 
   constructOperatorPacket(bits) {
-    this.type = "OPERATOR";
     this.lengthTypeId = parseInt(spliceBits(bits, 1), 10);
     this.subpackets = [];
 
@@ -106,17 +102,17 @@ const processPacket = (packet) => {
     }
 
     case PacketTypes.GreaterThan: {
-      let [a, b] = packet.subpackets.map(processPacket);
+      const [a, b] = packet.subpackets.map(processPacket);
       return Number(a > b);
     }
 
     case PacketTypes.LessThan: {
-      let [a, b] = packet.subpackets.map(processPacket);
+      const [a, b] = packet.subpackets.map(processPacket);
       return Number(a < b);
     }
 
     case PacketTypes.EqualTo: {
-      let [a, b] = packet.subpackets.map(processPacket);
+      const [a, b] = packet.subpackets.map(processPacket);
       return Number(a === b);
     }
   }
@@ -131,12 +127,13 @@ export const hexToBinaryString = (hex) => {
 };
 
 export const part1 = (input) => {
+  const inputPacket = new Packet(hexToBinaryString(input).split(""));
+  const packets = [inputPacket];
+
   let vTotal = 0;
-  let inputPacket = hexToBinaryString(input).split("");
-  let packets = [new Packet(inputPacket)];
 
   while (packets.length) {
-    let packet = packets.pop();
+    const packet = packets.pop();
     if (packet.subpackets?.length) packets.push(...packet.subpackets);
     vTotal += packet.version;
   }
@@ -145,6 +142,6 @@ export const part1 = (input) => {
 };
 
 export const part2 = (input) => {
-  let inputPacket = new Packet(hexToBinaryString(input).split(""));
+  const inputPacket = new Packet(hexToBinaryString(input).split(""));
   return processPacket(inputPacket);
 };
