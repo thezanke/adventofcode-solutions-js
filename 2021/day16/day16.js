@@ -63,7 +63,6 @@ class Packet {
       const size = parseInt(spliceBits(bits, 15).join(""), 2);
       const subpacketBits = spliceBits(bits, size);
       while (subpacketBits.length) {
-        // console.log(subpacketBits);
         this.subpackets.push(new Packet(subpacketBits));
       }
     }
