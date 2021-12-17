@@ -18,7 +18,6 @@ export const part1 = ([gx1, gx2, gy1, gy2]) => {
       if (x > gx2) return false;
 
       const isInGoal = checkIfGoal(x, y);
-      // console.log(x, y, isInGoal);
       if (isInGoal) {
         if (_maxY > maxY) maxY = _maxY;
         return true;
@@ -41,7 +40,6 @@ export const part1 = ([gx1, gx2, gy1, gy2]) => {
     }
   }
 
-  // console.log(checkIfGoal(x, y));
   return maxY;
 };
 
@@ -52,25 +50,15 @@ export const part2 = ([gx1, gx2, gy1, gy2]) => {
     return true;
   };
 
-  let maxY = 0;
-
   const determineIfWillBeGoal = (startVX, startVY) => {
     let [x, y, vX, vY] = [0, 0, startVX, startVY];
-
-    let _maxY = 0;
 
     while (true) {
       if (y < gy1) return false;
       if (x > gx2) return false;
 
       const isInGoal = checkIfGoal(x, y);
-      // console.log(x, y, isInGoal);
-      if (isInGoal) {
-        if (_maxY > maxY) maxY = _maxY;
-        return true;
-      } else {
-        if (y > _maxY) _maxY = y;
-      }
+      if (isInGoal) return true;
 
       x += vX;
       y += vY;
@@ -85,7 +73,7 @@ export const part2 = ([gx1, gx2, gy1, gy2]) => {
 
   for (let vX = 0; vX < gx2 * 2; vX += 1) {
     for (let vY = gy1; vY < Math.abs(gy1); vY += 1) {
-      if (determineIfWillBeGoal(vX, vY)) t += 1;
+      t += Number(determineIfWillBeGoal(vX, vY));
     }
   }
 
