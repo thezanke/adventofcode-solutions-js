@@ -49,7 +49,7 @@ describe("2021 - Day 17", () => {
       const input = readInput("./2021/day17/input", parseOpts);
 
       it("returns the expected result", () => {
-        expect(part2(input)).toEqual(true);
+        expect(part2(input)).toEqual(5059);
       });
     });
   });
