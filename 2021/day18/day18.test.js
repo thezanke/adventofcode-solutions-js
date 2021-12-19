@@ -8,30 +8,30 @@ describe("2021 - Day 18", () => {
   describe("Part 1", () => {
     describe("addNums", () => {
       it("returns the expected result", () => {
-        expect(`${JSON.stringify(addNums([[[[4,3],4],4],[7,[[8,4],9]]], [1,1]))}`).toEqual(`[[[[0,7],4],[[7,8],[6,0]]],[8,1]]`);
+        expect(JSON.stringify(addNums([[[[4,3],4],4],[7,[[8,4],9]]],[1,1]))).toEqual(`[[[[0,7],4],[[7,8],[6,0]]],[8,1]]`);
       });
 
       it("returns the expected result", () => {
-        expect(`${JSON.stringify(addNums([1,1], [2,2], [3,3], [4,4]))}`).toEqual(`[[[[1,1],[2,2]],[3,3]],[4,4]]`);
+        expect(JSON.stringify(addNums([1,1],[2,2],[3,3],[4,4]))).toEqual(`[[[[1,1],[2,2]],[3,3]],[4,4]]`);
       });
 
       it("returns the expected result", () => {
-        expect(`${JSON.stringify(addNums([1,1], [2,2], [3,3], [4,4], [5,5]))}`).toEqual(`[[[[3,0],[5,3]],[4,4]],[5,5]]`);
+        expect(JSON.stringify(addNums([1,1],[2,2],[3,3],[4,4],[5,5]))).toEqual(`[[[[3,0],[5,3]],[4,4]],[5,5]]`);
       });
 
       it("returns the expected result", () => {
-        expect(`${JSON.stringify(addNums([1,1], [2,2], [3,3], [4,4], [5,5], [6,6]))}`).toEqual(`[[[[5,0],[7,4]],[5,5]],[6,6]]`);
+        expect(JSON.stringify(addNums([1,1],[2,2],[3,3],[4,4],[5,5],[6,6]))).toEqual(`[[[[5,0],[7,4]],[5,5]],[6,6]]`);
       });
 
       it("returns the expected result", () => {
-        expect(`${JSON.stringify(
+        expect(JSON.stringify(
           addNums(
             [[[0,[4,5]],[0,0]],[[[4,5],[2,6]],[9,5]]],
             [7,[[[3,7],[4,3]],[[6,3],[8,8]]]]
           )
-        )}`).toEqual(`[[[[4,0],[5,4]],[[7,7],[6,0]]],[[8,[7,7]],[[7,9],[5,0]]]]`);
+        )).toEqual(`[[[[4,0],[5,4]],[[7,7],[6,0]]],[[8,[7,7]],[[7,9],[5,0]]]]`);
       });
-    })
+    });
 
     describe("Example Input", () => {
       const exampleInput = readInput("./2021/day18/example-input", parseOpts);
