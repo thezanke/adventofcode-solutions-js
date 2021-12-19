@@ -165,7 +165,6 @@ const addParents = (arr) => {
 
 export const part1 = (input) => {
   let num = addNums(...input);
-  console.log(JSON.stringify(num));
   return num.magnitude();
 };
 
