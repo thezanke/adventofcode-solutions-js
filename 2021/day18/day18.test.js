@@ -55,15 +55,15 @@ describe("2021 - Day 18", () => {
   });
 
   describe("Part 2", () => {
-    describe.skip("Example Input", () => {
+    describe("Example Input", () => {
       const exampleInput = readInput("./2021/day18/example-input", parseOpts);
 
       it("returns the expected result", () => {
-        expect(part2(exampleInput)).toEqual(true);
+        expect(part2(exampleInput)).toEqual(3993);
       });
     });
 
-    describe.skip("Final Input", () => {
+    describe("Final Input", () => {
       const input = readInput("./2021/day18/input", parseOpts);
 
       it("returns the expected result", () => {

@@ -168,6 +168,16 @@ export const part1 = (input) => {
   return num.magnitude();
 };
 
+const getPairs = (input) =>
+  input.flatMap((v, i) => input.slice(i + 1).map((w) => [w, v]));
+
 export const part2 = (input) => {
-  return false;
+  const pairs = getPairs(input);
+  let max = 0;
+  for (const pair of pairs) {
+    let [a, b] = pair;
+    let mag = Math.max(addNums(a, b).magnitude(), addNums(b, a).magnitude());
+    if (mag > max) max = mag;
+  }
+  return max;
 };
