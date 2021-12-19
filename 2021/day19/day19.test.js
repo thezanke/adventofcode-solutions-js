@@ -17,15 +17,15 @@ describe("2021 - Day 19", () => {
       const exampleInput = readInput("./2021/day19/example-input", parseOpts);
 
       it("returns the expected result", () => {
-        expect(part1(exampleInput)).toEqual(true);
+        expect(part1(exampleInput)).toEqual(79);
       });
     });
 
-    describe.skip("Final Input", () => {
+    describe("Final Input", () => {
       const input = readInput("./2021/day19/input", parseOpts);
 
       it("returns the expected result", () => {
-        expect(part1(input)).toEqual(true);
+        expect(part1(input)).toEqual(390);
       });
     });
   });
