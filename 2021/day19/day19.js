@@ -39,8 +39,8 @@ class ScanPoint {
 
 // Not sure why 5 is the magic number, it was just a guess
 const SIMILARITY_THREASHOLD = 5;
-const determineIfSimilar = (a1, _a2) => {
-  const unfound = [..._a2];
+const determineIfSimilar = (a1, a2) => {
+  const unfound = [...a2];
 
   let similarities = 0;
   for (const el of a1) {
