@@ -61,13 +61,14 @@ const SIMILARITY_THREASHOLD = 5;
 const determineIfSimilar = (a1, a2) => {
   const unfound = [...a2];
 
-  let similarities = 0;
+  let count = 0;
   for (const el of a1) {
     const index = unfound.indexOf(el);
-    if (index > -1) {
-      similarities += 1;
 
-      if (similarities === SIMILARITY_THREASHOLD) {
+    if (index !== -1) {
+      count += 1;
+
+      if (count === SIMILARITY_THREASHOLD) {
         return true;
       }
 
