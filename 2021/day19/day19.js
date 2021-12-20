@@ -2,9 +2,11 @@
 import _ from "lodash";
 class Beacon {
   points = [];
+  scanners = [];
 
-  constructor(initialPoint) {
-    this.points.push(initialPoint);
+  addPoint(point) {
+    this.points.push(point);
+    this.scanners.push(point.scanner);
   }
 }
 
@@ -36,6 +38,23 @@ class ScanPoint {
     }
   }
 }
+class Scanner {
+  constructor(id, detected) {
+    this.id = id;
+    this.detected = detected.map((xyz) => new ScanPoint(xyz, this));
+    this.getDistances();
+  }
+
+  getDistances() {
+    this.detected.forEach((d) => d.getDistances());
+  }
+
+  toString() {
+    const detected = this.detected.map((b) => `   ${b}`).join(",\n");
+
+    return `Scanner ${this.id} [\n${detected}\n]`;
+  }
+}
 
 // Not sure why 5 is the magic number, it was just a guess
 const SIMILARITY_THREASHOLD = 5;
@@ -59,25 +78,9 @@ const determineIfSimilar = (a1, a2) => {
   return false;
 };
 
-class Scanner {
-  constructor(id, detected) {
-    this.id = id;
-    this.detected = detected.map((xyz) => new ScanPoint(xyz, this));
-    this.getDistances();
-  }
-
-  getDistances() {
-    this.detected.forEach((d) => d.getDistances());
-  }
-
-  toString() {
-    const detected = this.detected.map((b) => `   ${b}`).join(",\n");
-
-    return `Scanner ${this.id} [\n${detected}\n]`;
-  }
-}
-
 const findBeaconForPoint = (p1) => (beacon) => {
+  if (beacon.scanners.includes(p1.scanner)) return false;
+
   const d1 = [...p1.distances.values()];
 
   return beacon.points.find((p2) => {
@@ -92,12 +95,12 @@ const findBeacons = (scanners) => {
   for (const scanPoint of scanPoints) {
     let beacon = beacons.find(findBeaconForPoint(scanPoint));
 
-    if (beacon) {
-      beacon.points.push(scanPoint);
-    } else {
-      beacon = new Beacon(scanPoint);
+    if (!beacon) {
+      beacon = new Beacon();
       beacons.push(beacon);
     }
+
+    beacon.addPoint(scanPoint);
   }
 
   return beacons;
@@ -112,8 +115,10 @@ export const part2 = (input) => {
   const scanners = input.map((detected, id) => new Scanner(id, detected));
   const beacons = findBeacons(scanners);
 
-  for (const scanner of scanners.entries) {
-  }
+  // const s1 = scanners[0];
+  // const s2 = scanners[1];
+
+  // const shared = beacons.filter(b => )
 
   return false;
 };
