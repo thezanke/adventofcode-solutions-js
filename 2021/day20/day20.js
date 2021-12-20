@@ -14,19 +14,20 @@ class ScanImage {
   }
 
   expand() {
-    const _ = this.pad;
     const lastLength = this.data[0].length;
     const length = lastLength + 6;
-    const padArr = Array.from({ length }, () => _);
+
+    const _ = this.pad;
+    const paddedArr = Array.from({ length }, () => _);
 
     this.data = [
-      [...padArr],
-      [...padArr],
-      [...padArr],
+      [...paddedArr],
+      [...paddedArr],
+      [...paddedArr],
       ...this.data.map((row) => [_, _, _, ...row, _, _, _]),
-      [...padArr],
-      [...padArr],
-      [...padArr],
+      [...paddedArr],
+      [...paddedArr],
+      [...paddedArr],
     ];
   }
 
