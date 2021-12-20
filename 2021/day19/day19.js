@@ -37,14 +37,26 @@ class ScanPoint {
   }
 }
 
-const determineIfSimilar = (a1, a2) => {
-  // no clue why this works:
-  return _.intersection(a1, a2).length >= 5;
+// Not sure why 5 is the magic number, it was just a guess
+const SIMILARITY_THREASHOLD = 5;
+const determineIfSimilar = (a1, _a2) => {
+  const unfound = [..._a2];
 
-  // but this does not:
-  // const combined = [...a1, ...a2];
-  // const set = new Set(combined);
-  // return combined.length - set.size >= 5;
+  let similarities = 0;
+  for (const el of a1) {
+    const index = unfound.indexOf(el);
+    if (index > -1) {
+      similarities += 1;
+
+      if (similarities === SIMILARITY_THREASHOLD) {
+        return true;
+      }
+
+      unfound.splice(index, 1);
+    }
+  }
+
+  return false;
 };
 
 class Scanner {
@@ -74,9 +86,7 @@ const findBeaconForPoint = (p1) => (beacon) => {
   });
 };
 
-export const part1 = (input) => {
-  const scanners = input.map((detected, id) => new Scanner(id, detected));
-
+const findBeacons = (scanners) => {
   const beacons = [];
   const scanPoints = scanners.flatMap((s) => s.detected);
   for (const scanPoint of scanPoints) {
@@ -90,9 +100,20 @@ export const part1 = (input) => {
     }
   }
 
-  return beacons.length;
+  return beacons;
+};
+
+export const part1 = (input) => {
+  const scanners = input.map((detected, id) => new Scanner(id, detected));
+  return findBeacons(scanners).length;
 };
 
 export const part2 = (input) => {
+  const scanners = input.map((detected, id) => new Scanner(id, detected));
+  const beacons = findBeacons(scanners);
+
+  for (const scanner of scanners.entries) {
+  }
+
   return false;
 };
