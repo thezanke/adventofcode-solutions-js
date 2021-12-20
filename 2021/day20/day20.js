@@ -33,6 +33,7 @@ class ScanImage {
   getBitsForIndex(x, y) {
     const d = this.data;
     const _ = this.pad;
+
     return [
       Number((d[y - 1]?.[x - 1] ?? _) === "#"),
       Number((d[y - 1]?.[x] ?? _) === "#"),
