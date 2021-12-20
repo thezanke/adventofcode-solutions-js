@@ -37,6 +37,16 @@ class ScanPoint {
   }
 }
 
+const determineIfSimilar = (a1, a2) => {
+  // no clue why this works:
+  return _.intersection(a1, a2).length >= 5;
+
+  // but this does not:
+  // const combined = [...a1, ...a2];
+  // const set = new Set(combined);
+  // return combined.length - set.size >= 5;
+};
+
 class Scanner {
   constructor(id, detected) {
     this.id = id;
@@ -60,9 +70,7 @@ const findBeaconForPoint = (p1) => (beacon) => {
 
   return beacon.points.find((p2) => {
     const d2 = [...p2.distances.values()];
-    const similarities = _.intersection(d1, d2);
-
-    return similarities.length > 4;
+    return determineIfSimilar(d1, d2);
   });
 };
 
@@ -83,23 +91,6 @@ export const part1 = (input) => {
   }
 
   return beacons.length;
-  //   s1.detected.forEach((p1) => {
-  //     const d1 = [...s1.distances.get(p1).values()];
-
-  //     let d2;
-  //     let similarities;
-  //     const found = s2.detected.find((p2) => {
-  //       d2 = [...s2.distances.get(p2).values()];
-  //       similarities = _.intersection(d1, d2);
-  //       return similarities.length > 4;
-  //     });
-  //     console.log(p1);
-  //     console.log(found);
-  //     console.log([...similarities]);
-  //   });
-  // }
-
-  return false;
 };
 
 export const part2 = (input) => {
