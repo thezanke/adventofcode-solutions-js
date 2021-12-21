@@ -11,9 +11,9 @@ const parseOpts = {
   },
 };
 
-describe("2021 - Day 19", () => {
+describe.skip("2021 - Day 19", () => {
   describe("Part 1", () => {
-    describe("Example Input", () => {
+    describe.skip("Example Input", () => {
       const exampleInput = readInput("./2021/day19/example-input", parseOpts);
 
       it("returns the expected result", () => {
