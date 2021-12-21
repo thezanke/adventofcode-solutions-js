@@ -4,7 +4,6 @@ import _ from "lodash";
 const addPosForPlayer = (p1, p2, c, r) => {
   const s = [p1, p2];
   s[c] = ((s[c] + r - 1) % 10) + 1;
-
   return s;
 };
 
@@ -33,7 +32,6 @@ export const part1 = ([p1, p2]) => rollPart1(p1, p2);
 const rollPart2 = _.memoize(
   (p1, p2, s1, s2, c, r) => {
     let [, , _s1, _s2, _c, _r] = [p1, p2, s1, s2, c, r];
-    // console.log(p1, p2, s1, s2, c, r);
 
     if (r === 3) {
       _r = 1;
