@@ -254,26 +254,6 @@ const createRegions = (input) => {
   });
 };
 
-const calculateCentroid = (points) => {
-  const len = points.length;
-
-  let sX = 0;
-  let sY = 0;
-  let sZ = 0;
-
-  for (const p of points) {
-    sX += p.x;
-    sY += p.y;
-    sZ += p.z;
-  }
-
-  return {
-    x: Number((sX / len).toFixed(4)),
-    y: Number((sY / len).toFixed(4)),
-    z: Number((sZ / len).toFixed(4)),
-  };
-};
-
 const combineRegions = (regions) => {
   const [r1, ...unmerged] = regions;
 
@@ -312,9 +292,7 @@ const combineRegions = (regions) => {
         }
       }
 
-      console.log(unmerged.length);
-
-      throw new Error("never aligned");
+      throw new Error("Never aligned!");
     }
   }
 
