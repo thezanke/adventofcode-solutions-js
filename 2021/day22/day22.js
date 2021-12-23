@@ -56,8 +56,17 @@ export const part1 = (input) => {
   return solve(start, end, input);
 };
 
+class Cuboid {
+  constructor(p1, p2) {
+    p1 = { ...p1 };
+    p2 = { ...p2 };
+  }
+
+  // intersecti
+}
+
 export const part2 = (input) => {
-  const [start, end] = getMaxBounds(input);
+  // const [start, end] = getMaxBounds(input);
 
   return solve(start, end, input);
 };

@@ -19,7 +19,7 @@ const parseOpts = {
   },
 };
 
-describe("2021 - Day 22", () => {
+describe.skip("2021 - Day 22", () => {
   describe("Part 1", () => {
     describe("Example Input", () => {
       const exampleInput = readInput("./2021/day22/example-input", parseOpts);
