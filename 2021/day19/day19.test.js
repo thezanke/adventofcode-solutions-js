@@ -11,8 +11,8 @@ const parseOpts = {
   },
 };
 
-describe.skip("2021 - Day 19", () => {
-  describe.skip("Part 1", () => {
+describe("2021 - Day 19", () => {
+  describe("Part 1", () => {
     describe("Example Input", () => {
       const exampleInput = readInput("./2021/day19/example-input", parseOpts);
 
@@ -21,7 +21,7 @@ describe.skip("2021 - Day 19", () => {
       });
     });
 
-    describe("Final Input", () => {
+    describe.skip("Final Input", () => {
       const input = readInput("./2021/day19/input", parseOpts);
 
       it("returns the expected result", () => {
@@ -31,7 +31,7 @@ describe.skip("2021 - Day 19", () => {
   });
 
   describe("Part 2", () => {
-    describe("Example Input", () => {
+    describe.skip("Example Input", () => {
       const exampleInput = readInput("./2021/day19/example-input", parseOpts);
 
       it("returns the expected result", () => {
@@ -39,7 +39,7 @@ describe.skip("2021 - Day 19", () => {
       });
     });
 
-    describe("Final Input", () => {
+    describe.skip("Final Input", () => {
       const input = readInput("./2021/day19/input", parseOpts);
 
       it("returns the expected result", () => {
