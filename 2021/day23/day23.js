@@ -82,16 +82,16 @@ const getPossibleMoves = (unit, state) => {
 };
 
 const reduceMove = (state, unitIndex, move) => {
-  const newState = { ...state };
-  newState.score += move.cost;
-  newState.units = [...state.units];
-  newState.units[unitIndex] = {
-    ...newState.units[unitIndex],
+  const score = state.score + move.cost;
+
+  const units = [...state.units];
+  units[unitIndex] = {
+    ...units[unitIndex],
     x: move.x,
     y: move.y,
   };
 
-  return newState;
+  return { score, units };
 };
 
 const checkForWin = ({ units }) => {
@@ -113,33 +113,36 @@ const printState = (state) => {
   console.log(grid.map((row) => row.join("")).join("\n"));
 };
 
+const createMemoKey = ({ score, units }) => {
+  return [score, ...units.flatMap(({ x, y }) => [x, y])].join(",");
+};
+
 export const part1 = (input) => {
   let min = Infinity;
 
-  const loop = _.memoize(
-    (state, depth = 1) => {
-      if (state.score >= min) return;
+  const loop = _.memoize((state, depth = 1) => {
+    if (state.score >= min) return;
 
-      if (checkForWin(state)) {
-        min = state.score;
-        return;
-      }
+    if (checkForWin(state)) {
+      min = state.score;
+      return;
+    }
 
-      const { units } = state;
-      for (let i = 0; i < units.length; i += 1) {
-        if (state.score >= min) return;
-        const unit = units[i];
-        const possibleMoves = getPossibleMoves(unit, state);
-        for (const move of possibleMoves) {
-          if (state.score >= min) return;
-          const newState = reduceMove(state, i, move);
-          loop(newState, depth + 1);
-        }
+    const { units } = state;
+    for (let i = 0; i < units.length; i += 1) {
+      if (state.score >= min) return; // escape if min has shrank
+
+      const unit = units[i];
+      const possibleMoves = getPossibleMoves(unit, state);
+
+      for (const move of possibleMoves) {
+        if (state.score >= min) return; // escape if min has shrank
+
+        const newState = reduceMove(state, i, move);
+        loop(newState, depth + 1);
       }
-    },
-    (state) =>
-      state.score + "," + state.units.map((u) => `${u.x},${u.y}`).join(",")
-  );
+    }
+  }, createMemoKey);
 
   const initialState = { score: 0, units: input };
   loop(initialState);
