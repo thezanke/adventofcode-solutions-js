@@ -44,7 +44,9 @@ class Engine {
     }
   }
 
-  exec() {
+  run(...input) {
+    this.addInput(...input);
+
     for (const inst of this.instructions) {
       let [op, a, b] = inst;
 
@@ -56,17 +58,40 @@ class Engine {
       }
     }
 
-    return { ...this.memory };
+    const finalMemory = { ...this.memory };
+    this.clear();
+
+    return finalMemory;
   }
 }
 
 const numberToInts = (num) => `${num}`.split("").map(Number);
 
+const findLowest = (engine, index, ...input) => {
+  let lowest = [Infinity, 0];
+
+  for (let n = 9; n > 0; n -= 1) {
+    input[index] = n;
+    const { z } = engine.run(...input);
+    if (z < lowest[0]) lowest = [z, n];
+  }
+
+  return lowest;
+};
+
 export const part1 = (instructions) => {
   const engine = new Engine(instructions);
-  let max = 0;
-  let loop = 0;
-  let minZ = Infinity;
+  let input = [9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9];
+
+  let winning;
+
+  let i = 1;
+  while (!winning) {
+    const [z, n] = findLowest(engine, i, ...input);
+    input[i] = n;
+    if (!z) winning = input;
+    i = (i + 1) % input.length;
+  }
 
   // for (let i = 11111111111111; i < 99999999999999; i += 1) {
   //   const ints = numberToInts(i);
@@ -93,8 +118,8 @@ export const part1 = (instructions) => {
 
   //   }
   // }
-  engine.addInput(...numberToInts(61981619591169));
-  return engine.exec()
+  // engine.addInput(...numberToInts(61981619591169));
+  return winning;
 };
 
 export const part2 = (input) => {
