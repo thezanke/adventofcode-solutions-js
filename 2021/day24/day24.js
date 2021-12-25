@@ -65,61 +65,31 @@ class Engine {
   }
 }
 
-const numberToInts = (num) => `${num}`.split("").map(Number);
-
-const findLowest = (engine, index, ...input) => {
-  let lowest = [Infinity, 0];
-
-  for (let n = 9; n > 0; n -= 1) {
-    input[index] = n;
-    const { z } = engine.run(...input);
-    if (z < lowest[0]) lowest = [z, n];
-  }
-
-  return lowest;
-};
+const findZero = (engine, n) => {};
 
 export const part1 = (instructions) => {
   const engine = new Engine(instructions);
-  let input = [9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9];
 
-  let winning;
+  for (let x = 4; ; x = x - 1 || 9) {
+    const input = Array.from({ length: 14 }, () => 9);
+    input[0] = x;
 
-  let i = 1;
-  while (!winning) {
-    const [z, n] = findLowest(engine, i, ...input);
-    input[i] = n;
-    if (!z) winning = input;
-    i = (i + 1) % input.length;
+    let inc = 1;
+
+    for (let i = 1; i > 0; i += inc) {
+      for (let n = input[i], minZ = Infinity; ; n = n - 1 || 9) {
+        input[i] = n;
+        const { z } = engine.run(...input);
+        if (!z) return input;
+        if (z === minZ) break;
+        if (z < minZ) {
+          minZ = z;
+        }
+      }
+      if (i === 13) inc = -1;
+      if (i === 1) inc = 1;
+    }
   }
-
-  // for (let i = 11111111111111; i < 99999999999999; i += 1) {
-  //   const ints = numberToInts(i);
-  //   if (ints.includes(0)) continue;
-  //   engine.addInput(...ints);
-  //   const success = !engine.exec().z;
-  //   if (success && i > max) {
-  //     console.log("new max!");
-  //     max = i;
-  //   }
-  //   if (engine.memory.z < minZ) {
-  //     minZ = engine.memory.z;
-  //     console.log("new min Z", i, engine.memory)
-  //   }
-  //   if (loop % 100000 === 0) console.log(i, engine.memory);
-  //   loop += 1;
-  //   engine.clear();
-  // }
-
-  // let best = []
-  // for (let i = 0; i < 14; i += 1) {
-  //   let min = 0;
-  //   for (let n = 1; n < 10; n += 1) {
-
-  //   }
-  // }
-  // engine.addInput(...numberToInts(61981619591169));
-  return winning;
 };
 
 export const part2 = (input) => {
