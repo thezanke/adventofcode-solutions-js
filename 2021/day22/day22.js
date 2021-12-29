@@ -142,12 +142,7 @@ export const getCuboidsForInput = (input) => {
   return cubes;
 };
 
-export const part1 = (input) => {
-  const cuboids = getCuboidsForInput(input);
-  return cuboids.reduce((t, c) => t + c.area, 0);
-};
-
-export const part2 = (input) => {
+export const solve = (input) => {
   const cuboids = getCuboidsForInput(input);
   return cuboids.reduce((t, c) => t + c.area, 0);
 };
