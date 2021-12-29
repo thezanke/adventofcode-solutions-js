@@ -120,7 +120,7 @@ export const getRemainingCuboids = (c2, c1) => {
     cubes.push(new Cuboid(c2p2.x, minY, minZ, c1p2.x, maxY, maxZ));
   }
 
-  return [...cubes];
+  return cubes;
 };
 
 export const getCuboidsForInput = (input) => {
