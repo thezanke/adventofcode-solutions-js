@@ -22,25 +22,16 @@ export class Engine {
 
   handleCalculation(op, a, b) {
     switch (op) {
-      case "add": {
+      case "add":
         return a + b;
-      }
-
-      case "mul": {
+      case "mul":
         return a * b;
-      }
-
-      case "div": {
+      case "div":
         return Math.floor(a / b);
-      }
-
-      case "mod": {
+      case "mod":
         return a % b;
-      }
-
-      case "eql": {
+      case "eql":
         return Number(a === b);
-      }
     }
   }
 

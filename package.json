@@ -10,7 +10,9 @@
     "jsdom": "^19.0.0",
     "lodash": "^4.17.21",
     "mathjs": "^10.0.0",
-    "nodemon": "^2.0.15"
+    "nodemon": "^2.0.15",
+    "open": "^8.4.0",
+    "polka": "^0.5.2"
   },
   "scripts": {
     "test": "NODE_OPTIONS='--experimental-vm-modules --experimental-json-modules --no-warnings' env-cmd jest --watch",
