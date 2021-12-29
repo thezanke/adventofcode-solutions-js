@@ -36,7 +36,7 @@ export class Cuboid {
     return Math.abs(this.p1.z - this.p2.z);
   }
 
-  get area() {
+  get volume() {
     return this.height * this.width * this.depth;
   }
 
@@ -133,5 +133,5 @@ export const getCuboidsForInput = (input) => {
 
 export const solve = (input) => {
   const cuboids = getCuboidsForInput(input);
-  return cuboids.reduce((t, c) => t + c.area, 0);
+  return cuboids.reduce((t, c) => t + c.volume, 0);
 };
