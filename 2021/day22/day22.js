@@ -20,28 +20,20 @@ export const transformInput = (o) => {
 
 export class Cuboid {
   constructor(x1, y1, z1, x2, y2, z2) {
-    this.points = [
-      { x: x1, y: y1, z: z1 },
-      { x: x2, y: y1, z: z1 },
-      { x: x1, y: y2, z: z1 },
-      { x: x2, y: y2, z: z1 },
-      { x: x1, y: y1, z: z2 },
-      { x: x2, y: y1, z: z2 },
-      { x: x1, y: y2, z: z2 },
-      { x: x2, y: y2, z: z2 },
-    ];
+    this.p1 = { x: x1, y: y1, z: z1 };
+    this.p2 = { x: x2, y: y2, z: z2 };
   }
 
   get height() {
-    return Math.abs(this.points[0].y - this.points[7].y);
+    return Math.abs(this.p1.y - this.p2.y);
   }
 
   get width() {
-    return Math.abs(this.points[0].x - this.points[7].x);
+    return Math.abs(this.p1.x - this.p2.x);
   }
 
   get depth() {
-    return Math.abs(this.points[0].z - this.points[7].z);
+    return Math.abs(this.p1.z - this.p2.z);
   }
 
   get area() {
@@ -50,20 +42,20 @@ export class Cuboid {
 
   get center() {
     return {
-      x: this.points[0].x + this.width / 2,
-      y: this.points[0].y + this.height / 2,
-      z: this.points[0].z + this.depth / 2,
+      x: this.p1.x + this.width / 2,
+      y: this.p1.y + this.height / 2,
+      z: this.p1.z + this.depth / 2,
     };
   }
 
   getContained(...points) {
     return points.filter((p) => {
-      if (p.x < this.points[0].x) return false;
-      if (p.x >= this.points[7].x) return false;
-      if (p.y < this.points[0].y) return false;
-      if (p.y >= this.points[7].y) return false;
-      if (p.z < this.points[0].z) return false;
-      if (p.z >= this.points[7].z) return false;
+      if (p.x < this.p1.x) return false;
+      if (p.x >= this.p2.x) return false;
+      if (p.y < this.p1.y) return false;
+      if (p.y >= this.p2.y) return false;
+      if (p.z < this.p1.z) return false;
+      if (p.z >= this.p2.z) return false;
 
       return true;
     });
@@ -71,53 +63,50 @@ export class Cuboid {
 }
 
 export const getRemainingCuboids = (c1, c2) => {
-  const [c1p1, c1p2, c2p1, c2p2] = [
-    c1.points[0],
-    c1.points[7],
-    c2.points[0],
-    c2.points[7],
-  ];
-
   const noInteraction =
-    c2p2.x <= c1p1.x ||
-    c2p1.x >= c1p2.x ||
-    c2p2.y <= c1p1.y ||
-    c2p1.y >= c1p2.y ||
-    c2p2.z <= c1p1.z ||
-    c2p1.z >= c1p2.z;
+    c2.p2.x <= c1.p1.x ||
+    c2.p1.x >= c1.p2.x ||
+    c2.p2.y <= c1.p1.y ||
+    c2.p1.y >= c1.p2.y ||
+    c2.p2.z <= c1.p1.z ||
+    c2.p1.z >= c1.p2.z;
 
   if (noInteraction) return [c1];
 
   const cubes = [];
 
-  if (c2p1.y > c1p1.y) {
-    cubes.push(new Cuboid(c1p1.x, c1p1.y, c1p1.z, c1p2.x, c2p1.y, c1p2.z));
+  if (c2.p1.y > c1.p1.y) {
+    cubes.push(
+      new Cuboid(c1.p1.x, c1.p1.y, c1.p1.z, c1.p2.x, c2.p1.y, c1.p2.z)
+    );
   }
 
-  if (c2p2.y < c1p2.y) {
-    cubes.push(new Cuboid(c1p1.x, c2p2.y, c1p1.z, c1p2.x, c1p2.y, c1p2.z));
+  if (c2.p2.y < c1.p2.y) {
+    cubes.push(
+      new Cuboid(c1.p1.x, c2.p2.y, c1.p1.z, c1.p2.x, c1.p2.y, c1.p2.z)
+    );
   }
 
-  const minY = c2p1.y >= c1p1.y ? c2p1.y : c1p1.y;
-  const maxY = c2p2.y <= c1p2.y ? c2p2.y : c1p2.y;
+  const minY = c2.p1.y >= c1.p1.y ? c2.p1.y : c1.p1.y;
+  const maxY = c2.p2.y <= c1.p2.y ? c2.p2.y : c1.p2.y;
 
-  if (c2p1.z > c1p1.z) {
-    cubes.push(new Cuboid(c1p1.x, minY, c1p1.z, c1p2.x, maxY, c2p1.z));
+  if (c2.p1.z > c1.p1.z) {
+    cubes.push(new Cuboid(c1.p1.x, minY, c1.p1.z, c1.p2.x, maxY, c2.p1.z));
   }
 
-  if (c2p2.z < c1p2.z) {
-    cubes.push(new Cuboid(c1p1.x, minY, c2p2.z, c1p2.x, maxY, c1p2.z));
+  if (c2.p2.z < c1.p2.z) {
+    cubes.push(new Cuboid(c1.p1.x, minY, c2.p2.z, c1.p2.x, maxY, c1.p2.z));
   }
 
-  const minZ = c2p1.z >= c1p1.z ? c2p1.z : c1p1.z;
-  const maxZ = c2p2.z <= c1p2.z ? c2p2.z : c1p2.z;
+  const minZ = c2.p1.z >= c1.p1.z ? c2.p1.z : c1.p1.z;
+  const maxZ = c2.p2.z <= c1.p2.z ? c2.p2.z : c1.p2.z;
 
-  if (c2p1.x > c1p1.x) {
-    cubes.push(new Cuboid(c1p1.x, minY, minZ, c2p1.x, maxY, maxZ));
+  if (c2.p1.x > c1.p1.x) {
+    cubes.push(new Cuboid(c1.p1.x, minY, minZ, c2.p1.x, maxY, maxZ));
   }
 
-  if (c2p2.x < c1p2.x) {
-    cubes.push(new Cuboid(c2p2.x, minY, minZ, c1p2.x, maxY, maxZ));
+  if (c2.p2.x < c1.p2.x) {
+    cubes.push(new Cuboid(c2.p2.x, minY, minZ, c1.p2.x, maxY, maxZ));
   }
 
   return cubes;
