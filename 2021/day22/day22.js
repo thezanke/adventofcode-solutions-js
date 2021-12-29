@@ -70,12 +70,12 @@ export class Cuboid {
   }
 }
 
-export const getRemainingCuboids = (c2, c1) => {
-  const [c2p1, c2p2, c1p1, c1p2] = [
-    c2.points[0],
-    c2.points[7],
+export const getRemainingCuboids = (c1, c2) => {
+  const [c1p1, c1p2, c2p1, c2p2] = [
     c1.points[0],
     c1.points[7],
+    c2.points[0],
+    c2.points[7],
   ];
 
   const noInteraction =
@@ -129,14 +129,14 @@ export const getCuboidsForInput = (input) => {
   for (const entry of input) {
     const [on, ...cords] = entry;
 
-    const c1 = new Cuboid(...cords);
+    const c2 = new Cuboid(...cords);
 
     for (let i = cubes.length - 1; i >= 0; i -= 1) {
-      const c2 = cubes[i];
+      const c1 = cubes[i];
       cubes.splice(i, 1, ...getRemainingCuboids(c1, c2));
     }
 
-    if (on) cubes.push(c1);
+    if (on) cubes.push(c2);
   }
 
   return cubes;
