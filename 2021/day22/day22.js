@@ -78,16 +78,6 @@ export const getRemainingCuboids = (c2, c1) => {
     c1.points[7],
   ];
 
-  const fullyContained =
-    c2p1.x <= c1p1.x &&
-    c2p2.x >= c1p2.x &&
-    c2p1.y <= c1p1.y &&
-    c2p2.y >= c1p2.y &&
-    c2p1.z <= c1p1.z &&
-    c2p2.z >= c1p2.z;
-
-  if (fullyContained) return [];
-
   const noInteraction =
     c2p2.x <= c1p1.x ||
     c2p1.x >= c1p2.x ||
