@@ -15,6 +15,25 @@
     <script type="module">
       import { transformInput, getCuboidsForInput } from "./day22.js";
 
+      const addCuboidToScene = (cuboid) => {
+        const group = new THREE.Group();
+        const geometry = new THREE.BoxGeometry(
+          cuboid.width,
+          cuboid.height,
+          cuboid.depth
+        );
+        Object.assign(group.position, cuboid.center);
+        group.add(new THREE.LineSegments(geometry, lineMaterial));
+        group.add(new THREE.Mesh(geometry, meshMaterial));
+        scene.add(group);
+      };
+
+      const readTextFile = async (file) => {
+        const res = await fetch(file, { method: "GET" });
+        const text = await res.text();
+        return text;
+      };
+
       const scene = new THREE.Scene();
 
       const gridHelper = new THREE.GridHelper(300000, 20);
@@ -49,40 +68,18 @@
         transparent: true,
         opacity: 0.5,
       });
+  
       const lineMaterial = new THREE.LineBasicMaterial({
         color: 0x111111,
         transparent: true,
         opacity: 0.5,
       });
 
-      const addCuboid = (cuboid) => {
-        const group = new THREE.Group();
-        const geometry = new THREE.BoxGeometry(
-          cuboid.width,
-          cuboid.height,
-          cuboid.depth
-        );
-        Object.assign(group.position, cuboid.center);
-        group.add(new THREE.LineSegments(geometry, lineMaterial));
-        group.add(new THREE.Mesh(geometry, meshMaterial));
-        scene.add(group);
-      };
-
-      async function readTextFile(file) {
-        const res = await fetch(file, { method: "GET" });
-        const text = await res.text();
-        return text;
-      }
-
       const input = transformInput(await readTextFile("input"));
       const cubes = getCuboidsForInput(input);
+      cubes.forEach(addCuboidToScene);
 
       console.log(cubes.reduce((t, c) => t + c.area, 0));
-
-      // input.slice(0, 2)
-      cubes.forEach(addCuboid);
-
-      console.log(cubes);
     </script>
   </body>
 </html>
