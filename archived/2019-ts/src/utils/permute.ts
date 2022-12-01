@@ -17,13 +17,13 @@
 export const permute = (input: any[]) => {
   const result: any[][] = [];
 
-  function swap(arr: any[], idxA: number, idxB: number) {
+  function swap (arr: any[], idxA: number, idxB: number) {
     const tmp = arr[idxA];
     arr[idxA] = arr[idxB];
     arr[idxB] = tmp;
   }
 
-  function generate(n: number, arr: any[]) {
+  function generate (n: number, arr: any[]) {
     if (n === 1) {
       result.push(arr.slice());
       return;

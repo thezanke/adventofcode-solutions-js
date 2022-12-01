@@ -25,8 +25,8 @@ test('calculate total scores for examples', () => {
 
 test('calculate total score for challenge', () => {
   expect(calculateTotal(processStream(CHALLENGE_INPUT))).toEqual(12897);
-})
+});
 
 test.only('count garbage for challenge', () => {
   expect(countGarbage(processStream(CHALLENGE_INPUT))).toEqual(7031);
-})
+});

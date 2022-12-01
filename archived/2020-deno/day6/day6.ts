@@ -1,14 +1,14 @@
-import { intersection } from "../common/arrays.ts";
+import { intersection } from '../common/arrays.ts';
 
 export const countUniqueAnswers = (groups: string[][]) => {
   return groups.reduce((total, groupForms) => {
-    const set = new Set([...groupForms.join("")]);
+    const set = new Set([...groupForms.join('')]);
     return total + set.size;
   }, 0);
 };
 
 interface AnswerMap {
-  [key: string]: number;
+  [key: string]: number
 }
 
 /* my original naive solution */
@@ -17,7 +17,7 @@ export const countGroupedAnswers = (groups: string[][]) => {
   groups.forEach((groupForms) => {
     const answerMap: AnswerMap = {};
     const totalForms = groupForms.length;
-    [...groupForms.join("")].forEach((l) => {
+    [...groupForms.join('')].forEach((l) => {
       answerMap[l] = answerMap[l] ? answerMap[l] + 1 : 1;
     });
     Object.values(answerMap).forEach((c) => {
@@ -31,7 +31,7 @@ export const countGroupedAnswers = (groups: string[][]) => {
 export const countGroupedAnswersWIntersection = (groups: string[][]) => {
   return groups.reduce((total, groupForms) => {
     const allAnswered = groupForms
-      .map((form) => form.split(""))
+      .map((form) => form.split(''))
       .reduce((acc, form) => intersection(acc, form))
       .length;
 

@@ -2,7 +2,7 @@ import {
   solvePart1,
   asteroidsFromInput,
   findBestStationAsteroid,
-  solvePart2,
+  solvePart2
 } from './day10';
 import { getInput } from './utils/getInput';
 
@@ -15,7 +15,7 @@ describe('DAY 10', () => {
         '.....',
         '#####',
         '....#',
-        '...##',
+        '...##'
       ];
 
       const asteroids = asteroidsFromInput(input);
@@ -34,7 +34,7 @@ describe('DAY 10', () => {
         '#..#....#.',
         '.##.#..###',
         '##...#..#.',
-        '.#....####',
+        '.#....####'
       ];
 
       const asteroids = asteroidsFromInput(input);
@@ -53,7 +53,7 @@ describe('DAY 10', () => {
         '..#...##..',
         '..##....##',
         '......#...',
-        '.####.###.',
+        '.####.###.'
       ];
 
       const asteroids = asteroidsFromInput(input);
@@ -72,7 +72,7 @@ describe('DAY 10', () => {
         '..#.#..#.#',
         '#..#.#.###',
         '.##...##.#',
-        '.....#.#..',
+        '.....#.#..'
       ];
 
       const asteroids = asteroidsFromInput(input);
@@ -101,7 +101,7 @@ describe('DAY 10', () => {
         '....##.##.###..#####',
         '.#.#.###########.###',
         '#.#.#.#####.####.###',
-        '###.##.####.##.#..##',
+        '###.##.####.##.#..##'
       ];
 
       const asteroids = asteroidsFromInput(input);
@@ -137,7 +137,7 @@ describe('DAY 10', () => {
         '....##.##.###..#####',
         '.#.#.###########.###',
         '#.#.#.#####.####.###',
-        '###.##.####.##.#..##',
+        '###.##.####.##.#..##'
       ];
       expect(solvePart2(input, { x: 11, y: 13 })).toEqual(802);
     });

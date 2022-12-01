@@ -1,9 +1,9 @@
 /*
-* Stolen from https://www.w3resource.com/javascript-exercises/javascript-math-exercise-47.php after 
+* Stolen from https://www.w3resource.com/javascript-exercises/javascript-math-exercise-47.php after
 * trying my hardest to write it myself
 */
 
-export function xgcd(a: number, b: number) {
+export function xgcd (a: number, b: number) {
   a = +a;
   b = +b;
   if (a !== a || b !== b) {
@@ -19,16 +19,16 @@ export function xgcd(a: number, b: number) {
     return false;
   }
 
-  var signX = (a < 0) ? -1 : 1,
-    signY = (b < 0) ? -1 : 1,
-    x = 0,
-    y = 1,
-    u = 1,
-    v = 0,
-    q,
-    r,
-    m,
-    n;
+  const signX = (a < 0) ? -1 : 1;
+  const signY = (b < 0) ? -1 : 1;
+  let x = 0;
+  let y = 1;
+  let u = 1;
+  let v = 0;
+  let q;
+  let r;
+  let m;
+  let n;
   a = Math.abs(a);
   b = Math.abs(b);
 

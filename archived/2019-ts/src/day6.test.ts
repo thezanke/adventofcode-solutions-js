@@ -4,8 +4,8 @@ import { getInput } from './utils/getInput';
 describe('DAY 6', () => {
   // prettier-ignore
   const EXAMPLE_INPUT = [
-    'COM)B', 'B)C', 'C)D', 'D)E','E)F', 'B)G',
-    'G)H', 'D)I','E)J', 'J)K', 'K)L'
+    'COM)B', 'B)C', 'C)D', 'D)E', 'E)F', 'B)G',
+    'G)H', 'D)I', 'E)J', 'J)K', 'K)L'
   ];
 
   describe('createOrbitMap()', () => {

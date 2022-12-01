@@ -1,21 +1,21 @@
 export enum Seat {
-  empty = "L",
-  occupied = "#",
-  missing = ".",
+  empty = 'L',
+  occupied = '#',
+  missing = '.',
 }
 
 export const textToGrid = (text: string) => {
-  return text.split("\n").map((l) => l.split(""));
+  return text.split('\n').map((l) => l.split(''));
 };
 
 export const printChart = (chart: string[][]) => {
-  console.log("\n" + chart.map((r) => r.join("")).join("\n"));
+  console.log('\n' + chart.map((r) => r.join('')).join('\n'));
 };
 
 export const findStableSeating = (
   initial: string[][],
   overpop: number,
-  countFn: CountFunc,
+  countFn: CountFunc
 ) => {
   let state = [...initial.map((r) => [...r])];
   let unstable = true;
@@ -62,9 +62,7 @@ export const countType = (chart: string[][], type: string) => {
   }, 0);
 };
 
-interface CountFunc {
-  (x: number, y: number, type: Seat, state: string[][]): number;
-}
+type CountFunc = (x: number, y: number, type: Seat, state: string[][]) => number;
 
 export const countAdjacent: CountFunc = (x, y, type, state) => {
   return [
@@ -75,7 +73,7 @@ export const countAdjacent: CountFunc = (x, y, type, state) => {
     state[y + 1]?.[x + 1],
     state[y + 1]?.[x],
     state[y + 1]?.[x - 1],
-    state[y]?.[x - 1],
+    state[y]?.[x - 1]
   ].filter((p) => p === type).length;
 };
 
@@ -90,7 +88,7 @@ export const countVisibles: CountFunc = (x, y, type, state) => {
   const findVisibleByVector = (vx: number, vy: number) => {
     let diff = 1;
     while (true) {
-      let pos = state[y + diff * vy]?.[x + diff * vx];
+      const pos = state[y + diff * vy]?.[x + diff * vx];
       if (!pos) return;
       if (pos !== Seat.missing) {
         visible.push(pos);

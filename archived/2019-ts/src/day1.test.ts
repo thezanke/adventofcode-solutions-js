@@ -2,7 +2,7 @@ import {
   calculateAdditionalFuel,
   calculateRequiredFuel,
   solvePart1,
-  solvePart2,
+  solvePart2
 } from './day1';
 
 describe('DAY 1', () => {

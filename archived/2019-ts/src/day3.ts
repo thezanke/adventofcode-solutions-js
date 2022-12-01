@@ -1,12 +1,12 @@
 import { map } from 'lodash';
 
 interface Point {
-  x: number;
-  y: number;
+  x: number
+  y: number
 }
 
 interface Intersection extends Point {
-  totalSteps: number;
+  totalSteps: number
 }
 
 enum DIRECTION {

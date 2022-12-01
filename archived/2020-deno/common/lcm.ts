@@ -1,1 +1,1 @@
-export * from "../../2019/src/utils/lcm.ts";
+export * from '../../2019/src/utils/lcm.ts';

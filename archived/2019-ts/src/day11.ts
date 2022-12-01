@@ -17,7 +17,7 @@ enum Color {
 
 class Panel {
   painted = false;
-  constructor(public x: number, public y: number, public color = Color.black) {}
+  constructor (public x: number, public y: number, public color = Color.black) {}
 }
 
 enum Mode {
@@ -32,7 +32,7 @@ class Robot {
   private heading = Direction.up;
   private mode = Mode.paint;
 
-  constructor(initialMemory: number[] = [], private panels: Panel[] = []) {
+  constructor (initialMemory: number[] = [], private readonly panels: Panel[] = []) {
     this.program = runProgram(
       initialMemory,
       undefined,
@@ -41,16 +41,16 @@ class Robot {
     );
   }
 
-  getCurrentPanel() {
+  getCurrentPanel () {
     let panel = this.panels.find(p => p.x === this.x && p.y === this.y);
-    if (!panel) {
+    if (panel == null) {
       panel = new Panel(this.x, this.y);
       this.panels.push(panel);
     }
     return panel;
   }
 
-  turnLeft() {
+  turnLeft () {
     switch (this.heading) {
       case Direction.up:
         this.heading = Direction.left;
@@ -68,7 +68,7 @@ class Robot {
     }
   }
 
-  turnRight() {
+  turnRight () {
     switch (this.heading) {
       case Direction.up:
         this.heading = Direction.right;
@@ -86,11 +86,11 @@ class Robot {
     }
   }
 
-  toggleMode() {
+  toggleMode () {
     this.mode = Math.abs(this.mode - 1);
   }
 
-  move() {
+  move () {
     switch (this.heading) {
       case Direction.up:
         this.y -= 1;
@@ -108,7 +108,7 @@ class Robot {
     }
   }
 
-  processOutput(output: number) {
+  processOutput (output: number) {
     const currentPanel = this.getCurrentPanel();
 
     switch (this.mode) {
@@ -132,7 +132,7 @@ class Robot {
     this.toggleMode();
   }
 
-  run() {
+  run () {
     while (!this.program.exited) {
       if (this.program.waiting) {
         const currentPanel = this.getCurrentPanel();
@@ -143,7 +143,7 @@ class Robot {
     }
   }
 
-  paintedCount() {
+  paintedCount () {
     return this.panels.filter(p => p.painted).length;
   }
 }

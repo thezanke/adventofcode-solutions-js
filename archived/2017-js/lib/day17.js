@@ -4,13 +4,13 @@ const nextPos = (pos, stepSize, bufferLength) => {
 };
 
 class Spinlock {
-  constructor(stepSize) {
+  constructor (stepSize) {
     this.stepSize = stepSize;
     this.buffer = [0];
     this.pos = 0;
   }
 
-  next() {
+  next () {
     const lastValue = this.buffer[this.pos];
     this.pos = nextPos(this.pos, this.stepSize, this.buffer.length);
     this.buffer.splice(this.pos, 0, lastValue + 1);
@@ -29,6 +29,6 @@ const findSolution = (stepSize, insertions) => {
   }
 
   return solution;
-}
+};
 
 module.exports = { Spinlock, nextPos, findSolution };

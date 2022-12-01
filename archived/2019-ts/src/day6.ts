@@ -1,10 +1,10 @@
 export interface OrbitMapObject {
-  id: string;
-  orbiting?: OrbitMapObject;
+  id: string
+  orbiting?: OrbitMapObject
 }
 
 interface OrbitMap {
-  [key: string]: OrbitMapObject;
+  [key: string]: OrbitMapObject
 }
 
 export const createOrbitMap = (input: string[]): OrbitMap => {
@@ -25,11 +25,11 @@ export const createOrbitMap = (input: string[]): OrbitMap => {
 
 export const getOrbitChain = (start: OrbitMapObject) => {
   let { orbiting } = start;
-  if (!orbiting) return [];
+  if (orbiting == null) return [];
 
   const chain: OrbitMapObject[] = [];
 
-  while (orbiting) {
+  while (orbiting != null) {
     chain.push(orbiting);
     ({ orbiting } = orbiting);
   }
@@ -56,7 +56,7 @@ export const solvePart2 = (input: string[], startId: string, endId: string) => {
   const endOrbitChain = getOrbitChain(end);
 
   const pivotObject = startOrbitChain.find(o => endOrbitChain.includes(o));
-  if (!pivotObject) return Number.NEGATIVE_INFINITY;
+  if (pivotObject == null) return Number.NEGATIVE_INFINITY;
 
   return (
     startOrbitChain.indexOf(pivotObject) + endOrbitChain.indexOf(pivotObject)

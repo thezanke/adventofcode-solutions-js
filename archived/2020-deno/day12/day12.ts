@@ -1,4 +1,4 @@
-import { Vect } from "../common/Vect.ts";
+import { Vect } from '../common/Vect.ts';
 
 enum Heading {
   north,
@@ -8,19 +8,19 @@ enum Heading {
 }
 
 enum Action {
-  north = "N",
-  south = "S",
-  east = "E",
-  west = "W",
-  left = "L",
-  right = "R",
-  forward = "F",
+  north = 'N',
+  south = 'S',
+  east = 'E',
+  west = 'W',
+  left = 'L',
+  right = 'R',
+  forward = 'F',
 }
 
 class MovingObject {
   public pos = new Vect();
 
-  public performAction(action: Action, amount: number) {
+  public performAction (action: Action, amount: number) {
     switch (action) {
       case Action.north: {
         this.pos.y += amount;
@@ -45,13 +45,13 @@ class MovingObject {
 class Ship1 extends MovingObject {
   private heading = Heading.east;
 
-  private turn(degrees: number) {
+  private turn (degrees: number) {
     const turns = degrees / 90;
     this.heading = (this.heading + turns) % 4;
     if (this.heading < 0) this.heading = 4 - Math.abs(this.heading);
   }
 
-  public performAction(action: Action, amount: number) {
+  public performAction (action: Action, amount: number) {
     switch (action) {
       case Action.left: {
         this.turn(-1 * amount);
@@ -76,13 +76,13 @@ class Ship1 extends MovingObject {
 }
 
 class Waypoint extends MovingObject {
-  public constructor() {
+  public constructor () {
     super();
     this.pos.x = 10;
     this.pos.y = 1;
   }
 
-  public performAction(action: Action, amount: number) {
+  public performAction (action: Action, amount: number) {
     switch (action) {
       case Action.left: {
         this.pos.rotate(amount);
@@ -100,9 +100,9 @@ class Waypoint extends MovingObject {
 }
 
 export class Ship2 extends MovingObject {
-  private waypoint = new Waypoint();
+  private readonly waypoint = new Waypoint();
 
-  public performAction(action: Action, amount: number) {
+  public performAction (action: Action, amount: number) {
     if (action === Action.forward) {
       this.pos.add(this.waypoint.pos.copy().multiply(amount));
     } else {
@@ -113,7 +113,7 @@ export class Ship2 extends MovingObject {
 
 export const followInstructions = (
   instructions: string[],
-  ship: MovingObject = new Ship1(),
+  ship: MovingObject = new Ship1()
 ) => {
   instructions.forEach((inst) => {
     const action = inst[0] as Action;

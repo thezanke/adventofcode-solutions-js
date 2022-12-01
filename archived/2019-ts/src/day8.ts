@@ -9,7 +9,7 @@ enum Color {
 class Layer {
   zeroCount: number;
 
-  constructor(public rows: Color[][]) {
+  constructor (public rows: Color[][]) {
     this.zeroCount = 0;
     rows.forEach(row => {
       this.zeroCount += row.filter(n => n === 0).length;

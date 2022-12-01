@@ -4,12 +4,12 @@ const findPosition = (
   part: string,
   _min: number,
   _max: number,
-  shrink: string,
+  shrink: string
 ) => {
   let min = _min;
   let max = _max;
 
-  part.split("").forEach((c) => {
+  part.split('').forEach((c) => {
     const x = Math.ceil((max - min) / 2);
     if (c === shrink) {
       max -= x;
@@ -25,11 +25,11 @@ const findPosition = (
 
 export const getSeatId = (boardingPass: string) => {
   const match = boardingPass.match(PASS_MATCHER);
-  if (!match) return -1;
+  if (match == null) return -1;
 
   const [, rowInput, colInput] = match;
-  const row = findPosition(rowInput, 0, 127, "F");
-  const col = findPosition(colInput, 0, 7, "L");
+  const row = findPosition(rowInput, 0, 127, 'F');
+  const col = findPosition(colInput, 0, 7, 'L');
 
   return row * 8 + col;
 };

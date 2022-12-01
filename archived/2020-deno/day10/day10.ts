@@ -1,4 +1,4 @@
-import { memoize } from "../common/memoize.ts";
+import { memoize } from '../common/memoize.ts';
 
 export const countDifferences = (inputs: number[]) => {
   const sortedInput = [...inputs].sort((a, b) => a - b);
@@ -23,7 +23,7 @@ export const createArrangementTree = (inputs: number[]) => {
   const tree: { [key: number]: number[] } = {};
 
   for (let i = 0; i < sortedInput.length; i += 1) {
-    let a = sortedInput[i];
+    const a = sortedInput[i];
     if (!tree[a]) tree[a] = [];
 
     [1, 2, 3].forEach((d) => {
@@ -45,7 +45,7 @@ export const countTotalArrangements = (inputs: number[]) => {
   console.log(tree);
 
   const countPaths = memoize((curr: number, dest: number) => {
-    let currentNodeValues = tree[curr];
+    const currentNodeValues = tree[curr];
     let arrangements = 0;
 
     if (currentNodeValues.includes(dest)) {

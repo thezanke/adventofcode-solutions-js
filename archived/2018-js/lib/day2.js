@@ -19,7 +19,7 @@ const part1 = input => {
 const part2 = input => {
   const results = input
     .map((line, i) => {
-      let nextLines = input.slice(i + 1);
+      const nextLines = input.slice(i + 1);
 
       sibling = nextLines.find(line2 => {
         let count = 0;

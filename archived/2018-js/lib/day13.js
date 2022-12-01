@@ -137,7 +137,7 @@ const createSimulation = (inputStr, handleCollisions = false) => {
 
   return {
     map,
-    get carts() {
+    get carts () {
       return carts;
     },
     mapWidth,

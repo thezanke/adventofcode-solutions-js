@@ -1,19 +1,19 @@
-import { degreeToRadian } from "./degreeToRadian.ts";
+import { degreeToRadian } from './degreeToRadian.ts';
 
 export class Vect {
-  constructor(
+  constructor (
     public x = 0,
-    public y = 0,
+    public y = 0
   ) {}
 
-  add(vect: Vect) {
+  add (vect: Vect) {
     this.x += vect.x;
     this.y += vect.y;
 
     return this;
   }
 
-  multiply(amount: number | Vect) {
+  multiply (amount: number | Vect) {
     if (amount instanceof Vect) {
       this.x *= amount.x;
       this.y *= amount.y;
@@ -25,7 +25,7 @@ export class Vect {
     return this;
   }
 
-  rotate(deg: number, around = new Vect(0, 0)) {
+  rotate (deg: number, around = new Vect(0, 0)) {
     // TODO: deal with rotating around another vector
 
     const angle = degreeToRadian(deg);
@@ -37,13 +37,13 @@ export class Vect {
     return this;
   }
 
-  mDistance(from = new Vect(0, 0)) {
+  mDistance (from = new Vect(0, 0)) {
     const x = this.x - from.x;
     const y = this.y - from.y;
     return Math.abs(x) + Math.abs(y);
   }
 
-  copy() {
+  copy () {
     return new Vect(this.x, this.y);
   }
 }

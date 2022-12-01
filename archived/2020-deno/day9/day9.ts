@@ -1,9 +1,9 @@
 const findAddends = (
   sum: number,
-  numbers: number[],
+  numbers: number[]
 ): [number, number] | null => {
   let a: number | undefined;
-  let b = numbers.find((n) => {
+  const b = numbers.find((n) => {
     a = numbers.find((n2) => sum - n === n2);
     if (a) return true;
   });
@@ -18,7 +18,7 @@ export const findXmasError = (numbers: number[], groupSize: number) => {
     if (i >= groupSize) {
       const last = numbers.slice(i - groupSize, i);
       const results = findAddends(num, last);
-      return !results;
+      return results == null;
     }
 
     return false;
@@ -40,8 +40,8 @@ export const findEncryptionWeakness = (numbers: number[], vuln: number) => {
     for (let j = i + 1; j < maskedNumbers.length; j += 1) {
       const b = maskedNumbers[j];
       if (!b) break;
-      let range = maskedNumbers.slice(i, j + 1);
-      if (range.includes(null)) throw new Error("null in range");
+      const range = maskedNumbers.slice(i, j + 1);
+      if (range.includes(null)) throw new Error('null in range');
       if (sumRange(range as number[]) === vuln) {
         const min = Math.min(...range as number[]);
         const max = Math.max(...range as number[]);

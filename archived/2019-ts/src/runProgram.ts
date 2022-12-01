@@ -34,14 +34,14 @@ export const getOpcode = (value: number): [number, number[]] => {
 };
 
 interface Instruction {
-  opcode: number;
-  modes: number[];
-  params: number[];
+  opcode: number
+  modes: number[]
+  params: number[]
 }
 
 export class Program {
   private _memory: number[];
-  private inputs: number[];
+  private readonly inputs: number[];
   private iPointer = 0;
   private relativeBase = 0;
   private currentInstruction?: Instruction;
@@ -49,27 +49,27 @@ export class Program {
   waiting = false;
   exited = false;
 
-  constructor(
+  constructor (
     initialMemory: number[],
     overrides?: { [key: number]: number },
     initalInputs: number[] = [],
-    private outputHandler?: Function,
-    private debugging = false
+    private readonly outputHandler?: Function,
+    private readonly debugging = false
   ) {
     this._memory = [...initialMemory];
     this.inputs = [...initalInputs];
-    if (overrides) Object.assign(this._memory, overrides);
+    if (overrides != null) Object.assign(this._memory, overrides);
     this.run();
   }
 
   // tslint:disable-next-line no-any
-  private debug(...args: any[]) {
+  private debug (...args: any[]) {
     if (this.debugging) {
       console.log(`${this.iPointer}: `, ...args);
     }
   }
 
-  readMemory(pointer: number) {
+  readMemory (pointer: number) {
     let value = this.memory[pointer];
     if (!value) {
       value = this.memory[pointer] = 0;
@@ -77,13 +77,13 @@ export class Program {
     return value;
   }
 
-  getParameter(index: number, write = false) {
-    if (!this.currentInstruction) throw Error('no current instruction');
+  getParameter (index: number, write = false) {
+    if (this.currentInstruction == null) throw Error('no current instruction');
 
     const { modes, params } = this.currentInstruction;
     const value = params[index];
     const mode = modes[index] || 0;
-    
+
     switch (mode) {
       case MODE.REFERENCE:
         if (write) return value;
@@ -102,7 +102,7 @@ export class Program {
   // z = x * 38 + y + 639
   // pointer = 566
 
-  private nextInstruction() {
+  private nextInstruction () {
     const opVal = this._memory[this.iPointer];
     const [opcode, modes] = getOpcode(opVal);
     const params = this._memory.slice(this.iPointer + 1, this.iPointer + 4);
@@ -135,7 +135,7 @@ export class Program {
         break;
       }
       case OP.SAVE_INPUT: {
-        if (!this.inputs.length) {
+        if (this.inputs.length === 0) {
           this.waiting = true;
           break;
         }
@@ -149,7 +149,7 @@ export class Program {
         break;
       }
       case OP.OUTPUT_VALUE: {
-        if (!this.outputHandler) {
+        if (this.outputHandler == null) {
           throw Error('output called with no handler');
         }
 
@@ -205,7 +205,7 @@ export class Program {
     }
   }
 
-  run() {
+  run () {
     if (this.exited) {
       throw Error('tried to run exited program');
     }
@@ -217,12 +217,12 @@ export class Program {
     }
   }
 
-  input(...input: number[]) {
+  input (...input: number[]) {
     this.inputs.push(...input);
     if (this.waiting) this.run();
   }
 
-  get memory() {
+  get memory () {
     return [...this._memory];
   }
 }

@@ -5,9 +5,9 @@ const DEBUG = false;
 
 export class Amplifier {
   private _outputSignal = NaN;
-  private program: Program;
+  private readonly program: Program;
 
-  constructor(initialMemory: number[] = [], phase: number) {
+  constructor (initialMemory: number[] = [], phase: number) {
     this.program = runProgram(
       initialMemory,
       undefined,
@@ -19,15 +19,15 @@ export class Amplifier {
     );
   }
 
-  set inputSignal(n: number) {
+  set inputSignal (n: number) {
     this.program.input(n);
   }
 
-  get outputSignal() {
+  get outputSignal () {
     return this._outputSignal;
   }
 
-  get exited() {
+  get exited () {
     return this.program.exited;
   }
 }

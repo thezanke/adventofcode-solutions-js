@@ -1,15 +1,15 @@
 const PASSWORD_MATCHER = /(\d+)-(\d+) (.+): (.+)/;
 
 interface ParsedPassword {
-  min: number;
-  max: number;
-  char: string;
-  password: string;
+  min: number
+  max: number
+  char: string
+  password: string
 }
 
 const parsePassword = (rawPasswordData: string): ParsedPassword | null => {
   const match = rawPasswordData.match(PASSWORD_MATCHER);
-  if (!match) return null;
+  if (match == null) return null;
 
   const [, min, max, char, password] = match;
   if (!(min && max && char && password)) return null;
@@ -17,9 +17,7 @@ const parsePassword = (rawPasswordData: string): ParsedPassword | null => {
   return { min: Number(min), max: Number(max), char, password };
 };
 
-interface PasswordPolicy {
-  (parsedPassword: ParsedPassword): boolean;
-}
+type PasswordPolicy = (parsedPassword: ParsedPassword) => boolean;
 
 export const policy1: PasswordPolicy = ({ min, max, char, password }) => {
   const charCount = [...password].filter((c) => char === c).length;
@@ -34,6 +32,6 @@ export const policy2: PasswordPolicy = ({ min, max, char, password }) => {
 
 export const isValidPassword = (rawPasswordData: string, policy = policy1) => {
   const passwordData = parsePassword(rawPasswordData);
-  if (!passwordData) return false;
+  if (passwordData == null) return false;
   return policy(passwordData);
 };

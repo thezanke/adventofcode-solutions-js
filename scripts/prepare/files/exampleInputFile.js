@@ -1,20 +1,20 @@
-import { fetchExampleInput } from "../fetchInput.js";
-import { File } from "./file.js";
+import { fetchExampleInput } from '../fetchInput.js';
+import { File } from './file.js';
 
 export class ExampleInputFile extends File {
-  fileName = `example-input`;
+  fileName = 'example-input';
 
-  async createFileContents() {
+  async createFileContents () {
     try {
       const input = await fetchExampleInput(this.day, this.year);
       return input;
     } catch (e) {
-      let message = "❗ Could not fetch example input, ";
+      let message = '❗ Could not fetch example input, ';
       if (e.message) message += `reason="${e.message}", `;
-      message += "stubbing blank file instead.";
+      message += 'stubbing blank file instead.';
       console.log(message);
 
-      return "";
+      return '';
     }
   }
 }

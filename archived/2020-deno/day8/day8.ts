@@ -1,18 +1,18 @@
 enum Op {
-  noop = "nop",
-  accumulate = "acc",
-  jump = "jmp",
+  noop = 'nop',
+  accumulate = 'acc',
+  jump = 'jmp',
 }
 
 interface Instruction {
-  op: Op;
-  arg: number;
-  completed?: boolean;
+  op: Op
+  arg: number
+  completed?: boolean
 }
 
 export const parseBootCode = (instructions: string[]) => {
   return instructions.map((i) => {
-    const [op, argStr] = i.split(" ");
+    const [op, argStr] = i.split(' ');
     const arg = Number(argStr);
     return { op, arg } as Instruction;
   });
@@ -23,9 +23,9 @@ export class GameConsole {
   public accumulator = 0;
   public error = false;
 
-  constructor(private bootInstructions: Instruction[]) {}
+  constructor (private readonly bootInstructions: Instruction[]) {}
 
-  boot() {
+  boot () {
     while (true) {
       const inst = this.bootInstructions[this.curr];
 

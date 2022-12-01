@@ -167,7 +167,7 @@ describe('runProgram()', () => {
   });
 
   test('should be a quine', () => {
-    const input = [109,1,204,-1,1001,100,1,100,1008,100,16,101,1006,101,0,99]; // prettier-ignore
+    const input = [109, 1, 204, -1, 1001, 100, 1, 100, 1008, 100, 16, 101, 1006, 101, 0, 99]; // prettier-ignore
     const output: number[] = [];
     runProgram(input, undefined, undefined, (o: number) => { output.push(o); }); // prettier-ignore
     expect(input).toEqual(output);

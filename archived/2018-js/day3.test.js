@@ -9,4 +9,4 @@ describe('day 3', () => {
   test('part 2', () => {
     expect(part2(CHALLENGE_INPUT)).toEqual(1166);
   });
-})
+});

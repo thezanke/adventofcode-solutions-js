@@ -1,4 +1,6 @@
-export default {
-  transform: {},
-  testPathIgnorePatterns: ["/node_modules", "/archived"],
+/** @type {import('ts-jest').JestConfigWithTsJest} */
+module.exports = {
+  preset: 'ts-jest',
+  testEnvironment: 'node',
+  testPathIgnorePatterns: ['archived']
 };

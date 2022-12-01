@@ -4,8 +4,8 @@ import { stat } from 'fs';
 const ASTEROID = '#';
 
 interface Position {
-  x: number;
-  y: number;
+  x: number
+  y: number
 }
 
 /**
@@ -30,12 +30,12 @@ class Asteroid implements Position {
   detected = 0;
 
   // prettier-ignore
-  constructor(
+  constructor (
     public x: number,
     public y: number
   ) {}
 
-  detectAsteroids(asteroids: Asteroid[]) {
+  detectAsteroids (asteroids: Asteroid[]) {
     asteroids.forEach(a1 => {
       if (a1 === this) return;
 
@@ -48,7 +48,7 @@ class Asteroid implements Position {
     });
   }
 
-  get coordinates() {
+  get coordinates () {
     return `${this.x},${this.y}`;
   }
 }
@@ -69,14 +69,14 @@ export const findBestStationAsteroid = (asteroids: Asteroid[]) => {
     (best, asteroid) => {
       if (!asteroid) return best;
       asteroid.detectAsteroids(asteroids);
-      if (!best) return asteroid;
+      if (best == null) return asteroid;
       if (asteroid.detected > best.detected) return asteroid;
       return best;
     },
     undefined
   );
 
-  if (!bestLocation) {
+  if (bestLocation == null) {
     throw Error('impossible');
   }
 
@@ -98,14 +98,14 @@ class Target implements Position {
   distance: number;
   angle: number;
 
-  constructor(asteroid: Asteroid, homeAsteroid: Asteroid) {
+  constructor (asteroid: Asteroid, homeAsteroid: Asteroid) {
     this.x = asteroid.x;
     this.y = asteroid.y;
     this.distance = this.getDistanceFrom(homeAsteroid);
     this.angle = this.getAngleFrom(homeAsteroid);
   }
 
-  getDistanceFrom(p: Position) {
+  getDistanceFrom (p: Position) {
     const x0 = p.x;
     const y0 = p.y;
     const x1 = this.x;
@@ -113,7 +113,7 @@ class Target implements Position {
     return Math.abs(x1 - x0) + Math.abs(y1 - y0);
   }
 
-  getAngleFrom(p: Position) {
+  getAngleFrom (p: Position) {
     const { x: cx, y: cy } = this;
     const { x: ex, y: ey } = p;
 
@@ -130,11 +130,11 @@ class Station {
   targets: Target[];
   destroyedTargets: Target[] = [];
 
-  constructor(public homeAsteroid: Asteroid, asteroids: Asteroid[]) {
+  constructor (public homeAsteroid: Asteroid, asteroids: Asteroid[]) {
     this.targets = this.identifyTargets(asteroids);
   }
 
-  identifyTargets(asteroids: Asteroid[]) {
+  identifyTargets (asteroids: Asteroid[]) {
     return sortBy(
       asteroids
         .filter(a => a !== this.homeAsteroid)
@@ -143,12 +143,12 @@ class Station {
     );
   }
 
-  destroyTarget(target: Target) {
+  destroyTarget (target: Target) {
     this.destroyedTargets.push(target);
     this.targets.splice(this.targets.indexOf(target), 1);
   }
 
-  findNextTarget(i: number) {
+  findNextTarget (i: number) {
     const { lastDestroyedTarget: lastDestroyed } = this;
     let nextTarget = this.targets.find(t => {
       if (i === 0) return t.angle >= 90;
@@ -156,22 +156,22 @@ class Station {
     });
 
     // edge case for rolling over to 0º
-    if (!nextTarget) nextTarget = this.targets.find(t => t.angle >= 0);
+    if (nextTarget == null) nextTarget = this.targets.find(t => t.angle >= 0);
 
     return nextTarget;
   }
 
-  fireLasers(stopCondition: (iteration: number) => boolean) {
+  fireLasers (stopCondition: (iteration: number) => boolean) {
     let i = 0;
 
     while (!stopCondition(i)) {
       const target = this.findNextTarget(i);
-      if (target) this.destroyTarget(target);
+      if (target != null) this.destroyTarget(target);
       i += 1;
     }
   }
 
-  get lastDestroyedTarget() {
+  get lastDestroyedTarget () {
     return this.destroyedTargets[this.destroyedTargets.length - 1];
   }
 }
@@ -180,13 +180,13 @@ export const solvePart2 = (input: string[], location?: Position) => {
   const asteroids = asteroidsFromInput(input);
   let homeAsteroid;
 
-  if (location) {
+  if (location != null) {
     homeAsteroid = asteroids.find(
       a => a.x === location.x && a.y === location.y
     );
   }
 
-  if (!homeAsteroid) homeAsteroid = findBestStationAsteroid(asteroids);
+  if (homeAsteroid == null) homeAsteroid = findBestStationAsteroid(asteroids);
 
   const station = new Station(homeAsteroid, asteroids);
 

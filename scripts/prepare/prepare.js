@@ -1,9 +1,9 @@
-import * as fs from "fs";
-import * as path from "path";
-import { CodeFile } from "./files/codeFile.js";
-import { ExampleInputFile } from "./files/exampleInputFile.js";
-import { InputFile } from "./files/inputFile.js";
-import { TestFile } from "./files/testFile.js";
+import * as fs from 'fs';
+import * as path from 'path';
+import { CodeFile } from './files/codeFile.js';
+import { ExampleInputFile } from './files/exampleInputFile.js';
+import { InputFile } from './files/inputFile.js';
+import { TestFile } from './files/testFile.js';
 
 const today = new Date();
 
@@ -18,7 +18,7 @@ const ensureDirectory = (path) => {
 
 const filesToGenerate = [CodeFile, InputFile, ExampleInputFile, TestFile];
 
-const writeOptions = { encoding: "utf-8" };
+const writeOptions = { encoding: 'utf-8' };
 
 const createMissingFiles = async (workdir, day, year) => {
   const files = [];
@@ -39,7 +39,7 @@ const createMissingFiles = async (workdir, day, year) => {
       } catch (e) {
         let message = `❗ Could not create file "${file.fileName}", `;
         if (e.message) message += `reason="${e.message}", `;
-        message += "skipping.";
+        message += 'skipping.';
         console.log(message);
       }
     } else {
@@ -51,7 +51,7 @@ const createMissingFiles = async (workdir, day, year) => {
 export const prepare = async () => {
   const [, , ...args] = process.argv;
   const [day, year] = determineDay(...args);
-  const yeardir = path.resolve(".", year);
+  const yeardir = path.resolve('.', year);
   const workdir = path.join(yeardir, `day${day}`);
 
   console.log(

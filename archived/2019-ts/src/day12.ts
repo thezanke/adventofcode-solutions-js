@@ -1,9 +1,9 @@
 import { lcm } from './utils/lcm';
 
 interface Vector {
-  x: number;
-  y: number;
-  z: number;
+  x: number
+  y: number
+  z: number
 }
 
 type Axis = 'x' | 'y' | 'z';
@@ -16,16 +16,16 @@ class Moon {
   pNrg = 0;
   kNrg = 0;
 
-  constructor(_pos: Vector, _vel?: Vector) {
+  constructor (_pos: Vector, _vel?: Vector) {
     this.pos = { ..._pos };
-    if (_vel) this.vel = { ..._vel };
+    if (_vel != null) this.vel = { ..._vel };
   }
 
-  get energy() {
+  get energy () {
     return this.pNrg * this.kNrg;
   }
 
-  getAxisState(axis: Axis) {
+  getAxisState (axis: Axis) {
     return this.pos[axis] * 1000 + this.vel[axis];
   }
 }
@@ -41,26 +41,26 @@ const vectorEnergy = (v: Vector) => {
 export class Simulation {
   moons: Moon[];
 
-  constructor(input: string[]) {
+  constructor (input: string[]) {
     this.moons = this.parseInput(input);
   }
 
-  get totalEnergy() {
+  get totalEnergy () {
     return this.moons.reduce((total, moon) => {
       return total + moon.energy;
     }, 0);
   }
 
-  parseInput(input: string[]) {
+  parseInput (input: string[]) {
     return input.map(moonStr => {
       const res = MOON_COORDINATES.exec(moonStr);
-      if (!res) throw Error('error parsing input');
+      if (res == null) throw Error('error parsing input');
       const [x, y, z] = res.slice(1, 4).map(Number);
       return new Moon({ x, y, z });
     });
   }
 
-  getAxisState(axis: Axis) {
+  getAxisState (axis: Axis) {
     return this.moons.map(m => m.getAxisState(axis)).join(',');
   }
 

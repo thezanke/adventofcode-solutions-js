@@ -1,10 +1,10 @@
 interface ChemData {
-  yields: number;
-  ingredients: string[];
+  yields: number
+  ingredients: string[]
 }
 
 interface ChemTable {
-  [name: string]: ChemData;
+  [name: string]: ChemData
 }
 
 const ORE = 'ORE';
@@ -21,10 +21,10 @@ const parseInput = (input: string[]) => {
     const ingredients = inStr
       .split(', ')
       .reduce<string[]>((ingList, ingStr) => {
-        const [amount, name] = parseChemAmount(ingStr);
-        ingList.push(...Array.from({ length: amount }, () => name));
-        return ingList;
-      }, []);
+      const [amount, name] = parseChemAmount(ingStr);
+      ingList.push(...Array.from({ length: amount }, () => name));
+      return ingList;
+    }, []);
 
     const [yields, name] = parseChemAmount(outStr);
     chemTable[name] = { yields, ingredients };

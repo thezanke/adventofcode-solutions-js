@@ -1,7 +1,7 @@
-export const parseInput = (input: string) => input.split("").map(Number);
+export const parseInput = (input: string) => input.split('').map(Number);
 
 const getAnswer = (output: number[]) => {
-  let ret = "";
+  let ret = '';
   let pos = (output.indexOf(1) + 1) % output.length;
   while (ret.length < output.length - 1) {
     ret += `${output[pos]}`;
@@ -11,8 +11,8 @@ const getAnswer = (output: number[]) => {
 };
 
 export const performIterations = (input: number[], count: number) => {
-  let output = [...input];
-  let max = Math.max(...input);
+  const output = [...input];
+  const max = Math.max(...input);
 
   let pos = 0;
 
@@ -28,7 +28,7 @@ export const performIterations = (input: number[], count: number) => {
   };
 
   const iterate = () => {
-    let currVal = output[pos];
+    const currVal = output[pos];
     const moving = output.splice(pos + 1, 3);
     const displacement = 3 - moving.length;
     if (displacement) {
@@ -36,7 +36,7 @@ export const performIterations = (input: number[], count: number) => {
       pos -= displacement;
     }
     output.splice(findDestIndex(), 0, ...moving);
-    let newValIndex = output.indexOf(currVal);
+    const newValIndex = output.indexOf(currVal);
     if (pos !== newValIndex) {
       output.push(...output.splice(0, newValIndex - pos));
     }

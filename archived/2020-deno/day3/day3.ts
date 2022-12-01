@@ -1,6 +1,6 @@
-import { Vect } from "../common/Vect.ts";
+import { Vect } from '../common/Vect.ts';
 
-const TREE = "#";
+const TREE = '#';
 
 export const countTrees = (lines: string[], trajectory: Vect) => {
   const lineLength = lines[0].length;

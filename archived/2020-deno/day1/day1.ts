@@ -17,7 +17,7 @@ export const findThreeEntries = (input: number[], target = 2020) => {
   let y = 0;
   let z = 0;
 
-  while (list.length) {
+  while (list.length > 0) {
     x = list.pop() as number;
     for (y of list) {
       z = target - x - y;

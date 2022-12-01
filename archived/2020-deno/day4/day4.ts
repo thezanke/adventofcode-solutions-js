@@ -1,15 +1,15 @@
-import { BYR, ECL, EYR, HCL, HGT, IYR, PID } from "./constants.ts";
+import { BYR, ECL, EYR, HCL, HGT, IYR, PID } from './constants.ts';
 
 export interface Passport {
-  [key: string]: string;
+  [key: string]: string
 }
 
 export const parsePassport = (str: string) => {
   const passport: Passport = {};
 
   str.split(/\n/).forEach((line) => {
-    line.split(" ").forEach((field) => {
-      const [fieldName, value] = field.split(":");
+    line.split(' ').forEach((field) => {
+      const [fieldName, value] = field.split(':');
       passport[fieldName] = value;
     });
   });
@@ -18,11 +18,11 @@ export const parsePassport = (str: string) => {
 };
 
 const REQUIRED_FIELDS = [BYR, IYR, EYR, HGT, HCL, ECL, PID];
-const VALID_ECL = ["amb", "blu", "brn", "gry", "grn", "hzl", "oth"];
+const VALID_ECL = ['amb', 'blu', 'brn', 'gry', 'grn', 'hzl', 'oth'];
 
 export const hasAllRequiredFields = (passport: Passport) => {
   const passportFields = Object.keys(passport);
-  return !REQUIRED_FIELDS.filter((f) => !passportFields.includes(f)).length;
+  return REQUIRED_FIELDS.filter((f) => !passportFields.includes(f)).length === 0;
 };
 
 export const isPassportValid = (passport: Passport) => {
@@ -45,11 +45,11 @@ export const isPassportValid = (passport: Passport) => {
 
   // hgt
   const heightMatch = passport.hgt.match(/(\d+)(.+)/);
-  if (!heightMatch) return false;
+  if (heightMatch == null) return false;
   const [, heightStr, heightUnit] = heightMatch;
   const height = Number(heightStr);
   if (!(height && heightUnit)) return false;
-  if (heightUnit === "cm") {
+  if (heightUnit === 'cm') {
     if (height < 150 || height > 193) return false;
   } else {
     if (height < 59 || height > 76) return false;

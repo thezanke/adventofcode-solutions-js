@@ -25,14 +25,14 @@ const playGame = ({ playerCount, max }) => {
 
   for (let nextMarble = 1; nextMarble <= max; nextMarble += 1) {
     if (nextMarble % 23 === 0) {
-      let dropMarbleIndex = marbleCircle.moveTo(currentMarbleIndex, -7);
-      let points = nextMarble + marbleCircle.at(dropMarbleIndex);
+      const dropMarbleIndex = marbleCircle.moveTo(currentMarbleIndex, -7);
+      const points = nextMarble + marbleCircle.at(dropMarbleIndex);
 
       players[currentPlayerIndex].points += points;
       currentMarbleIndex = marbleCircle.moveTo(currentMarbleIndex, -6) - 1;
       marbleCircle.remove(dropMarbleIndex);
     } else {
-      let insertIndex = marbleCircle.moveTo(currentMarbleIndex, 1) + 1;
+      const insertIndex = marbleCircle.moveTo(currentMarbleIndex, 1) + 1;
       marbleCircle.add(insertIndex, nextMarble);
       currentMarbleIndex = insertIndex;
     }

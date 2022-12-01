@@ -1,3 +1,3 @@
-exports.EXAMPLE_INPUT = ``;
+exports.EXAMPLE_INPUT = '';
 
-exports.CHALLENGE_INPUT = ``;
+exports.CHALLENGE_INPUT = '';

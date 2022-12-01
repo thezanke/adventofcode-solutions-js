@@ -1,23 +1,23 @@
-import { intersection } from "../common/arrays.ts";
+import { intersection } from '../common/arrays.ts';
 
 const RULE_ROW_PARSER = /(\w+ \w+) bags contain (\d+ .+)./;
 const RULE_VALUE_PARSER = /(\d+) (\w+ \w+) bags?/;
 
 interface RuleDetails {
   [type: string]: {
-    [type: string]: number;
-  };
+    [type: string]: number
+  }
 }
 
 export const buildRuleDetails = (ruleStrings: string[]) => {
   const details: RuleDetails = {};
   ruleStrings.forEach((ruleRow) => {
     const match = ruleRow.match(RULE_ROW_PARSER);
-    if (!match) return;
+    if (match == null) return;
     const [, type, suffix] = match;
-    suffix.split(", ").forEach((ruleValueStr) => {
+    suffix.split(', ').forEach((ruleValueStr) => {
       const match = ruleValueStr.match(RULE_VALUE_PARSER);
-      if (!match) return;
+      if (match == null) return;
       const [, num, subType] = match;
       if (!details[type]) details[type] = {};
       details[type][subType] = Number(num);

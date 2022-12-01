@@ -27,8 +27,8 @@ export class Arcade {
   tiles: number[][] = [];
   score = 0;
   program: Program;
-  private nextTile: number[] = [];
-  constructor(
+  private readonly nextTile: number[] = [];
+  constructor (
     public initalMemory: number[],
     quarters?: number,
     private readonly renderOnUpdate = false
@@ -43,7 +43,7 @@ export class Arcade {
     );
   }
 
-  setTile(x: number, y: number, typeId: number) {
+  setTile (x: number, y: number, typeId: number) {
     if (!this.tiles[y]) this.tiles[y] = [];
     this.tiles[y][x] = typeId;
   }
@@ -66,7 +66,7 @@ export class Arcade {
     }
   };
 
-  render() {
+  render () {
     console.clear();
     console.log(
       this.tiles.map(row => row.map(id => TileChar[id]).join('')).join('\n'),
@@ -74,13 +74,13 @@ export class Arcade {
     );
   }
 
-  takeInput(input: number) {
+  takeInput (input: number) {
     if (this.program.waiting) {
       this.program.input(input);
     }
   }
 
-  run() {
+  run () {
     const i = setInterval(() => {
       if (this.program.exited) {
         clearInterval(i);
