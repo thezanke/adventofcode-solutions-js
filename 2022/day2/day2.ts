@@ -82,11 +82,12 @@ export const part2 = (input: string) => {
     score += choice;
 
     const isWinner = winMap[choice] === opponentChoice;
+    const isLoser = winMap[opponentChoice] === choice;
+
     if (isWinner) {
       score += 6;
-    } else {
-      const isLoser = winMap[opponentChoice] === choice;
-      if (!isLoser) score += 3;
+    } else if (!isLoser) {
+      score += 3;
     }
   }
 
