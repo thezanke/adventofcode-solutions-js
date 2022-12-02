@@ -67,6 +67,7 @@ const getOutcomeChoice = (opponentChoice: Choice, outcome: Outcome) => {
 
 export const part2 = (input: string) => {
   type ChoiceChar = 'A' | 'B' | 'C';
+
   const choiceMap: Record<ChoiceChar, Choice> = {
     A: Choice.Rock,
     B: Choice.Paper,
