@@ -26,7 +26,7 @@ const calculateRoundScore = (choice: Choice, opponentChoice: Choice) => {
   let score = choice;
 
   const isWinner = winMap[choice] === opponentChoice;
-  const isLoser = winMap[opponentChoice] === choice;
+  const isLoser = loseMap[choice] === opponentChoice;
 
   if (isWinner) {
     score += 6;
