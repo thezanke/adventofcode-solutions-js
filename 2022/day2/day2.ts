@@ -22,6 +22,21 @@ const loseMap = {
   [Choice.Paper]: Choice.Scissors
 };
 
+const calculateRoundScore = (choice: Choice, opponentChoice: Choice) => {
+  let score = choice;
+
+  const isWinner = winMap[choice] === opponentChoice;
+  const isLoser = winMap[opponentChoice] === choice;
+
+  if (isWinner) {
+    score += 6;
+  } else if (!isLoser) {
+    score += 3;
+  }
+
+  return score;
+};
+
 export const part1 = (input: string) => {
   type ChoiceChar = 'A' | 'B' | 'C' | 'X' | 'Y' | 'Z';
 
@@ -35,23 +50,11 @@ export const part1 = (input: string) => {
   };
 
   const strategyGuide = input.split('\n').map(r => r.split(' ').map((c) => choiceMap[c as ChoiceChar]));
+  const totalScore = strategyGuide.reduce((s, [opponentChoice, choice]) => {
+    return s + calculateRoundScore(choice, opponentChoice);
+  }, 0);
 
-  let score = 0;
-  for (const round of strategyGuide) {
-    const [opponentChoice, choice] = round;
-    score += choice;
-
-    const isWinner = winMap[choice] === opponentChoice;
-    const isLoser = loseMap[choice] === opponentChoice;
-
-    if (isWinner) {
-      score += 6;
-    } else if (!isLoser) {
-      score += 3;
-    }
-  }
-
-  return score;
+  return totalScore;
 };
 
 const getOutcomeChoice = (opponentChoice: Choice, outcome: Outcome) => {
@@ -70,26 +73,13 @@ export const part2 = (input: string) => {
     C: Choice.Scissors
   };
 
-  const ultraTopSecretStrategyGuide = input.split('\n').map(r => {
-    return [choiceMap[r[0] as ChoiceChar], r[2]] as [Choice, Outcome];
+  const ultraTopSecretStrategyGuide = input.split('\n').map(([char, ,outcome]) => {
+    return [choiceMap[char as ChoiceChar], outcome] as [Choice, Outcome];
   });
 
-  let score = 0;
-  for (const round of ultraTopSecretStrategyGuide) {
-    const [opponentChoice, outcome] = round;
+  const totalScore = ultraTopSecretStrategyGuide.reduce((s, [opponentChoice, outcome]) => {
+    return s + calculateRoundScore(getOutcomeChoice(opponentChoice, outcome), opponentChoice);
+  }, 0);
 
-    const choice = getOutcomeChoice(opponentChoice, outcome);
-    score += choice;
-
-    const isWinner = winMap[choice] === opponentChoice;
-    const isLoser = winMap[opponentChoice] === choice;
-
-    if (isWinner) {
-      score += 6;
-    } else if (!isLoser) {
-      score += 3;
-    }
-  }
-
-  return score;
+  return totalScore;
 };
