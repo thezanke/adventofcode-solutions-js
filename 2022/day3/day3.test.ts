@@ -325,7 +325,7 @@ bGFnGljgSsjBCTBszz`;
     });
 
     test('part 2', () => {
-      expect(part2(input)).toEqual(14859);
+      expect(part2(input)).toEqual(2604);
     });
   });
 });
