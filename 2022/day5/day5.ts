@@ -7,7 +7,12 @@ const parseInput = (input: string) => {
   const legend = asciiStacksWLegend[asciiStacksWLegend.length - 1];
   const digits = legend.trim().split(/ +/);
   const asciiStacks = asciiStacksWLegend.slice(0, asciiStacksWLegend.length - 1);
-  const stacks: string[][] = Array.from(digits, (d) => asciiStacks.map(r => r[legend.indexOf(d)]).filter(c => c !== ' '));
+
+  const stacks: string[][] = Array.from(digits, (d) => {
+    const digitIndex = legend.indexOf(d);
+    return asciiStacks.map(row => row[digitIndex]).filter(c => c !== ' ');
+  });
+
   const parsedDirections = directions.map(d => {
     const result = DIR_REGEX.exec(d)?.slice(1, 4).map(Number) ?? [];
     return [result[0], ...result.slice(1, 4).map(d => d - 1)];
