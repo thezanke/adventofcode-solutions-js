@@ -8,7 +8,7 @@ const parseInput = (input: string) => {
   const digits = legend.trim().split(/ +/);
   const asciiStacks = asciiStacksWLegend.slice(0, asciiStacksWLegend.length - 1);
 
-  const stacks: string[][] = Array.from(digits, (d) => {
+  const stacks = Array.from(digits, (d) => {
     const digitIndex = legend.indexOf(d);
     return asciiStacks.map(row => row[digitIndex]).filter(c => c !== ' ');
   });
