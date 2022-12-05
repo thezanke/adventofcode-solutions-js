@@ -21,9 +21,9 @@ const parseInput = (input: string) => {
 };
 
 const solve = (input: string, multiMove = false) => {
-  const [stacks, parsedDirections] = parseInput(input);
+  const [stacks, directions] = parseInput(input);
 
-  parsedDirections.forEach(([count, start, end]) => {
+  directions.forEach(([count, start, end]) => {
     const els = stacks[start].splice(0, count);
     if (!multiMove) els.reverse();
     stacks[end].unshift(...els);
