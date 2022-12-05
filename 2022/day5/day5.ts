@@ -3,10 +3,9 @@
 const DIR_REGEX = /move (\d+) from (\d) to (\d)/;
 
 const parseInput = (input: string) => {
-  const [asciiStacksWLegend, directions] = input.split('\n\n').map(c => c.split('\n'));
-  const legend = asciiStacksWLegend[asciiStacksWLegend.length - 1];
+  const [asciiStacks, directions] = input.split('\n\n').map(c => c.split('\n'));
+  const legend = asciiStacks.pop() ?? '';
   const digits = legend.trim().split(/ +/);
-  const asciiStacks = asciiStacksWLegend.slice(0, asciiStacksWLegend.length - 1);
 
   const stacks = Array.from(digits, (d) => {
     const digitIndex = legend.indexOf(d);
