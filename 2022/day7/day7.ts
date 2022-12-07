@@ -4,10 +4,10 @@ import path from 'path';
 const CHANGE_DIR = 'cd';
 const LIST = 'ls';
 
-type BIN = typeof CHANGE_DIR | typeof LIST;
+type COMMAND_STRING = typeof CHANGE_DIR | typeof LIST;
 
 interface Command {
-  bin: typeof CHANGE_DIR | typeof LIST
+  bin: COMMAND_STRING
   args: string[]
   output: string[][]
 }
@@ -25,8 +25,10 @@ const parseInput = (input: string) => {
 
   for (const line of input.split('\n')) {
     const parts = line.split(' ');
-    if (parts[0] === COMMAND_SYMBOL) {
-      commands.push({ bin: parts[1] as BIN, args: parts.slice(2), output: [] });
+    const [arg1, bin] = parts;
+
+    if (arg1 === COMMAND_SYMBOL) {
+      commands.push({ bin: bin as COMMAND_STRING, args: parts.slice(2), output: [] });
     } else {
       commands[commands.length - 1].output.push(parts);
     }
