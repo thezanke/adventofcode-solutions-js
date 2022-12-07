@@ -42,32 +42,32 @@ class SystemInfo {
   public fileSizes: Map<string, number> = new Map();
 
   constructor (commands: Command[]) {
+    this.parseCommands(commands);
+  }
+
+  parseCommands (commands: Command[]) {
     let cwd: string = '/';
 
-    const handleDirectoryChange = (command: Command) => {
-      const [dirname] = command.args;
-      cwd = path.resolve(path.join(cwd, dirname));
-    };
+    const commandMap = {
+      [CHANGE_DIR]: (command: Command) => {
+        const [dirname] = command.args;
+        cwd = path.resolve(path.join(cwd, dirname));
+      },
+      [LIST]: (command: Command) => {
+        for (const line of command.output) {
+          const [arg1, fileOrFolder] = line;
+          const filePath = path.join(cwd, fileOrFolder);
 
-    const handleListing = (command: Command) => {
-      for (const line of command.output) {
-        const [arg1, fileOrFolder] = line;
-        const filePath = path.join(cwd, fileOrFolder);
+          if (!this.fileTree.has(filePath)) {
+            this.fileTree.set(filePath, cwd);
+          }
 
-        if (!this.fileTree.has(filePath)) {
-          this.fileTree.set(filePath, cwd);
-        }
-
-        if (arg1 !== DIR) {
-          const [size] = line;
-          this.fileSizes.set(filePath, parseInt(size, 10));
+          if (arg1 !== DIR) {
+            const [size] = line;
+            this.fileSizes.set(filePath, parseInt(size, 10));
+          }
         }
       }
-    };
-
-    const commandMap = {
-      [CHANGE_DIR]: handleDirectoryChange,
-      [LIST]: handleListing
     };
 
     for (const command of commands) {
