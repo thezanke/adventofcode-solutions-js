@@ -1,4 +1,4 @@
-import { part1, part2 } from './day4';
+import { part1, part2 } from './day4'
 
 describe('Day 4', () => {
   describe('Examples', () => {
@@ -7,16 +7,16 @@ describe('Day 4', () => {
 5-7,7-9
 2-8,3-7
 6-6,4-6
-2-6,4-8`;
+2-6,4-8`
 
     test('part 1 example', () => {
-      expect(part1(input)).toEqual(2);
-    });
+      expect(part1(input)).toEqual(2)
+    })
 
     test('part 2 example', () => {
-      expect(part2(input)).toEqual(4);
-    });
-  });
+      expect(part2(input)).toEqual(4)
+    })
+  })
 
   describe('Solutions', () => {
     const input = `12-80,12-81
@@ -1018,14 +1018,14 @@ describe('Day 4', () => {
 12-72,12-71
 52-72,71-71
 63-97,63-96
-21-99,20-21`;
+21-99,20-21`
 
     test('part 1', () => {
-      expect(part1(input)).toEqual(602);
-    });
+      expect(part1(input)).toEqual(602)
+    })
 
     test('part 2', () => {
-      expect(part2(input)).toEqual(891);
-    });
-  });
-});
+      expect(part2(input)).toEqual(891)
+    })
+  })
+})

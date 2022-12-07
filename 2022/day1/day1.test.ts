@@ -1,4 +1,4 @@
-import { part1, part2 } from './day1';
+import { part1, part2 } from './day1'
 
 describe('Day 1', () => {
   describe('Examples', () => {
@@ -15,12 +15,12 @@ describe('Day 1', () => {
 8000
 9000
 
-10000`;
+10000`
 
     test('example 1', () => {
-      expect(part1(input)).toEqual(24000);
-    });
-  });
+      expect(part1(input)).toEqual(24000)
+    })
+  })
 
   describe('Solutions', () => {
     const input = `
@@ -2278,13 +2278,13 @@ describe('Day 1', () => {
 5233
 7358
 3806
-9333`;
+9333`
     test('part 1', () => {
-      expect(part1(input)).toEqual(71502);
-    });
+      expect(part1(input)).toEqual(71502)
+    })
 
     test('part 2', () => {
-      expect(part2(input)).toEqual(208191);
-    });
-  });
-});
+      expect(part2(input)).toEqual(208191)
+    })
+  })
+})

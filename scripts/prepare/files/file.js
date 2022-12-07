@@ -1,22 +1,22 @@
-import * as path from 'path';
+import * as path from 'path'
 
 export class File {
   constructor (workdir, day, year, files) {
-    this.workdir = workdir;
-    this.day = day;
-    this.year = year;
-    this.files = files;
+    this.workdir = workdir
+    this.day = day
+    this.year = year
+    this.files = files
   }
 
   get fileName () {
-    throw Error('Missing custom fileName');
+    throw Error('Missing custom fileName')
   }
 
   get filePath () {
-    return path.join(this.workdir, this.fileName);
+    return path.join(this.workdir, this.fileName)
   }
 
   createFileContents () {
-    throw Error('Missing custom createFileContents');
+    throw Error('Missing custom createFileContents')
   }
 }

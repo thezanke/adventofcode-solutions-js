@@ -1,3 +1,3 @@
-import { prepare } from './prepare.js';
+import { prepare } from './prepare.js'
 
-prepare();
+prepare()

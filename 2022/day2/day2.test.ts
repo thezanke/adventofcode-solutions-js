@@ -1,19 +1,19 @@
-import { part1, part2 } from './day2';
+import { part1, part2 } from './day2'
 
 describe('Day 2', () => {
   describe('Examples', () => {
     const input = `A Y
 B X
-C Z`;
+C Z`
 
     test('part 1 example', () => {
-      expect(part1(input)).toEqual(15);
-    });
+      expect(part1(input)).toEqual(15)
+    })
 
     test('part 2 example', () => {
-      expect(part2(input)).toEqual(12);
-    });
-  });
+      expect(part2(input)).toEqual(12)
+    })
+  })
 
   describe('Solutions', () => {
     const input = `B Y
@@ -2515,14 +2515,14 @@ C Y
 A Y
 A Z
 A X
-C Y`;
+C Y`
 
     test('part 1', () => {
-      expect(part1(input)).toEqual(10310);
-    });
+      expect(part1(input)).toEqual(10310)
+    })
 
     test('part 2', () => {
-      expect(part2(input)).toEqual(14859);
-    });
-  });
-});
+      expect(part2(input)).toEqual(14859)
+    })
+  })
+})

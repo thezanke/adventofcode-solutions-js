@@ -1,6 +1,6 @@
-import path from 'path';
-import fs from 'fs';
-import * as csv from 'csv-parse/lib/sync';
+import path from 'path'
+import fs from 'fs'
+import * as csv from 'csv-parse/lib/sync'
 
 /**
  * @param {string} fileInputPath
@@ -8,17 +8,17 @@ import * as csv from 'csv-parse/lib/sync';
  * @returns
  */
 export const readInput = (fileInputPath, options = {}) => {
-  const { transform, ...parseOptions } = options;
-  const resolvedPath = path.resolve(fileInputPath);
-  let contents = fs.readFileSync(resolvedPath, { encoding: 'utf-8' });
+  const { transform, ...parseOptions } = options
+  const resolvedPath = path.resolve(fileInputPath)
+  let contents = fs.readFileSync(resolvedPath, { encoding: 'utf-8' })
 
   if (parseOptions.delimiter) {
     contents = csv.parse(contents, {
       skipEmptyLines: true,
       columns: false,
       ...parseOptions
-    });
+    })
   }
 
-  return transform?.(contents) ?? contents;
-};
+  return transform?.(contents) ?? contents
+}

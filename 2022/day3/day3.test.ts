@@ -1,4 +1,4 @@
-import { part1, part2 } from './day3';
+import { part1, part2 } from './day3'
 
 describe('Day 3', () => {
   describe('Examples', () => {
@@ -7,16 +7,16 @@ jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL
 PmmdzqPrVvPwwTWBwg
 wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn
 ttgJtRGJQctTZtZT
-CrZsJsPPZsGzwwsLwLmpwMDw`;
+CrZsJsPPZsGzwwsLwLmpwMDw`
 
     test('part 1 example', () => {
-      expect(part1(input)).toEqual(157);
-    });
+      expect(part1(input)).toEqual(157)
+    })
 
     test('part 2 example', () => {
-      expect(part2(input)).toEqual(70);
-    });
-  });
+      expect(part2(input)).toEqual(70)
+    })
+  })
 
   describe('Solutions', () => {
     const input = `RCMRQjLLWGTjnlnZwwnZJRZH
@@ -318,14 +318,14 @@ PzQpSQQQvzVvpzHqjvNvQSvGRmmTDVRDmsGsRGsrcDcDGC
 cQPHSPvPvZHqcZjzpZjnZNtWlLdtldJWfnfhlJJtLdMg
 nPPssTBnMJPdtHPVHtRhpv
 bSSgGFWDgWwDFFlmWlcShqdpRqpVcHvvnqpvpRHd
-bGFnGljgSsjBCTBszz`;
+bGFnGljgSsjBCTBszz`
 
     test('part 1', () => {
-      expect(part1(input)).toEqual(7746);
-    });
+      expect(part1(input)).toEqual(7746)
+    })
 
     test('part 2', () => {
-      expect(part2(input)).toEqual(2604);
-    });
-  });
-});
+      expect(part2(input)).toEqual(2604)
+    })
+  })
+})

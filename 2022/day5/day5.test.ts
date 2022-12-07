@@ -1,4 +1,4 @@
-import { part1, part2 } from './day5';
+import { part1, part2 } from './day5'
 
 describe('Day 4', () => {
   describe('Examples', () => {
@@ -10,16 +10,16 @@ describe('Day 4', () => {
 move 1 from 2 to 1
 move 3 from 1 to 3
 move 2 from 2 to 1
-move 1 from 1 to 2`;
+move 1 from 1 to 2`
 
     test('part 1 example', () => {
-      expect(part1(input)).toEqual('CMZ');
-    });
+      expect(part1(input)).toEqual('CMZ')
+    })
 
     test('part 2 example', () => {
-      expect(part2(input)).toEqual('MCD');
-    });
-  });
+      expect(part2(input)).toEqual('MCD')
+    })
+  })
 
   describe('Solutions', () => {
     const input = `        [H]         [S]         [D]
@@ -534,14 +534,14 @@ move 44 from 5 to 4
 move 2 from 5 to 8
 move 1 from 7 to 3
 move 16 from 4 to 6
-move 3 from 5 to 9`;
+move 3 from 5 to 9`
 
     test('part 1', () => {
-      expect(part1(input)).toEqual('RFFFWBPNS');
-    });
+      expect(part1(input)).toEqual('RFFFWBPNS')
+    })
 
     test('part 2', () => {
-      expect(part2(input)).toEqual('CQQBBJFCS');
-    });
-  });
-});
+      expect(part2(input)).toEqual('CQQBBJFCS')
+    })
+  })
+})

@@ -1,10 +1,10 @@
-import { fetchInput } from '../fetchInput.js';
-import { File } from './file.js';
+import { fetchInput } from '../fetchInput.js'
+import { File } from './file.js'
 
 export class InputFile extends File {
-  fileName = 'input';
+  fileName = 'input'
 
   createFileContents () {
-    return fetchInput(this.day, this.year);
+    return fetchInput(this.day, this.year)
   }
 }

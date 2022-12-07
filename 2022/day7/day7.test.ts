@@ -1,4 +1,4 @@
-import { part1, part2 } from './day7';
+import { part1, part2 } from './day7'
 
 describe('Day 6', () => {
   describe('Examples', () => {
@@ -25,12 +25,12 @@ $ ls
 4060174 j
 8033020 d.log
 5626152 d.ext
-7214296 k`;
+7214296 k`
 
     describe('Part 1', () => {
       test('Example 1', () => {
-        expect(part1(input)).toEqual(95437);
-      });
+        expect(part1(input)).toEqual(95437)
+      })
 
       // test('Example 2', () => {
       //   expect(part1('bvwbjplbgvbhsrlpgdmjqwftvncz')).toEqual(5);
@@ -47,12 +47,12 @@ $ ls
       // test('Example 5', () => {
       //   expect(part1('zcfzfwzzqfrljwzlrfnpqdbhtmscgvjw')).toEqual(11);
       // });
-    });
+    })
 
     describe('Part 2', () => {
       test('Example 1', () => {
-        expect(part2(input)).toEqual(24933642);
-      });
+        expect(part2(input)).toEqual(24933642)
+      })
 
       // test('Example 2', () => {
       //   expect(part2('bvwbjplbgvbhsrlpgdmjqwftvncz')).toEqual(23);
@@ -69,8 +69,8 @@ $ ls
       // test('Example 5', () => {
       //   expect(part2('zcfzfwzzqfrljwzlrfnpqdbhtmscgvjw')).toEqual(26);
       // });
-    });
-  });
+    })
+  })
 
   describe('Solutions', () => {
     const input =
@@ -1053,14 +1053,14 @@ $ cd ..
 $ cd zjvhmd
 $ ls
 287427 csjncqmr.tfj
-297578 hhhp.jvt`;
+297578 hhhp.jvt`
 
     test('Part 1', () => {
-      expect(part1(input)).toEqual(1723892);
-    });
+      expect(part1(input)).toEqual(1723892)
+    })
 
     test('Part 2', () => {
-      expect(part2(input)).toEqual(8474158);
-    });
-  });
-});
+      expect(part2(input)).toEqual(8474158)
+    })
+  })
+})

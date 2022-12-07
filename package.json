@@ -16,7 +16,8 @@
   "scripts": {
     "test": "jest --watch",
     "debug": "node --inspect-brk --experimental-vm-modules node_modules/.bin/jest --runInBand",
-    "prep": "env-cmd node ./scripts/prepare"
+    "prep": "env-cmd node ./scripts/prepare",
+    "lint": "eslint --fix --ext ts,js,json ."
   },
   "devDependencies": {
     "@babel/preset-typescript": "^7.18.6",
