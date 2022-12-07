@@ -1,6 +1,5 @@
 import _ from 'lodash';
 import path from 'path';
-import { NEW_LINE_CHAR, SLASH_CHAR, SPACE_CHAR } from '../constants';
 
 const CHANGE_DIR = 'cd';
 const LIST = 'ls';
@@ -24,8 +23,8 @@ const DIR = 'dir';
 const parseInput = (input: string) => {
   const commands: Command[] = [];
 
-  for (const line of input.split(NEW_LINE_CHAR)) {
-    const parts = line.split(SPACE_CHAR);
+  for (const line of input.split('\n')) {
+    const parts = line.split(' ');
     if (parts[0] === COMMAND_SYMBOL) {
       commands.push({ bin: parts[1] as BIN, args: parts.slice(2), output: [] });
     } else {
@@ -37,11 +36,11 @@ const parseInput = (input: string) => {
 };
 
 class SystemInfo {
-  public fileTree: Map<string, string | null> = new Map([[SLASH_CHAR, null]]);
+  public fileTree: Map<string, string | null> = new Map([['/', null]]);
   public fileSizes: Map<string, number> = new Map();
 
   constructor (commands: Command[]) {
-    let cwd: string = SLASH_CHAR;
+    let cwd: string = '/';
 
     const handleDirectoryChange = (command: Command) => {
       const [dirname] = command.args;
@@ -120,7 +119,7 @@ export const part2 = (input: string) => {
   const totalDiskSpace = 70000000;
   const totalRequiredSpace = 30000000;
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const unusedDiskSpace = totalDiskSpace - directorySizes.get(SLASH_CHAR)!;
+  const unusedDiskSpace = totalDiskSpace - directorySizes.get('/')!;
   const requiredFreedSpace = totalRequiredSpace - unusedDiskSpace;
   const sortedDirectorySizeArr = [...directorySizes].sort((a, b) => a[1] - b[1]);
 
