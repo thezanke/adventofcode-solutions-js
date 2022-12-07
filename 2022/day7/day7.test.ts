@@ -2,9 +2,7 @@ import { part1, part2 } from './day7';
 
 describe('Day 6', () => {
   describe('Examples', () => {
-    describe('Part 1', () => {
-      test('Example 1', () => {
-        expect(part1(
+    const input =
 `$ cd /
 $ ls
 dir a
@@ -27,8 +25,11 @@ $ ls
 4060174 j
 8033020 d.log
 5626152 d.ext
-7214296 k`
-        )).toEqual(95437);
+7214296 k`;
+
+    describe('Part 1', () => {
+      test('Example 1', () => {
+        expect(part1(input)).toEqual(95437);
       });
 
       // test('Example 2', () => {
@@ -48,9 +49,9 @@ $ ls
       // });
     });
 
-    describe.skip('Part 2', () => {
+    describe('Part 2', () => {
       test('Example 1', () => {
-        expect(part2('mjqjpqmgbljsphdztnvjfqwrcgsmlb')).toEqual(19);
+        expect(part2(input)).toEqual(24933642);
       });
 
       // test('Example 2', () => {
@@ -1055,11 +1056,11 @@ $ ls
 297578 hhhp.jvt`;
 
     test('Part 1', () => {
-      expect(part1(input)).toEqual(1042);
+      expect(part1(input)).toEqual(1723892);
     });
 
-    test.skip('Part 2', () => {
-      expect(part2(input)).toEqual(2980);
+    test('Part 2', () => {
+      expect(part2(input)).toEqual(8474158);
     });
   });
 });

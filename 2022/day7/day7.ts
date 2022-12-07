@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import path from 'path';
 
 const CHANGE_DIR = 'cd';
 const LIST = 'ls';
@@ -17,14 +18,15 @@ interface SystemInfo {
 }
 
 const COMMAND_SYMBOL = '$';
-const UP = '..';
 const DIR = 'dir';
+const NEW_LINE = '\n';
+const SPACE = ' ';
 
 const parseInput = (input: string) => {
   const commands: Command[] = [];
 
-  for (const line of input.split('\n')) {
-    const parts = line.split(' ');
+  for (const line of input.split(NEW_LINE)) {
+    const parts = line.split(SPACE);
     if (parts[0] === COMMAND_SYMBOL) {
       commands.push({ bin: parts[1] as BIN, args: parts.slice(2), output: [] });
     } else {
@@ -36,30 +38,29 @@ const parseInput = (input: string) => {
 };
 
 class SystemInfo {
-  public fileTree: Map<string, string | null> = new Map();
+  public fileTree: Map<string, string | null> = new Map([['/', null]]);
   public fileSizes: Map<string, number> = new Map();
 
   constructor (commands: Command[]) {
-    let current: string | null = null;
+    let cwd: string = '/';
 
     const handleDirectoryChange = (command: Command) => {
-      const [to] = command.args;
-
-      if (to === UP) {
-        current = this.fileTree.get(current as unknown as string) as string;
-      } else {
-        current = to;
-      }
+      const [dirname] = command.args;
+      cwd = path.resolve(path.join(cwd, dirname));
     };
 
     const handleListing = (command: Command) => {
       for (const line of command.output) {
-        const [,fileOrFolder] = line;
-        this.fileTree.set(fileOrFolder, current);
+        const [arg1, fileOrFolder] = line;
+        const filePath = path.join(cwd, fileOrFolder);
 
-        if (line[0] !== DIR) {
+        if (!this.fileTree.has(filePath)) {
+          this.fileTree.set(filePath, cwd);
+        }
+
+        if (arg1 !== DIR) {
           const [size] = line;
-          this.fileSizes.set(fileOrFolder, parseInt(size, 10));
+          this.fileSizes.set(filePath, parseInt(size, 10));
         }
       }
     };
@@ -95,12 +96,15 @@ const generateDirectorySizes = (systemInfo: SystemInfo) => {
   return directorySizes;
 };
 
-const solve = (input: string) => {
+const getDirectorySizesFromInput = (input: string) => {
   const parsedInput = parseInput(input);
   const systemInfo = new SystemInfo(parsedInput);
-  const directorySizes = generateDirectorySizes(systemInfo);
 
-  // console.log(directorySizes);
+  return generateDirectorySizes(systemInfo);
+};
+
+export const part1 = (input: string) => {
+  const directorySizes = getDirectorySizesFromInput(input);
 
   let sum = 0;
 
@@ -111,5 +115,17 @@ const solve = (input: string) => {
   return sum;
 };
 
-export const part1 = (input: string) => solve(input);
-export const part2 = (input: string) => solve(input);
+export const part2 = (input: string) => {
+  const directorySizes = getDirectorySizesFromInput(input);
+
+  const totalDiskSpace = 70000000;
+  const totalRequiredSpace = 30000000;
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  const unusedDiskSpace = totalDiskSpace - directorySizes.get('/')!;
+  const requiredFreedSpace = totalRequiredSpace - unusedDiskSpace;
+
+  const sortedDirectorySizeArr = [...directorySizes];
+  sortedDirectorySizeArr.sort((a, b) => a[1] - b[1]);
+
+  return sortedDirectorySizeArr.find(ds => ds[1] > requiredFreedSpace)?.[1];
+};
