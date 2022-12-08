@@ -13,44 +13,12 @@ describe('Day 8', () => {
       test('Example 1', () => {
         expect(part1(input)).toEqual(21)
       })
-
-      // test('Example 2', () => {
-      //   expect(part1('bvwbjplbgvbhsrlpgdmjqwftvncz')).toEqual(5);
-      // });
-
-      // test('Example 3', () => {
-      //   expect(part1('nppdvjthqldpwncqszvftbrmjlhg')).toEqual(6);
-      // });
-
-      // test('Example 4', () => {
-      //   expect(part1('nznrnfrfntjfmvfwmzdfjlvtqnbhcprsg')).toEqual(10);
-      // });
-
-      // test('Example 5', () => {
-      //   expect(part1('zcfzfwzzqfrljwzlrfnpqdbhtmscgvjw')).toEqual(11);
-      // });
     })
 
     describe('Part 2', () => {
       test('Example 1', () => {
         expect(part2(input)).toEqual(8)
       })
-
-      // test('Example 2', () => {
-      //   expect(part2('bvwbjplbgvbhsrlpgdmjqwftvncz')).toEqual(23);
-      // });
-
-      // test('Example 3', () => {
-      //   expect(part2('nppdvjthqldpwncqszvftbrmjlhg')).toEqual(23);
-      // });
-
-      // test('Example 4', () => {
-      //   expect(part2('nznrnfrfntjfmvfwmzdfjlvtqnbhcprsg')).toEqual(29);
-      // });
-
-      // test('Example 5', () => {
-      //   expect(part2('zcfzfwzzqfrljwzlrfnpqdbhtmscgvjw')).toEqual(26);
-      // });
     })
   })
 
@@ -154,8 +122,7 @@ describe('Day 8', () => {
 232120055124304462512532500502156531032207726437333213051406414333207241265312052356525310410451511
 202002311103141164630106023656017441203731706174163257322311073432575771525344436600220200050051342
 041004212342412120333645230362446732233342662123535575315702023322757200126221443432142400145220443
-420334452105533313552263566256611333163022717266264743363602103371464132116230560501113054442342042
-`
+420334452105533313552263566256611333163022717266264743363602103371464132116230560501113054442342042`
 
     test('Part 1', () => {
       expect(part1(input)).toEqual(1546)
