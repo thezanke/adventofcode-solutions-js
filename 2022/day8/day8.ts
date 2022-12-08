@@ -20,8 +20,10 @@ const determineIfShadedInDirection = (treeGrid: number[][], pos: Vec2d, height: 
     currentPos[0] += direction[0]
     currentPos[1] += direction[1]
 
-    const currHeight = treeGrid[currentPos[1]][currentPos[0]]
-    if (currHeight >= height) return true
+    const nextTreeHeight = treeGrid[currentPos[1]]?.[currentPos[0]]
+    if (nextTreeHeight === undefined) break
+
+    if (nextTreeHeight >= height) return true
   } while (!determineIfEdge(treeGrid, currentPos))
 
   return false
@@ -30,7 +32,6 @@ const determineIfShadedInDirection = (treeGrid: number[][], pos: Vec2d, height: 
 const directions: Vec2d[] = [[1, 0], [0, 1], [-1, 0], [0, -1]]
 
 const determineIfVisible = (treeGrid: number[][], pos: Vec2d, height: number): boolean => {
-  if (determineIfEdge(treeGrid, pos)) return true
   return directions.some(direction => !determineIfShadedInDirection(treeGrid, pos, height, direction))
 }
 
@@ -56,7 +57,7 @@ const determineDirectionScore = (treeGrid: number[][], pos: Vec2d, height: numbe
     currentPos[0] += direction[0]
     currentPos[1] += direction[1]
 
-    const nextTreeHeight = treeGrid[currentPos[1]]?.[currentPos[0]] as number | undefined
+    const nextTreeHeight = treeGrid[currentPos[1]]?.[currentPos[0]]
     if (nextTreeHeight === undefined) break
 
     score += 1
