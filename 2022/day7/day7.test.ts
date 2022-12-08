@@ -1,6 +1,6 @@
 import { part1, part2 } from './day7'
 
-describe('Day 6', () => {
+describe('Day 7', () => {
   describe('Examples', () => {
     const input =
 `$ cd /
