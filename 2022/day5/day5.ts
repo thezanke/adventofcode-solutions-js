@@ -23,11 +23,11 @@ const parseInput = (input: string): [string[][], number[][]] => {
 const solve = (input: string, multiMove = false): string => {
   const [stacks, directions] = parseInput(input)
 
-  directions.forEach(([count, start, end]) => {
+  for (const [count, start, end] of directions) {
     const els = stacks[start].splice(0, count)
     if (!multiMove) els.reverse()
     stacks[end].unshift(...els)
-  })
+  }
 
   return stacks.map(([top]) => top).join('')
 }
