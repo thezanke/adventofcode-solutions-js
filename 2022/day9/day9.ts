@@ -25,10 +25,8 @@ const parseInput = (input: string): Array<[Vec2d, number]> => {
 
 type Positions = Vec2d[]
 
-const determineSegmentMove = (positions: Positions): Vec2d => {
-  const [last, current] = positions
-
-  const displacement = vecUtils.subtract(last, current) as Vec2d
+const determineSegmentMove = (prevSegment: Vec2d, currSegment: Vec2d): Vec2d => {
+  const displacement = vecUtils.subtract(prevSegment, currSegment) as Vec2d
   const distance = vecUtils.sum(displacement.map(Math.abs))
   const unit = vecUtils.getUnitVec(displacement) as Vec2d<-1 | 0 | 1>
 
@@ -52,16 +50,18 @@ export const solve = (input: string, length: number = 2): number => {
   for (const [vec, dist] of moves) {
     for (let d = 0; d < dist; d += 1) {
       const [head] = positions
+
       vecUtils.add(head, vec, true)
 
       for (let p = 1; p < positions.length; p += 1) {
-        const [prevSegment, currSegment] = positions.slice(p - 1)
-        const segmentMove = determineSegmentMove([prevSegment, currSegment])
+        const [prevSegment, currSegment] = positions.slice(p - 1, p + 1)
+        const segmentMove = determineSegmentMove(prevSegment, currSegment)
 
         const isStalled = vecUtils.sum(segmentMove.map(Math.abs)) === 0
         if (isStalled) break
 
         vecUtils.add(currSegment, segmentMove, true)
+
         if (currSegment === tail) visited.add(vecToKey(currSegment))
       }
     }
