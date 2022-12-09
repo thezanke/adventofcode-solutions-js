@@ -1,5 +1,3 @@
-// import _ from 'lodash';
-
 type NumberRanges = [number, number, number, number]
 
 const parseNumberRangesFromInput = (input: string): NumberRanges[] => input.split('\n').map(p => p.split(/,|-/).map(Number).flat() as NumberRanges)

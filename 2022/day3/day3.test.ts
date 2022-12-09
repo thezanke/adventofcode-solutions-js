@@ -2,7 +2,8 @@ import { part1, part2 } from './day3'
 
 describe('Day 3', () => {
   describe('Examples', () => {
-    const input = `vJrwpWtwJgWrhcsFMMfFFhFp
+    const input =
+`vJrwpWtwJgWrhcsFMMfFFhFp
 jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL
 PmmdzqPrVvPwwTWBwg
 wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn
@@ -19,7 +20,8 @@ CrZsJsPPZsGzwwsLwLmpwMDw`
   })
 
   describe('Solutions', () => {
-    const input = `RCMRQjLLWGTjnlnZwwnZJRZH
+    const input =
+`RCMRQjLLWGTjnlnZwwnZJRZH
 qnvfhpSbvSppNddNdSqbbmmdPrwttJVrVPDVrJtHtwPZhrPJ
 BFpFzSSqSFFSvQsnWgCMjTLzng
 DbWVcVRRdlLffvtqjTWNgQ

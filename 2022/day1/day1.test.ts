@@ -2,7 +2,8 @@ import { part1, part2 } from './day1'
 
 describe('Day 1', () => {
   describe('Examples', () => {
-    const input = `1000
+    const input =
+`1000
 2000
 3000
 
@@ -23,8 +24,8 @@ describe('Day 1', () => {
   })
 
   describe('Solutions', () => {
-    const input = `
-5104
+    const input =
+`5104
 6131
 3553
 4496
@@ -2279,6 +2280,7 @@ describe('Day 1', () => {
 7358
 3806
 9333`
+
     test('part 1', () => {
       expect(part1(input)).toEqual(71502)
     })

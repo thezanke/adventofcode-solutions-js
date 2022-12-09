@@ -2,7 +2,8 @@ import { part1, part2 } from './day2'
 
 describe('Day 2', () => {
   describe('Examples', () => {
-    const input = `A Y
+    const input =
+`A Y
 B X
 C Z`
 
@@ -16,7 +17,8 @@ C Z`
   })
 
   describe('Solutions', () => {
-    const input = `B Y
+    const input =
+`B Y
 A Z
 A Z
 B Y
