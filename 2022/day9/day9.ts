@@ -28,15 +28,15 @@ type Positions = Vec2d[]
 const determineSegmentMove = (positions: Positions): Vec2d => {
   const [last, current] = positions
 
-  const displacementVector = vecUtils.subtract(last, current) as Vec2d
-  const displacementDistance = vecUtils.sum(displacementVector.map(Math.abs))
-  const displacementUnit = displacementVector.map((num: number) => num / Math.abs(num)) as Vec2d
+  const displacement = vecUtils.subtract(last, current) as Vec2d
+  const distance = vecUtils.sum(displacement.map(Math.abs))
+  const unit = displacement.map((num: number) => num / Math.abs(num)) as Vec2d
 
-  if (displacementDistance > 2) return displacementUnit
+  if (distance > 2) return unit
 
-  const [diffX, diffY] = displacementVector
-  if (Math.abs(diffX) > 1) return [displacementUnit[0], 0]
-  if (Math.abs(diffY) > 1) return [0, displacementUnit[1]]
+  const [diffX, diffY] = displacement
+  if (Math.abs(diffX) > 1) return [unit[0], 0]
+  if (Math.abs(diffY) > 1) return [0, unit[1]]
 
   return [0, 0]
 }
