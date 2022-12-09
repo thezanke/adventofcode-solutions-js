@@ -1,4 +1,5 @@
-type Vec2d = [X: number, y: number]
+import { Vec2d } from '../common/types'
+import * as vecUtils from '../common/vecUtils'
 
 const parseInput = (input: string): number[][] => {
   return input.split('\n').map(l => l.split('').map(Number))
@@ -13,17 +14,11 @@ const determineIfEdge = (treeGrid: number[][], [x, y]: Vec2d): boolean => {
   return false
 }
 
-const addVecToVec = (vec: number[], addend: number[]): void => {
-  for (const [i, val] of vec.entries()) {
-    vec[i] = val + (addend[i] ?? 0)
-  }
-}
-
 const determineIfShadedInDirection = (treeGrid: number[][], pos: Vec2d, height: number, direction: Vec2d): boolean => {
   const currentPos: Vec2d = [...pos]
 
   do {
-    addVecToVec(currentPos, direction)
+    vecUtils.add(currentPos, direction, true)
 
     const nextTreeHeight = treeGrid[currentPos[1]]?.[currentPos[0]]
     if (nextTreeHeight === undefined) break
@@ -59,7 +54,7 @@ const determineDirectionScore = (treeGrid: number[][], pos: Vec2d, height: numbe
   const currentPos: Vec2d = [...pos]
 
   do {
-    addVecToVec(currentPos, direction)
+    vecUtils.add(currentPos, direction, true)
 
     const nextTreeHeight = treeGrid[currentPos[1]]?.[currentPos[0]]
     if (nextTreeHeight === undefined) break
