@@ -1,1 +1,1 @@
-export type Vec2d = [X: number, y: number]
+export type Vec2d<T = number> = [X: T, y: T]

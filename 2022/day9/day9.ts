@@ -30,7 +30,7 @@ const determineSegmentMove = (positions: Positions): Vec2d => {
 
   const displacement = vecUtils.subtract(last, current) as Vec2d
   const distance = vecUtils.sum(displacement.map(Math.abs))
-  const unit = displacement.map((num: number) => num / Math.abs(num)) as Vec2d
+  const unit = vecUtils.getUnitVec(displacement) as Vec2d<-1 | 0 | 1>
 
   if (distance > 2) return unit
 
