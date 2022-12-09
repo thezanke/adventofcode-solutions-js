@@ -1,5 +1,3 @@
-// import _ from 'lodash';
-
 const DIR_REGEX = /move (\d+) from (\d) to (\d)/
 
 const parseInput = (input: string): [string[][], number[][]] => {

@@ -1,4 +1,3 @@
-// import _ from 'lodash'
 import * as vecUtils from '../common/vecUtils'
 
 import { Vec2d } from '../common/types'
