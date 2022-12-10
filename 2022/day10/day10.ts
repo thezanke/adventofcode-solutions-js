@@ -65,7 +65,8 @@ class Processor {
   }
 }
 
-export const part1 = (input: string, cycles = [20, 60, 100, 140, 180, 220]): number => {
+export const part1 = (input: string): number => {
+  const cycles = [20, 60, 100, 140, 180, 220]
   const [maxCycles] = cycles.slice(-1)
 
   const instructions = parseInput(input)
@@ -84,13 +85,14 @@ export const part2 = (input: string): string => {
   const instructions = parseInput(input)
   const processor = new Processor(instructions)
 
+  const maxCycles = 240
   const positionMap = new Map<number, number>()
 
-  processor.startProcessing(240, (cycle, x) => {
+  processor.startProcessing(maxCycles, (cycle, x) => {
     positionMap.set(cycle, x)
   })
 
-  const render = chunk(Array.from({ length: 240 }, (_v, i) => {
+  const render = chunk(Array.from({ length: maxCycles }, (_v, i) => {
     const cycle = i + 1
     const spritePos = positionMap.get(cycle)!
     const hPos = i % 40
