@@ -66,12 +66,10 @@ class Processor {
 }
 
 export const part1 = (input: string): number => {
-  const cycles = [20, 60, 100, 140, 180, 220]
-  const [maxCycles] = cycles.slice(-1)
-
   const instructions = parseInput(input)
   const processor = new Processor(instructions)
-
+  const cycles = [20, 60, 100, 140, 180, 220]
+  const [maxCycles] = cycles.slice(-1)
   let total = 0
 
   processor.startProcessing(maxCycles, (cycle, x) => {
@@ -81,18 +79,10 @@ export const part1 = (input: string): number => {
   return total
 }
 
-export const part2 = (input: string): string => {
-  const instructions = parseInput(input)
-  const processor = new Processor(instructions)
+const maxCrtCycles = 240
 
-  const maxCycles = 240
-  const positionMap = new Map<number, number>()
-
-  processor.startProcessing(maxCycles, (cycle, x) => {
-    positionMap.set(cycle, x)
-  })
-
-  const render = chunk(Array.from({ length: maxCycles }, (_v, i) => {
+const renderCrt = (positionMap: Map<number, number>): string => {
+  return chunk(Array.from({ length: maxCrtCycles }, (_v, i) => {
     const cycle = i + 1
     const spritePos = positionMap.get(cycle)!
     const hPos = i % 40
@@ -100,6 +90,16 @@ export const part2 = (input: string): string => {
 
     return isPixelLit ? '#' : ' '
   }), 40).map(x => x.join('')).join('\n')
+}
 
-  return render
+export const part2 = (input: string): string => {
+  const instructions = parseInput(input)
+  const processor = new Processor(instructions)
+  const positionMap = new Map<number, number>()
+
+  processor.startProcessing(maxCrtCycles, (cycle, x) => {
+    positionMap.set(cycle, x)
+  })
+
+  return renderCrt(positionMap)
 }
