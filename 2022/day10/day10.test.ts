@@ -167,26 +167,6 @@ noop`
 #######       #######       #######     `
         )
       })
-
-      //       const example2 =
-      // `
-      // `
-
-      //       test('Example 2', () => {
-      //         expect(part2(example2)).toEqual(36)
-      //       })
-
-      // test('Example 3', () => {
-      //   expect(part2('nppdvjthqldpwncqszvftbrmjlhg')).toEqual(23);
-      // });
-
-      // test('Example 4', () => {
-      //   expect(part2('nznrnfrfntjfmvfwmzdfjlvtqnbhcprsg')).toEqual(29);
-      // });
-
-      // test('Example 5', () => {
-      //   expect(part2('zcfzfwzzqfrljwzlrfnpqdbhtmscgvjw')).toEqual(26);
-      // });
     })
   })
 
