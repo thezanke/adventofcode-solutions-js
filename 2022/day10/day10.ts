@@ -91,10 +91,12 @@ export const part2 = (input: string): string => {
   })
 
   const render = chunk(Array.from({ length: 240 }, (_v, i) => {
-    const spritePos = positionMap.get(i + 1)!
-    const renderPos = i % 40
-    const isLit = (renderPos >= spritePos - 1) && (renderPos <= spritePos + 1)
-    return isLit ? '#' : ' '
+    const cycle = i + 1
+    const spritePos = positionMap.get(cycle)!
+    const hPos = i % 40
+    const isPixelLit = (hPos >= spritePos - 1) && (hPos <= spritePos + 1)
+
+    return isPixelLit ? '#' : ' '
   }), 40).map(x => x.join('')).join('\n')
 
   return render
