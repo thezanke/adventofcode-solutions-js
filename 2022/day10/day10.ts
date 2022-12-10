@@ -1,73 +1,103 @@
-import * as vecUtils from '../common/vecUtils'
+import { chunk } from 'lodash'
 
-import { Vec2d } from '../common/types'
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+type Command = 'addx' | 'noop'
+type Instruction = [command: Command, value?: number]
 
-type Direction = 'U' | 'D' | 'L' | 'R'
-
-const dirVecMap: Record<Direction, Vec2d> = {
-  U: [0, 1],
-  D: [0, -1],
-  L: [1, 0],
-  R: [-1, 0]
+const parseInput = (input: string): Instruction[] => {
+  return input.split('\n').map(l => {
+    const [command, val] = l.split(' ')
+    if (val === undefined) return [command as Command]
+    return [command as Command, parseInt(val, 10)]
+  })
 }
 
-const START: Vec2d = [0, 0]
-
-const parseInput = (input: string): Array<[Vec2d, number]> => {
-  return input
-    .split('\n')
-    .map(l => {
-      const [dir, dist] = l.split(' ')
-      return [dirVecMap[dir as Direction], parseInt(dist, 10)]
-    })
+const instructionCosts = {
+  noop: 1,
+  addx: 2
 }
 
-type Positions = Vec2d[]
+class Processor {
+  cycle = 0
+  x = 1
+  current: null | [instruction: Instruction, cost: number] = null
+  instructions: Instruction[] = []
 
-const determineSegmentMove = (prevSegment: Vec2d, currSegment: Vec2d): Vec2d => {
-  const displacement = vecUtils.subtract(prevSegment, currSegment) as Vec2d
-  const distance = vecUtils.sum(displacement.map(Math.abs))
-  const unit = vecUtils.getUnitVec(displacement) as Vec2d<-1 | 0 | 1>
+  constructor (instructions: Instruction[]) {
+    this.instructions = [...instructions].reverse()
+  }
 
-  if (distance > 2) return unit
+  handleCurrentInstruction (): void {
+    if (this.current === null) return
 
-  const [diffX, diffY] = displacement
-  if (Math.abs(diffX) > 1) return [unit[0], 0]
-  if (Math.abs(diffY) > 1) return [0, unit[1]]
+    this.current[1] -= 1
 
-  return [0, 0]
-}
+    const [instruction, cost] = this.current
+    if (cost > 0) return
 
-const vecToKey = (vec: number[]): string => vec.join(',')
+    this.current = null
 
-export const solve = (input: string, length: number = 2): number => {
-  const moves = parseInput(input)
-  const positions: Positions = Array.from({ length }, () => [...START])
-  const [tail] = positions.slice(-1)
-  const visited = new Set([vecToKey(START)])
-
-  for (const [vec, dist] of moves) {
-    for (let d = 0; d < dist; d += 1) {
-      const [head] = positions
-
-      vecUtils.add(head, vec, true)
-
-      for (let p = 1; p < positions.length; p += 1) {
-        const [prevSegment, currSegment] = positions.slice(p - 1, p + 1)
-        const segmentMove = determineSegmentMove(prevSegment, currSegment)
-
-        const isStalled = vecUtils.sum(segmentMove.map(Math.abs)) === 0
-        if (isStalled) break
-
-        vecUtils.add(currSegment, segmentMove, true)
-
-        if (currSegment === tail) visited.add(vecToKey(currSegment))
+    const [command] = instruction
+    switch (command) {
+      case 'addx': {
+        const [,val] = instruction
+        if (val !== undefined) this.x += val
+        break
       }
     }
   }
 
-  return visited.size
+  startProcessing (maxCycles: number, callback: (cycle: number, signal: number) => void): void {
+    while (this.cycle <= maxCycles) {
+      this.cycle += 1
+
+      callback(this.cycle, this.x)
+
+      if (this.current === null) {
+        const next = this.instructions.pop()
+        if (next !== undefined) {
+          this.current = [next, instructionCosts[next[0]]]
+        }
+      }
+
+      this.handleCurrentInstruction()
+    }
+  }
 }
 
-export const part1 = (input: string): number => solve(input)
-export const part2 = (input: string): number => solve(input, 10)
+export const part1 = (input: string, cycles = [20, 60, 100, 140, 180, 220]): number => {
+  const [maxCycles] = cycles.slice(-1)
+
+  const instructions = parseInput(input)
+  const processor = new Processor(instructions)
+
+  let total = 0
+
+  processor.startProcessing(maxCycles, (cycle, x) => {
+    if (cycles.includes(cycle)) total += cycle * x
+  })
+
+  return total
+}
+
+export const part2 = (input: string): string => {
+  const instructions = parseInput(input)
+  const processor = new Processor(instructions)
+
+  const positionMap = new Map<number, number>()
+
+  processor.startProcessing(240, (cycle, x) => {
+    positionMap.set(cycle, x)
+  })
+
+  const render = chunk(Array.from({ length: 240 }, (_v, i) => {
+    const spritePos = positionMap.get(i + 1)!
+    const renderPos = i % 40
+    const isLit = (renderPos >= spritePos - 1) && (renderPos <= spritePos + 1)
+    return isLit ? '#' : ' '
+  }), 40).map(x => x.join('')).join('\n')
+
+  console.log(render)
+
+  return render
+}
