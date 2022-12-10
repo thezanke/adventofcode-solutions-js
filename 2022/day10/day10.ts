@@ -97,7 +97,5 @@ export const part2 = (input: string): string => {
     return isLit ? '#' : ' '
   }), 40).map(x => x.join('')).join('\n')
 
-  console.log(render)
-
   return render
 }
