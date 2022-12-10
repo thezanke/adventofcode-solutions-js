@@ -1,6 +1,6 @@
 import { part1, part2 } from './day5'
 
-describe('Day 4', () => {
+describe('Day 5', () => {
   describe('Examples', () => {
     const input =
 `    [D]    
