@@ -38,7 +38,7 @@ Test: divisible by 17
     })
 
     describe('Part 2', () => {
-      test.skip('Example 1', () => {
+      test('Example 1', () => {
         expect(part2(example1)).toEqual(2713310158)
       })
     })
@@ -106,8 +106,8 @@ Test: divisible by 13
       expect(part1(input)).toEqual(62491)
     })
 
-    test.skip('Part 2', () => {
-      expect(part2(input)).toEqual(1)
+    test('Part 2', () => {
+      expect(part2(input)).toEqual(17408399184)
     })
   })
 })
