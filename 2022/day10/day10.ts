@@ -38,12 +38,10 @@ class Processor {
     this.current = null
 
     const [command] = instruction
-    switch (command) {
-      case 'addx': {
-        const [,val] = instruction
-        if (val !== undefined) this.x += val
-        break
-      }
+
+    if (command === 'addx') {
+      const [,val] = instruction
+      if (val !== undefined) this.x += val
     }
   }
 
