@@ -1,4 +1,3 @@
-import Heap from 'heap'
 import { Vec2d } from '../common/types'
 
 const elevationMap = 'abcdefghijklmnopqrstuvwxyz'
@@ -54,17 +53,18 @@ class Grid {
   }
 }
 
-const dijkstra = (grid: Grid, start: Position, end: Position): Map<Position, Position> | null => {
-  const open = new Heap<Position>((a, b) => a.distance - b.distance)
+const bfs = (grid: Grid, start: Position, end: Position): Map<Position, Position> | null => {
+  // const open = new Heap<Position>((a, b) => a.distance - b.distance)
+  const queue = []
 
   const parents: Map<Position, Position> = new Map()
 
   start.distance = 0
-  open.push(start)
+  queue.push(start)
 
   // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
-  while (open.size()) {
-    const curr = open.pop() as Position
+  while (queue.length > 0) {
+    const curr = queue.shift() as Position
 
     if (curr === end) return parents
 
@@ -72,10 +72,9 @@ const dijkstra = (grid: Grid, start: Position, end: Position): Map<Position, Pos
       if (pos.visited) continue
 
       parents.set(pos, curr)
-      const g = curr.distance + pos.value
-      if (g < pos.distance) pos.distance = g
+      pos.distance = curr.distance + 1
       // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
-      if (!open.has(pos)) open.push(pos)
+      if (!queue.includes(pos)) queue.push(pos)
     }
 
     curr.visited = true
@@ -127,7 +126,7 @@ export const part1 = (input: string): number => {
   const endPos = grid.getPosition(...end)
   if (endPos === null) return -1
 
-  const parents = dijkstra(grid, startPos, endPos)
+  const parents = bfs(grid, startPos, endPos)
   if (parents === null) return -1
 
   const shortestPath = getShortestPath(endPos, parents)
