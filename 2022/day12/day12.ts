@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+import Heap from 'heap'
 import { Vec2d } from '../common/types'
 
 const elevationMap = 'abcdefghijklmnopqrstuvwxyz'
@@ -116,6 +118,13 @@ const getShortestPath = (end: Position, parents: Map<Position, Position>): Posit
   return shortestPath
 }
 
+const getPathLength = (grid: Grid, start: Position, end: Position): number => {
+  const parents = bfs(grid, start, end)
+  if (parents === null) return -1
+  const shortestPath = getShortestPath(end, parents)
+  return shortestPath.length - 1
+}
+
 export const part1 = (input: string): number => {
   const { heightMap, start, end } = parseInput(input)
   const grid = new Grid(heightMap)
@@ -126,14 +135,33 @@ export const part1 = (input: string): number => {
   const endPos = grid.getPosition(...end)
   if (endPos === null) return -1
 
-  const parents = bfs(grid, startPos, endPos)
-  if (parents === null) return -1
+  return getPathLength(grid, startPos, endPos)
+}
 
-  const shortestPath = getShortestPath(endPos, parents)
+const getStartingLocationsFromHeightMap = (heightMap: HeightMap): Vec2d[] => {
+  const starts: Vec2d[] = []
 
-  return shortestPath.length - 1
+  heightMap.forEach((row, y) => row.forEach((value, x) => {
+    if (value === 0) starts.push([x, y])
+  }))
+
+  return starts
 }
 
 export const part2 = (input: string): number => {
-  return -1
+  const { heightMap, end } = parseInput(input)
+
+  const starts = getStartingLocationsFromHeightMap(heightMap)
+  const lengths = new Heap<number>((a, b) => a - b)
+
+  for (const start of starts) {
+    const grid = new Grid(heightMap)
+
+    const startPos = grid.getPosition(...start)!
+    const endPos = grid.getPosition(...end)!
+    const length = getPathLength(grid, startPos, endPos)
+    if (length > -1) lengths.push(length)
+  }
+
+  return lengths.pop()!
 }

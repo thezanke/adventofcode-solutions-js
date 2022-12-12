@@ -16,8 +16,8 @@ abdefghi`
     })
 
     describe('Part 2', () => {
-      test.skip('Example 1', () => {
-        expect(part2(example1)).toEqual(2713310158)
+      test('Example 1', () => {
+        expect(part2(example1)).toEqual(29)
       })
     })
   })
@@ -67,11 +67,11 @@ abcccaaaaaaaacccccccccccaaaaaacccccccaacccccccccccaaaaaaaaaaaaaaaaaaaaaaaacccccc
 abccaaaaaaacccccccccccccaaaaaaacccccccccccccccccaaaaaaaaaaaaaaaaaaaaaaaaaaacccccccccccccccaaaacccccccaaaaaaaacccccccccccccccccccccccccccccccccccccccccccccccaaaaa`
 
     test('Part 1', () => {
-      expect(part1(input)).toEqual(62491)
+      expect(part1(input)).toEqual(440)
     })
 
     test.skip('Part 2', () => {
-      expect(part2(input)).toEqual(17408399184)
+      expect(part2(input)).toEqual(439)
     })
   })
 })
