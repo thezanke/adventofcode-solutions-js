@@ -1,6 +1,7 @@
 {
   "name": "adventofcode-solutions-js",
   "dependencies": {
+    "@types/heap": "^0.2.31",
     "axios": "^0.24.0",
     "csv-parse": "^5.0.3",
     "env-cmd": "^10.1.0",
