@@ -3,41 +3,13 @@ import { determineIfCorrectOrder, part1, part2 } from './day13'
 describe('Day 13', () => {
   describe('Helpers', () => {
     test('determineIfCorrectOrder()', () => {
-      expect(determineIfCorrectOrder([
-        [1, 1, 3, 1, 1],
-        [1, 1, 5, 1, 1]
-      ])).toEqual(true)
-
-      expect(determineIfCorrectOrder([
-        [[1], [2, 3, 4]],
-        [[1], 4]
-      ])).toEqual(true)
-
-      expect(determineIfCorrectOrder([
-        [9],
-        [[8, 7, 6]]
-      ])).toEqual(false)
-
-      expect(determineIfCorrectOrder([
-        [[4, 4], 4, 4],
-        [[4, 4], 4, 4, 4]
-      ])).toEqual(true)
-
-      expect(determineIfCorrectOrder([
-        [7, 7, 7, 7],
-        [7, 7, 7]
-      ])).toEqual(false)
-
-      expect(determineIfCorrectOrder([
-        [],
-        [3]
-      ])).toEqual(true)
-
-      expect(determineIfCorrectOrder([
-        [[[]]],
-        [[]]
-      ])).toEqual(false)
-
+      expect(determineIfCorrectOrder([[1, 1, 3, 1, 1], [1, 1, 5, 1, 1]])).toEqual(true)
+      expect(determineIfCorrectOrder([[[1], [2, 3, 4]], [[1], 4]])).toEqual(true)
+      expect(determineIfCorrectOrder([[9], [[8, 7, 6]]])).toEqual(false)
+      expect(determineIfCorrectOrder([[[4, 4], 4, 4], [[4, 4], 4, 4, 4]])).toEqual(true)
+      expect(determineIfCorrectOrder([[7, 7, 7, 7], [7, 7, 7]])).toEqual(false)
+      expect(determineIfCorrectOrder([[], [3]])).toEqual(true)
+      expect(determineIfCorrectOrder([[[[]]], [[]]])).toEqual(false)
       expect(determineIfCorrectOrder([
         [1, [2, [3, [4, [5, 6, 7]]]], 8, 9],
         [1, [2, [3, [4, [5, 6, 0]]]], 8, 9]
@@ -541,7 +513,7 @@ describe('Day 13', () => {
     })
 
     test('Part 2', () => {
-      expect(part2(input)).toEqual(1)
+      expect(part2(input)).toEqual(22184)
     })
   })
 })
