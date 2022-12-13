@@ -55,8 +55,7 @@ class Grid {
   }
 }
 
-const bfs = (grid: Grid, start: Position, end: Position): Map<Position, Position> | null => {
-  // const open = new Heap<Position>((a, b) => a.distance - b.distance)
+const bfs = (start: Position, end: Position): Map<Position, Position> | null => {
   const queue = []
 
   const parents: Map<Position, Position> = new Map()
@@ -118,8 +117,8 @@ const getShortestPath = (end: Position, parents: Map<Position, Position>): Posit
   return shortestPath
 }
 
-const getPathLength = (grid: Grid, start: Position, end: Position): number => {
-  const parents = bfs(grid, start, end)
+const getPathLength = (start: Position, end: Position): number => {
+  const parents = bfs(start, end)
   if (parents === null) return -1
   const shortestPath = getShortestPath(end, parents)
   return shortestPath.length - 1
@@ -135,7 +134,7 @@ export const part1 = (input: string): number => {
   const endPos = grid.getPosition(...end)
   if (endPos === null) return -1
 
-  return getPathLength(grid, startPos, endPos)
+  return getPathLength(startPos, endPos)
 }
 
 const getStartingLocationsFromHeightMap = (heightMap: HeightMap): Vec2d[] => {
@@ -159,7 +158,7 @@ export const part2 = (input: string): number => {
 
     const startPos = grid.getPosition(...start)!
     const endPos = grid.getPosition(...end)!
-    const length = getPathLength(grid, startPos, endPos)
+    const length = getPathLength(startPos, endPos)
     if (length > -1) lengths.push(length)
   }
 

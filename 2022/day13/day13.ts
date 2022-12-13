@@ -1,6 +1,6 @@
 import { NestedArray } from '../common/types'
 
-type NestedNumberArrayPair = [left: NestedArray<number>, right: NestedArray<number>]
+export type NestedNumberArrayPair = [left: NestedArray<number>, right: NestedArray<number>]
 
 const parseInput = (input: string): NestedNumberArrayPair[] => {
   return input.split('\n\n').map(chunk =>

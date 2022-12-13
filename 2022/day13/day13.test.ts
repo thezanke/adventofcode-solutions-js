@@ -1,19 +1,20 @@
-import { determineIfCorrectOrder, part1, part2 } from './day13'
+import { determineIfCorrectOrder, NestedNumberArrayPair, part1, part2 } from './day13'
 
 describe('Day 13', () => {
   describe('Helpers', () => {
-    test('determineIfCorrectOrder()', () => {
-      expect(determineIfCorrectOrder([[1, 1, 3, 1, 1], [1, 1, 5, 1, 1]])).toEqual(true)
-      expect(determineIfCorrectOrder([[[1], [2, 3, 4]], [[1], 4]])).toEqual(true)
-      expect(determineIfCorrectOrder([[9], [[8, 7, 6]]])).toEqual(false)
-      expect(determineIfCorrectOrder([[[4, 4], 4, 4], [[4, 4], 4, 4, 4]])).toEqual(true)
-      expect(determineIfCorrectOrder([[7, 7, 7, 7], [7, 7, 7]])).toEqual(false)
-      expect(determineIfCorrectOrder([[], [3]])).toEqual(true)
-      expect(determineIfCorrectOrder([[[[]]], [[]]])).toEqual(false)
-      expect(determineIfCorrectOrder([
-        [1, [2, [3, [4, [5, 6, 7]]]], 8, 9],
-        [1, [2, [3, [4, [5, 6, 0]]]], 8, 9]
-      ])).toEqual(false)
+    describe.each<[NestedNumberArrayPair, boolean]>([
+      [[[1, 1, 3, 1, 1], [1, 1, 5, 1, 1]], true],
+      [[[[1], [2, 3, 4]], [[1], 4]], true],
+      [[[9], [[8, 7, 6]]], false],
+      [[[[4, 4], 4, 4], [[4, 4], 4, 4, 4]], true],
+      [[[7, 7, 7, 7], [7, 7, 7]], false],
+      [[[], [3]], true],
+      [[[[[]]], [[]]], false],
+      [[[1, [2, [3, [4, [5, 6, 7]]]], 8, 9], [1, [2, [3, [4, [5, 6, 0]]]], 8, 9]], false]
+    ])('determineIfCorrectOrder()', (input, expected) => {
+      it('Returns correct result', () => {
+        expect(determineIfCorrectOrder(input)).toEqual(expected)
+      })
     })
   })
 
@@ -44,14 +45,18 @@ describe('Day 13', () => {
 [1,[2,[3,[4,[5,6,0]]]],8,9]`
 
     describe('Part 1', () => {
-      test('Example 1', () => {
-        expect(part1(example1)).toEqual(13)
+      describe('Example 1', () => {
+        it('Returns correct result', () => {
+          expect(part1(example1)).toEqual(13)
+        })
       })
     })
 
     describe('Part 2', () => {
-      test('Example 1', () => {
-        expect(part2(example1)).toEqual(140)
+      describe('Example 1', () => {
+        it('Returns correct result', () => {
+          expect(part2(example1)).toEqual(140)
+        })
       })
     })
   })
@@ -508,12 +513,16 @@ describe('Day 13', () => {
 [[[]],[1,7,9,9,[7,8]],[],[[[2],10],2,1,[[2,4,10],[10,6],3,9],9]]
 [[0,2,10],[[],3],[[[0,2,6,5],[5,4,4]],[],[],[],4],[[1,[2],8,[7,8,0,3,7]],7,7,1,[2,[8,3,1],[],[7,8,2,7]]]]`
 
-    test('Part 1', () => {
-      expect(part1(input)).toEqual(6072)
+    describe('Part 1', () => {
+      it('Returns correct result', () => {
+        expect(part1(input)).toEqual(6072)
+      })
     })
 
-    test('Part 2', () => {
-      expect(part2(input)).toEqual(22184)
+    describe('Part 2', () => {
+      it('Returns correct result', () => {
+        expect(part2(input)).toEqual(22184)
+      })
     })
   })
 })

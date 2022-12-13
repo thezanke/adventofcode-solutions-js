@@ -1,6 +1,6 @@
 import { part1, part2 } from './day12'
 
-describe('Day 10', () => {
+describe('Day 12', () => {
   describe('Examples', () => {
     const example1 =
 `Sabqponm
@@ -10,14 +10,18 @@ acctuvwj
 abdefghi`
 
     describe('Part 1', () => {
-      test('Example 1', () => {
-        expect(part1(example1)).toEqual(31)
+      describe('Example 1', () => {
+        it('Returns correct result', () => {
+          expect(part1(example1)).toEqual(31)
+        })
       })
     })
 
     describe('Part 2', () => {
-      test('Example 1', () => {
-        expect(part2(example1)).toEqual(29)
+      describe('Example 1', () => {
+        it('Returns correct result', () => {
+          expect(part2(example1)).toEqual(29)
+        })
       })
     })
   })
@@ -66,12 +70,16 @@ abcccaaaaaaaaacccaacaaaaaaaaaaacccccaaaaccccccccccaaaaaacaaacaaacaaaaaaaaaaccccc
 abcccaaaaaaaacccccccccccaaaaaacccccccaacccccccccccaaaaaaaaaaaaaaaaaaaaaaaaccccccccccccccccaaaacccccccaaaaaaaaacccccccccccccccccccccccccccccaaacccccccccccccccaaaa
 abccaaaaaaacccccccccccccaaaaaaacccccccccccccccccaaaaaaaaaaaaaaaaaaaaaaaaaaacccccccccccccccaaaacccccccaaaaaaaacccccccccccccccccccccccccccccccccccccccccccccccaaaaa`
 
-    test('Part 1', () => {
-      expect(part1(input)).toEqual(440)
+    describe('Part 1', () => {
+      it('Returns correct result', () => {
+        expect(part1(input)).toEqual(440)
+      })
     })
 
-    test.skip('Part 2', () => {
-      expect(part2(input)).toEqual(439)
+    describe.skip('Part 2', () => {
+      it('Returns correct result', () => {
+        expect(part2(input)).toEqual(439)
+      })
     })
   })
 })
