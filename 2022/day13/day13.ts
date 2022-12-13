@@ -38,7 +38,6 @@ export const determineIfCorrectOrder = (pair: NestedNumberArrayPair): boolean | 
 
 export const part1 = (input: string): number => {
   const parsed = parseInput(input)
-
   const correct = parsed.map(determineIfCorrectOrder)
 
   return correct.reduce((t, v, i) => v === true ? t + i + 1 : t, 0)
