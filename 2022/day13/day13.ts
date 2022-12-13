@@ -20,8 +20,8 @@ export const determineIfCorrectOrder = (pair: NestedNumberArrayPair): boolean | 
     const leftVal = left[i]
     const rightVal = right[i]
 
-    const isBothNumbers = !Array.isArray(leftVal) && !Array.isArray(rightVal)
-    if (isBothNumbers) {
+    const isNumericComparison = !Array.isArray(leftVal) && !Array.isArray(rightVal)
+    if (isNumericComparison) {
       if (leftVal < rightVal) return true
       if (leftVal > rightVal) return false
     } else {
