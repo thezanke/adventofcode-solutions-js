@@ -1,5 +1,5 @@
-export const add = (_a: number[], b: number[], shouldMutateOriginal = false): number[] => {
-  const a = shouldMutateOriginal ? _a : [..._a]
+export const add = <T extends number[]>(_a: T, b: T, shouldMutateOriginal = false): T => {
+  const a = shouldMutateOriginal ? _a : [..._a] as T
   for (const [i, val] of _a.entries()) a[i] = val + (b[i] ?? 0)
   return a
 }
