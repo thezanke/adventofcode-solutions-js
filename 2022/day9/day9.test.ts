@@ -16,22 +16,6 @@ R 2`
       test('Example 1', () => {
         expect(part1(example1)).toEqual(13)
       })
-
-      // test('Example 2', () => {
-      //   expect(part1('bvwbjplbgvbhsrlpgdmjqwftvncz')).toEqual(5);
-      // });
-
-      // test('Example 3', () => {
-      //   expect(part1('nppdvjthqldpwncqszvftbrmjlhg')).toEqual(6);
-      // });
-
-      // test('Example 4', () => {
-      //   expect(part1('nznrnfrfntjfmvfwmzdfjlvtqnbhcprsg')).toEqual(10);
-      // });
-
-      // test('Example 5', () => {
-      //   expect(part1('zcfzfwzzqfrljwzlrfnpqdbhtmscgvjw')).toEqual(11);
-      // });
     })
 
     describe('Part 2', () => {
@@ -52,18 +36,6 @@ U 20`
       test('Example 2', () => {
         expect(part2(example2)).toEqual(36)
       })
-
-      // test('Example 3', () => {
-      //   expect(part2('nppdvjthqldpwncqszvftbrmjlhg')).toEqual(23);
-      // });
-
-      // test('Example 4', () => {
-      //   expect(part2('nznrnfrfntjfmvfwmzdfjlvtqnbhcprsg')).toEqual(29);
-      // });
-
-      // test('Example 5', () => {
-      //   expect(part2('zcfzfwzzqfrljwzlrfnpqdbhtmscgvjw')).toEqual(26);
-      // });
     })
   })
 
