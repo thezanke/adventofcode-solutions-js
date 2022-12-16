@@ -18,3 +18,5 @@ export const sumAbs = (vec: number[]): number => sum(vec.map(Math.abs))
 
 // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
 export const getUnitVec = (vec: number[]): Array<-1 | 0 | 1> => vec.map((num) => num && (num / Math.abs(num)) as 1 | -1 | 0)
+
+export const manhattan = (v1: number[], v2: number[]): number => sumAbs(subtract(v1, v2))
