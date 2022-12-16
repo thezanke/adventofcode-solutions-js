@@ -1,7 +1,7 @@
 import { Vec2d } from '../common/types'
 import * as v from '../common/vecUtils'
 
-const LOGGING = true
+const LOGGING = false
 
 type LineList = Vec2d[][]
 
@@ -21,7 +21,7 @@ class ScanGrid {
   private minX: number = Infinity
   private maxX: number = -Infinity
   private minY: number = 0
-  private maxY: number = -Infinity
+  public maxY: number = -Infinity
 
   constructor (lines: LineList, private readonly origin: Vec2d, private readonly hasFloor = false) {
     this.convertLinesToData(lines)
@@ -35,15 +35,12 @@ class ScanGrid {
     return this.data.get(posString) ?? ObjectType.Air
   }
 
-  adjustIfNeeded (pos: Vec2d, xOnly = false): void {
+  adjustIfNeeded (pos: Vec2d): void {
     const [x, y] = pos
-    const maxY = this.hasFloor && xOnly ? y + 2 : y
     if (this.minX === undefined || x < this.minX) this.minX = x
     if (this.maxX === undefined || x > this.maxX) this.maxX = x
-    if (!xOnly) {
-      if (this.minY === undefined || y < this.minY) this.minY = y
-      if (this.maxY === undefined || maxY > this.maxY) this.maxY = maxY
-    }
+    if (this.minY === undefined || y < this.minY) this.minY = y
+    if (this.maxY === undefined || y > this.maxY) this.maxY = y
   }
 
   setPositions (positions: Vec2d[], type: ObjectType | null): void {
@@ -99,7 +96,7 @@ class ScanGrid {
 
   checkIfOutOfBounds (sand: Vec2d): boolean {
     const [x, y] = sand
-    if (this.hasFloor) return x === this.origin[0] && y === this.origin[1]
+    if (this.hasFloor) return false
     if (x > this.maxX) return true
     if (x < this.minX) return true
     if (y > this.maxY) return true
@@ -116,6 +113,10 @@ class ScanGrid {
     return null
   }
 
+  isAtOrigin (pos: Vec2d): boolean {
+    return pos[0] === this.origin[0] && pos[1] === this.origin[1]
+  }
+
   dropSand (): boolean {
     const sand = [...this.origin] as Vec2d
     this.fallingSand.add(sand)
@@ -130,14 +131,16 @@ class ScanGrid {
 
       if (isAtRest) {
         this.setPositions([sand], ObjectType.Sand)
+        if (this.hasFloor && this.isAtOrigin(sand)) return false
         break
       } else {
         v.add(sand, move as Vec2d, true)
-        this.adjustIfNeeded(sand, true)
+        this.adjustIfNeeded(sand)
         if (this.checkIfOutOfBounds(sand)) break
       }
       this.print()
     }
+    this.fallingSand.delete(sand)
 
     return isAtRest
   }
@@ -162,6 +165,7 @@ class ScanGrid {
 export const solve = (input: string, solveWithFloor = false): number => {
   const lines = parseInput(input)
   const grid = new ScanGrid(lines, [500, 0], solveWithFloor)
+  grid.maxY += 2
 
   grid.simulate()
 

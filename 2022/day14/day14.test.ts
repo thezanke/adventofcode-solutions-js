@@ -10,7 +10,7 @@ describe('Day 14', () => {
 503,4 -> 502,4 -> 502,9 -> 494,9`
 
     describe('Part 1', () => {
-      describe.skip('Example 1', () => {
+      describe('Example 1', () => {
         it('Returns correct result', () => {
           expect(solve(example1)).toEqual(24)
         })
@@ -197,7 +197,7 @@ describe('Day 14', () => {
 486,37 -> 486,34 -> 486,37 -> 488,37 -> 488,34 -> 488,37 -> 490,37 -> 490,28 -> 490,37 -> 492,37 -> 492,28 -> 492,37 -> 494,37 -> 494,30 -> 494,37 -> 496,37 -> 496,36 -> 496,37 -> 498,37 -> 498,36 -> 498,37
 566,148 -> 571,148`
 
-    describe.skip('Part 1', () => {
+    describe('Part 1', () => {
       it('Returns correct result', () => {
         expect(solve(input)).toEqual(1001)
       })
@@ -205,7 +205,7 @@ describe('Day 14', () => {
 
     describe.skip('Part 2', () => {
       it('Returns correct result', () => {
-        // expect(part2(input)).toEqual(22184)
+        expect(solve(input, true)).toEqual(27976)
       })
     })
   })
