@@ -39,14 +39,16 @@ export class Graph {
 
     this.distances[node] = Object.fromEntries(connections.map(conn => [conn, 1]))
 
-    for (const valuableNode in this.values) {
-      const distance = this.getDistanceBetweenNodes(node, valuableNode)
-      this.distances[valuableNode][node] = distance
-      this.distances[node][valuableNode] = distance
+    for (const node2 in this.connections) {
+      if (node === node2) continue
+      const distance = this.getDistanceBetweenNodes(node, node2)
+      this.distances[node2][node] = distance
+      this.distances[node][node2] = distance
     }
   }
 
-  private getDistanceBetweenNodes (node1: string, node2: string): number {
+  getDistanceBetweenNodes (node1: string, node2: string): number {
+    if (this.distances[node1][node2] !== undefined) return this.distances[node1][node2]
     if (node1 === node2) return 0
 
     let current = [node1]
@@ -81,11 +83,56 @@ export const determineValveOrder = (valves: ValveData[]): string[] => {
   const graph = new Graph(valves)
   console.log(graph)
 
-  const unopened = Object.keys(graph.values)
-  const curr = 'AA'
-  const i = 0
+  const getChoiceInfo = (
+    current: keyof Graph['connections'],
+    choice: keyof Graph['connections'],
+    remainingTime: number
+  ): {
+    choice: keyof Graph['connections']
+    distance: number
+    score: number
+    cost: number
+  } => {
+    const value = graph.values[choice]
+    const distance = graph.getDistanceBetweenNodes(current, choice)
+    const cost = 1 + distance
+    const score = (remainingTime - cost) * value
 
-  return ['DD', 'BB']
+    return { choice, distance, score, cost }
+  }
+
+  const unopened = { ...graph.values }
+  console.log({ unopened })
+
+  const path = []
+  let i = 0
+  let curr = 'AA'
+  let total = 0
+
+  do {
+    const remainingTime = MAX_TIME - i
+
+    const results = Object.keys(unopened).map((choice) =>
+      getChoiceInfo(curr, choice, remainingTime)
+    ).sort((a, b) => b.score - a.score)
+
+    console.log({ curr, i, results })
+    const [next] = results
+
+    if (next === undefined || i + next.cost >= MAX_TIME) break
+    total += next.score
+
+    // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
+    delete unopened[next.choice]
+
+    path.push(next.choice)
+    curr = next.choice
+    i += next.cost
+  } while (i < MAX_TIME)
+
+  console.log(total)
+
+  return path
 }
 
 export const part1 = (input: string): number => {
