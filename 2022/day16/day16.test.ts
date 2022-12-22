@@ -1,4 +1,5 @@
-import { determinePlan, Graph, parseInput, part1, part2, ValveData } from './day16'
+import { beforeEach, describe, expect, it } from 'vitest'
+import { determineValveOrder, Graph, parseInput, part1, part2, ValveData } from './day16'
 
 describe('Day 16', () => {
   const exampleInput =
@@ -36,7 +37,7 @@ Valve JJ has flow rate=21; tunnel leads to valve II`
     describe('determineValveOrder()', () => {
       it('Returns expected order', () => {
         expect(
-          determinePlan(parsedExampleInput)
+          determineValveOrder(parsedExampleInput)
         ).toMatchObject(['DD', 'BB', 'JJ', 'HH', 'EE', 'CC'])
       })
     })

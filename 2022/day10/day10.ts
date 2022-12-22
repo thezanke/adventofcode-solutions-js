@@ -1,4 +1,4 @@
-import { chunk } from 'lodash'
+import _ from 'lodash'
 
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 type Command = 'addx' | 'noop'
@@ -80,7 +80,7 @@ export const part1 = (input: string): number => {
 const maxCrtCycles = 240
 
 const renderCrt = (positionMap: Map<number, number>): string => {
-  return chunk(Array.from({ length: maxCrtCycles }, (_v, i) => {
+  return _.chunk(Array.from({ length: maxCrtCycles }, (_v, i) => {
     const cycle = i + 1
     const spritePos = positionMap.get(cycle)!
     const hPos = i % 40

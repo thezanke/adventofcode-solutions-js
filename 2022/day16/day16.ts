@@ -77,7 +77,7 @@ export class Graph {
 //   // for (const [valve, ])
 // }
 
-export const determinePlan = (valves: ValveData[]): string[] => {
+export const determineValveOrder = (valves: ValveData[]): string[] => {
   const graph = new Graph(valves)
   console.log(graph)
 

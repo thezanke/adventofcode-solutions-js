@@ -1,3 +1,4 @@
+import { describe, expect, test } from 'vitest'
 import { part1, part2 } from './day6'
 
 describe('Day 6', () => {

@@ -1,3 +1,4 @@
+import { describe, expect, it } from 'vitest'
 import { determineIfCorrectOrder, NestedNumberArrayPair, part1, part2 } from './day13'
 
 describe('Day 13', () => {
