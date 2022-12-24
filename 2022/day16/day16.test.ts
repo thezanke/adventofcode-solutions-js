@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it } from 'vitest'
-import { determineValveOrder, Graph, parseInput, part1, part2, ValveData } from './day16'
+import { findBestPath, Graph, parseInput, part1, part2, ValveData } from './day16'
 
 describe('Day 16', () => {
   const exampleInput =
@@ -34,11 +34,11 @@ Valve JJ has flow rate=21; tunnel leads to valve II`
       })
     })
 
-    describe('determineValveOrder()', () => {
-      it('Returns expected order', () => {
-        expect(
-          determineValveOrder(parsedExampleInput)
-        ).toMatchObject(['DD', 'BB', 'JJ', 'HH', 'EE', 'CC'])
+    describe('findBestPath()', () => {
+      it('Returns expected results', () => {
+        const { path, value } = findBestPath(parsedExampleInput)
+        expect(path).toEqual(['DD', 'BB', 'JJ', 'HH', 'EE', 'CC'])
+        expect(value).toEqual(1651)
       })
     })
 
@@ -83,7 +83,7 @@ Valve JJ has flow rate=21; tunnel leads to valve II`
 
   describe('Examples', () => {
     describe('Part 1', () => {
-      describe.skip('Example 1', () => {
+      describe('Example 1', () => {
         it('Returns correct result', () => {
           expect(part1(exampleInput)).toEqual(1651)
         })
@@ -159,7 +159,7 @@ Valve OQ has flow rate=0; tunnels lead to valves FX, VN
 Valve MG has flow rate=0; tunnels lead to valves TU, CS
 Valve LS has flow rate=0; tunnels lead to valves CR, ZV`
 
-    describe.skip('Part 1', () => {
+    describe('Part 1', () => {
       it('Returns correct result', () => {
         expect(part1(input)).toEqual(1)
       })

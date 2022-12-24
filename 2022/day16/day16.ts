@@ -1,7 +1,7 @@
 const LINE_REGEX = /Valve ([A-Z]+) has flow rate=(-?\d+); tunnels? leads? to valves? (.+)$/
 const MAX_TIME = 30
 
-export type ValveData = [label: string, flowRate: number, ...adjacent: string[]]
+export type ValveData = [label: ValveLabel, flowRate: number, ...adjacent: string[]]
 
 export const parseInput = (input: string): ValveData[] => {
   return input.split('\n').map(line => {
@@ -79,20 +79,23 @@ export class Graph {
 //   // for (const [valve, ])
 // }
 
-export const determineValveOrder = (valves: ValveData[]): string[] => {
+type ValveLabel = keyof Graph['connections']
+interface ChoiceInfo {
+  choice: ValveLabel
+  distance: number
+  score: number
+  cost: number
+}
+
+export const findBestPath = (valves: ValveData[]): { path: ValveLabel[], value: number } => {
   const graph = new Graph(valves)
-  console.log(graph)
+  // console.log(graph)
 
   const getChoiceInfo = (
-    current: keyof Graph['connections'],
-    choice: keyof Graph['connections'],
+    current: ValveLabel,
+    choice: ValveLabel,
     remainingTime: number
-  ): {
-    choice: keyof Graph['connections']
-    distance: number
-    score: number
-    cost: number
-  } => {
+  ): ChoiceInfo => {
     const value = graph.values[choice]
     const distance = graph.getDistanceBetweenNodes(current, choice)
     const cost = 1 + distance
@@ -101,44 +104,47 @@ export const determineValveOrder = (valves: ValveData[]): string[] => {
     return { choice, distance, score, cost }
   }
 
-  const unopened = { ...graph.values }
-  console.log({ unopened })
+  const best: {
+    path: ValveLabel[]
+    value: number
+  } = { path: [], value: 0 }
 
-  const path = []
-  let i = 0
-  let curr = 'AA'
-  let total = 0
+  const findNextBestPath = (
+    current: ValveLabel,
+    unopened: ValveLabel[],
+    path: ValveLabel[] = [],
+    totalScore: number = 0,
+    remainingTime: number = MAX_TIME
+  ): void => {
+    if (remainingTime < 0) return
 
-  do {
-    const remainingTime = MAX_TIME - i
+    const isBest = totalScore > best.value
+    if (isBest) {
+      best.path = path
+      best.value = totalScore
+    }
 
-    const results = Object.keys(unopened).map((choice) =>
-      getChoiceInfo(curr, choice, remainingTime)
-    ).sort((a, b) => b.score - a.score)
+    if (unopened.length === 0) return
 
-    console.log({ curr, i, results })
-    const [next] = results
+    for (const option of unopened) {
+      const { score, cost } = getChoiceInfo(current, option, remainingTime)
 
-    if (next === undefined || i + next.cost >= MAX_TIME) break
-    total += next.score
+      const nextRemainingTime = remainingTime - cost
+      if (nextRemainingTime <= 0) continue
 
-    // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
-    delete unopened[next.choice]
+      findNextBestPath(option, unopened.filter(label => label !== option), [...path, option], totalScore + score, nextRemainingTime)
+    }
+  }
 
-    path.push(next.choice)
-    curr = next.choice
-    i += next.cost
-  } while (i < MAX_TIME)
+  findNextBestPath('AA', Object.keys(graph.values))
 
-  console.log(total)
-
-  return path
+  return best
 }
 
 export const part1 = (input: string): number => {
   const inputData = parseInput(input)
-  console.log(inputData)
-  return -1
+  const best = findBestPath(inputData)
+  return best.value
 }
 
 export const part2 = (input: string): number => {
