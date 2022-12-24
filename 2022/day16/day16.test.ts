@@ -27,14 +27,14 @@ Valve JJ has flow rate=21; tunnel leads to valve II`
     ['JJ', 21, 'II']
   ] as ValveData[]
 
-  describe('Units', () => {
+  describe('Helpers', () => {
     describe('parseInput()', () => {
       it('Returns expected order', () => {
         expect(parseInput(exampleInput)).toEqual(parsedExampleInput)
       })
     })
 
-    describe('findBestPath()', () => {
+    describe.skip('findBestPath()', () => {
       it('Returns expected results', () => {
         const { path, value } = findBestPath(parsedExampleInput)
         expect(path).toEqual(['DD', 'BB', 'JJ', 'HH', 'EE', 'CC'])
@@ -159,7 +159,7 @@ Valve OQ has flow rate=0; tunnels lead to valves FX, VN
 Valve MG has flow rate=0; tunnels lead to valves TU, CS
 Valve LS has flow rate=0; tunnels lead to valves CR, ZV`
 
-    describe('Part 1', () => {
+    describe.only('Part 1', () => {
       it('Returns correct result', () => {
         expect(part1(input)).toEqual(1)
       })
