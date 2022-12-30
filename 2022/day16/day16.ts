@@ -29,8 +29,11 @@ export const renderGraph = (graph: Graph): void => {
   render(graph, outputPath, (err: Error) => console.error(err))
 }
 
-const buildGraph = (inputData: ValveData[]): Graph => {
-  const graph = new Graph<{ id: string, label: string, flow: number }>()
+interface ValveAttributes { id: string, label: string, flow: number }
+
+const buildGraph = (inputData: ValveData[]): Graph<ValveAttributes> => {
+  const graph = new Graph<ValveAttributes>()
+
   for (const [valve, flow, ...edges] of inputData) {
     graph.addNode(valve, { id: valve, label: `${valve} (${flow})`, flow })
 
@@ -40,14 +43,17 @@ const buildGraph = (inputData: ValveData[]): Graph => {
       } catch {}
     }
   }
+
   return graph
 }
+
+type DistMap = Record<string, shortest.unweighted.ShortestPathLengthMapping>
 
 export const part1 = (input: string): number => {
   const inputData = parseInput(input)
   const graph = buildGraph(inputData)
   const flowValves = graph.filterNodes((_node, { flow }) => flow > 0)
-  const distMap = graph.reduceNodes<Record<string, shortest.unweighted.ShortestPathLengthMapping>>((map, node) => {
+  const distMap = graph.reduceNodes<DistMap>((map, node) => {
     map[node] = shortest.singleSourceLength(graph, node)
     return map
   }, {})
