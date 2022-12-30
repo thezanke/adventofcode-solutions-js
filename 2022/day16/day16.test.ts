@@ -1,5 +1,5 @@
-import { beforeEach, describe, expect, it } from 'vitest'
-import { findBestPath, Graph, parseInput, part1, part2, ValveData } from './day16'
+import { describe, expect, it } from 'vitest'
+import { parseInput, part1, part2, ValveData } from './day16'
 
 describe('Day 16', () => {
   const exampleInput =
@@ -31,52 +31,6 @@ Valve JJ has flow rate=21; tunnel leads to valve II`
     describe('parseInput()', () => {
       it('Returns expected order', () => {
         expect(parseInput(exampleInput)).toEqual(parsedExampleInput)
-      })
-    })
-
-    describe.skip('findBestPath()', () => {
-      it('Returns expected results', () => {
-        const { path, value } = findBestPath(parsedExampleInput)
-        expect(path).toEqual(['DD', 'BB', 'JJ', 'HH', 'EE', 'CC'])
-        expect(value).toEqual(1651)
-      })
-    })
-
-    describe('Graph', () => {
-      let graph: Graph
-
-      beforeEach(() => {
-        graph = new Graph()
-      })
-
-      describe('.addNode()', () => {
-        beforeEach(() => {
-          graph.addNode(['AA', 2, 'BB', 'CC'])
-          graph.addNode(['BB', 5, 'AA', 'DD'])
-          graph.addNode(['CC', 0, 'AA', 'DD', 'EE'])
-          graph.addNode(['DD', 0, 'BB', 'CC'])
-          graph.addNode(['EE', 0, 'CC'])
-        })
-
-        it('Inserts correct connection data', () => {
-          expect(Object.keys(graph.connections)).toEqual(['AA', 'BB', 'CC', 'DD', 'EE'])
-          expect(graph.connections.AA).toEqual(['BB', 'CC'])
-          expect(graph.connections.BB).toEqual(['AA', 'DD'])
-          expect(graph.connections.CC).toEqual(['AA', 'DD', 'EE'])
-        })
-
-        it('Inserts correct value data', () => {
-          expect(Object.keys(graph.values)).toEqual(['AA', 'BB'])
-          expect(graph.values.AA).toEqual(2)
-          expect(graph.values.BB).toEqual(5)
-          expect(graph.values.CC).toBeUndefined()
-        })
-
-        it('Inserts correct distance data', () => {
-          expect(Object.keys(graph.distances)).toEqual(['AA', 'BB', 'CC', 'DD', 'EE'])
-          expect(graph.distances.AA.EE).toEqual(2)
-          expect(graph.distances.BB.EE).toEqual(3)
-        })
       })
     })
   })
@@ -159,9 +113,9 @@ Valve OQ has flow rate=0; tunnels lead to valves FX, VN
 Valve MG has flow rate=0; tunnels lead to valves TU, CS
 Valve LS has flow rate=0; tunnels lead to valves CR, ZV`
 
-    describe.only('Part 1', () => {
+    describe('Part 1', () => {
       it('Returns correct result', () => {
-        expect(part1(input)).toEqual(1)
+        expect(part1(input)).toEqual(2087)
       })
     })
 

@@ -1,4 +1,10 @@
 import Graph from 'graphology'
+import render from 'graphology-svg'
+import * as shortest from 'graphology-shortest-path'
+import { circular } from 'graphology-layout'
+import * as fs from 'fs-extra'
+import * as path from 'path'
+import forceatlas2 from 'graphology-layout-forceatlas2'
 
 const LINE_REGEX = /Valve ([A-Z]+) has flow rate=(-?\d+); tunnels? leads? to valves? (.+)$/
 const MAX_TIME = 30
@@ -14,152 +20,71 @@ export const parseInput = (input: string): ValveData[] => {
   })
 }
 
-// export class Graph {
-//   connections: Record<string, string[]> = {}
-//   values: Record<string, number> = {}
-//   distances: Record<string, Record<string, number>> = {}
+export const renderGraph = (graph: Graph): void => {
+  circular.assign(graph)
+  forceatlas2.assign(graph, 50)
 
-//   constructor (nodeData?: ValveData[]) {
-//     if (nodeData !== undefined) this.addNodes(nodeData)
-//   }
+  const outputPath = './output/graph.svg'
+  fs.ensureDirSync(path.dirname(outputPath))
+  render(graph, outputPath, (err: Error) => console.error(err))
+}
 
-//   addNode ([label, value, ...adjacent]: ValveData): void {
-//     this.connections[label] = adjacent
-//     this.cacheDistance(label)
+const buildGraph = (inputData: ValveData[]): Graph => {
+  const graph = new Graph<{ id: string, label: string, flow: number }>()
+  for (const [valve, flow, ...edges] of inputData) {
+    graph.addNode(valve, { id: valve, label: `${valve} (${flow})`, flow })
 
-//     if (value > 0) this.values[label] = value
-//   }
-
-//   addNodes (nodeData: ValveData[]): void {
-//     for (const data of nodeData) {
-//       this.addNode(data)
-//     }
-//   }
-
-//   private cacheDistance (node: string): void {
-//     const connections = this.connections[node]
-
-//     this.distances[node] = Object.fromEntries(connections.map(conn => [conn, 1]))
-
-//     for (const node2 in this.connections) {
-//       if (node === node2) continue
-//       const distance = this.getDistanceBetweenNodes(node, node2)
-//       this.distances[node2][node] = distance
-//       this.distances[node][node2] = distance
-//     }
-//   }
-
-//   getDistanceBetweenNodes (node1: string, node2: string): number {
-//     if (this.distances[node1][node2] !== undefined) return this.distances[node1][node2]
-//     if (node1 === node2) return 0
-
-//     let current = [node1]
-//     let distance = 0
-//     const seen = new Set<string>()
-
-//     while (current.length > 0) {
-//       if (current.includes(node2)) break
-//       current.forEach(node => seen.add(node))
-//       current = current.flatMap(node => this.connections[node]).filter(node => !seen.has(node))
-//       distance += 1
-//     }
-
-//     return distance
-//   }
-// }
-
-// // const getPlanInit = (valves: ValveData[]): void => {
-// //   // const unopened = []
-// //   // const distances = {}
-// //   // const graph = {}
-// //   const graph = new Graph()
-
-// //   for (const data of valves) {
-// //     graph.addNode(data)
-// //   }
-
-// //   // for (const [valve, ])
-// // }
-
-// type ValveLabel = keyof Graph['connections']
-// interface ChoiceInfo {
-//   choice: ValveLabel
-//   distance: number
-//   score: number
-//   cost: number
-// }
-
-// interface Best { path: ValveLabel[], value: number, remainingTime: number }
-
-// export const findBestPath = (valves: ValveData[]): Best[] => {
-//   // const graph = new Graph(valves)
-//   // console.log(graph)
-
-//   const getChoiceInfo = (
-//     current: string,
-//     choice: string,
-//     remainingTime: number
-//   ): ChoiceInfo => {
-//     const value = graph.values[choice]
-//     const distance = graph.getDistanceBetweenNodes(current, choice)
-//     const cost = 1 + distance
-//     const score = (remainingTime - cost) * value
-
-//     return { choice, distance, score, cost }
-//   }
-
-//   const bests: Best[] = []
-
-//   const findNextBestPath = (
-//     current: string,
-//     unopened: string[],
-//     path: string[] = [],
-//     totalScore: number = 0,
-//     remainingTime: number = MAX_TIME
-//   ): void => {
-//     const isBest = bests.length === 0 || totalScore > bests[bests.length - 1].value
-//     if (isBest) {
-//       bests.push({ path, value: totalScore, remainingTime })
-//     }
-
-//     if (unopened.length === 0) return
-
-//     for (const option of unopened) {
-//       const { score, cost } = getChoiceInfo(current, option, remainingTime)
-
-//       const nextRemainingTime = remainingTime - cost
-//       if (nextRemainingTime <= 0) continue
-
-//       findNextBestPath(option, unopened.filter(label => label !== option), [...path, option], totalScore + score, nextRemainingTime)
-//     }
-//   }
-
-//   findNextBestPath('AA', Object.keys(graph.values))
-
-//   return bests
-// }
+    for (const edge of edges) {
+      try {
+        graph.addUndirectedEdge(valve, edge)
+      } catch {}
+    }
+  }
+  return graph
+}
 
 export const part1 = (input: string): number => {
   const inputData = parseInput(input)
-  const graph = new Graph()
+  const graph = buildGraph(inputData)
+  const flowValves = graph.filterNodes((_node, { flow }) => flow > 0)
+  const distMap = graph.reduceNodes<Record<string, shortest.unweighted.ShortestPathLengthMapping>>((map, node) => {
+    map[node] = shortest.singleSourceLength(graph, node)
+    return map
+  }, {})
 
-  for (const [valve, flow, ...edges] of inputData) {
-    graph.addNode(valve, { valve, flow })
+  let best = 0
 
-    for (const edge of edges) {
-      if (graph.hasNode(edge)) {
-        graph.addUndirectedEdge(valve, edge)
+  const traverse = (
+    current = 'AA',
+    options = flowValves,
+    remaining = MAX_TIME,
+    total = 0
+  ): void => {
+    if (remaining === 0 || options.length === 0) {
+      if (total > best) best = total
+      return
+    }
+
+    for (const next of options) {
+      const cost = distMap[current][next] + 1
+      let nextTotal = total
+
+      let remainingAfterDelay = remaining - cost
+      if (remainingAfterDelay < 0) remainingAfterDelay = 0
+      if (remainingAfterDelay > 0) {
+        const flow = graph.getNodeAttribute(next, 'flow')
+        nextTotal += remainingAfterDelay * flow
       }
+
+      const nextOptions = options.filter(o => o !== next)
+
+      traverse(next, nextOptions, remainingAfterDelay, nextTotal)
     }
   }
 
-  // const bests = findBestPath(inputData)
-  // console.log(bests)
+  traverse()
 
-  console.log(graph)
-  // graph.rout
-
-  return -1 // bests[bests.length - 1].value
+  return best
 }
 
 export const part2 = (input: string): number => {
