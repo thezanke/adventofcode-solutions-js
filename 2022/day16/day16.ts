@@ -49,7 +49,11 @@ const buildGraph = (inputData: ValveData[]): Graph<ValveAttributes> => {
 
 type DistMap = Record<string, shortest.unweighted.ShortestPathLengthMapping>
 
-export const part1 = (input: string): number => {
+const getInitialProblemState = (input: string): {
+  graph: Graph<ValveAttributes>
+  flowValves: string[]
+  distMap: DistMap
+} => {
   const inputData = parseInput(input)
   const graph = buildGraph(inputData)
   const flowValves = graph.filterNodes((_node, { flow }) => flow > 0)
@@ -57,6 +61,12 @@ export const part1 = (input: string): number => {
     map[node] = shortest.singleSourceLength(graph, node)
     return map
   }, {})
+
+  return { graph, flowValves, distMap }
+}
+
+export const part1 = (input: string): number => {
+  const { graph, flowValves, distMap } = getInitialProblemState(input)
 
   let best = 0
 
@@ -95,6 +105,40 @@ export const part1 = (input: string): number => {
 }
 
 export const part2 = (input: string): number => {
-  console.log(input)
-  return -1
+  const { graph, flowValves, distMap } = getInitialProblemState(input)
+
+  let best = 0
+
+  const traverse = (
+    current = 'AA',
+    options = flowValves,
+    remaining = MAX_TIME,
+    total = 0
+  ): void => {
+    if (remaining === 0 || options.length === 0) {
+      if (total > best) best = total
+      return
+    }
+
+    for (const next of options) {
+      const cost = distMap[current][next] + 1
+
+      let remainingAfterDelay = remaining - cost
+      if (remainingAfterDelay < 0) remainingAfterDelay = 0
+
+      let nextTotal = total
+      if (remainingAfterDelay > 0) {
+        const flow = graph.getNodeAttribute(next, 'flow')
+        nextTotal += remainingAfterDelay * flow
+      }
+
+      const nextOptions = options.filter(o => o !== next)
+
+      traverse(next, nextOptions, remainingAfterDelay, nextTotal)
+    }
+  }
+
+  traverse()
+
+  return best
 }

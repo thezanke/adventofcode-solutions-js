@@ -45,9 +45,9 @@ Valve JJ has flow rate=21; tunnel leads to valve II`
     })
 
     describe('Part 2', () => {
-      describe.skip('Example 1', () => {
+      describe('Example 1', () => {
         it('Returns correct result', () => {
-          expect(part2(exampleInput)).toEqual(1)
+          expect(part2(exampleInput)).toEqual(1707)
         })
       })
     })
