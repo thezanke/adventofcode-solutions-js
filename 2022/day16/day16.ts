@@ -73,10 +73,11 @@ export const part1 = (input: string): number => {
 
     for (const next of options) {
       const cost = distMap[current][next] + 1
-      let nextTotal = total
 
       let remainingAfterDelay = remaining - cost
       if (remainingAfterDelay < 0) remainingAfterDelay = 0
+
+      let nextTotal = total
       if (remainingAfterDelay > 0) {
         const flow = graph.getNodeAttribute(next, 'flow')
         nextTotal += remainingAfterDelay * flow
