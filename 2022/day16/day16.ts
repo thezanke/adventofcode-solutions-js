@@ -4,6 +4,7 @@ import * as shortest from 'graphology-shortest-path'
 import { circular } from 'graphology-layout'
 import * as fs from 'fs-extra'
 import * as path from 'path'
+import _ from 'lodash'
 import forceatlas2 from 'graphology-layout-forceatlas2'
 
 const LINE_REGEX = /Valve ([A-Z]+) has flow rate=(-?\d+); tunnels? leads? to valves? (.+)$/
@@ -104,41 +105,35 @@ export const part1 = (input: string): number => {
   return best
 }
 
-export const part2 = (input: string): number => {
-  const { graph, flowValves, distMap } = getInitialProblemState(input)
+export const condenseGraph = (originalGraph: Graph<ValveAttributes>, distMap: DistMap): Graph<ValveAttributes> => {
+  const newGraph = new Graph<ValveAttributes>()
 
-  let best = 0
+  const valuableNodes = originalGraph.filterNodes((node, attrs) => attrs.flow > 0)
+  for (const node of valuableNodes) {
+    newGraph.addNode(node, originalGraph.getNodeAttributes(node))
+  }
 
-  const traverse = (
-    current = 'AA',
-    options = flowValves,
-    remaining = MAX_TIME,
-    total = 0
-  ): void => {
-    if (remaining === 0 || options.length === 0) {
-      if (total > best) best = total
-      return
-    }
-
-    for (const next of options) {
-      const cost = distMap[current][next] as number + 1
-
-      let remainingAfterDelay = remaining - cost
-      if (remainingAfterDelay < 0) remainingAfterDelay = 0
-
-      let nextTotal = total
-      if (remainingAfterDelay > 0) {
-        const flow = graph.getNodeAttribute(next, 'flow')
-        nextTotal += remainingAfterDelay * flow
-      }
-
-      const nextOptions = options.filter(o => o !== next)
-
-      traverse(next, nextOptions, remainingAfterDelay, nextTotal)
+  for (const n1 of valuableNodes) {
+    for (const n2 of valuableNodes.filter(n => n !== n1)) {
+      try {
+        const distance = distMap[n1][n2]
+        newGraph.addUndirectedEdge(n1, n2, { distance, label: distance })
+      } catch {}
     }
   }
 
-  traverse()
+  return newGraph
+}
+
+export const part2 = (input: string): number => {
+  const { graph, distMap } = getInitialProblemState(input)
+
+  const condensed = condenseGraph(graph, distMap)
+
+  renderGraph(condensed)
+  console.log(condensed)
+
+  const best = 0
 
   return best
 }

@@ -119,7 +119,7 @@ Valve LS has flow rate=0; tunnels lead to valves CR, ZV`
       })
     })
 
-    describe.skip('Part 2', () => {
+    describe.only('Part 2', () => {
       it('Returns correct result', () => {
         expect(part2(input)).toEqual(1)
       })
