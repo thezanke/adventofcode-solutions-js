@@ -82,7 +82,7 @@ export const part1 = (input: string): number => {
     }
 
     for (const next of options) {
-      const cost = distMap[current][next] + 1
+      const cost = distMap[current][next] as number + 1
 
       let remainingAfterDelay = remaining - cost
       if (remainingAfterDelay < 0) remainingAfterDelay = 0
@@ -121,7 +121,7 @@ export const part2 = (input: string): number => {
     }
 
     for (const next of options) {
-      const cost = distMap[current][next] + 1
+      const cost = distMap[current][next] as number + 1
 
       let remainingAfterDelay = remaining - cost
       if (remainingAfterDelay < 0) remainingAfterDelay = 0
